@@ -7,11 +7,30 @@ public class Patient {
 	private String name;
 	private String gender;
 	private String birthDate;
+	private	int height;
+	private int weight;
+	private String relationName;
+	private String relationType;
+	private String relationContact;
 	private Address address;
-	private String relation;
-	private String noTel;
 	
-	public Patient() { }
+	public Patient() { 
+		address = new Address();
+	}
+	
+	public Patient(Patient p) {
+		setId(p.getId());
+		setKTP(p.getKTP());
+		setName(p.getName());
+		setGender(p.getGender());
+		setBirthDate(p.getBirthDate());
+		setHeight(p.getHeight());
+		setWeight(p.getWeight());
+		setRelationName(p.getRelationName());
+		setRelationType(p.getRelationType());
+		setRelationContact(p.getRelationContact());
+		address = new Address(p.getAddress());
+	}
 
 	public int getId() {
 		return id;
@@ -53,6 +72,22 @@ public class Patient {
 		this.birthDate = birthDate;
 	}
 
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWeight() {
+		return weight;
+	}
+
+	public void setWeight(int weight) {
+		this.weight = weight;
+	}
+
 	public Address getAddress() {
 		return address;
 	}
@@ -61,20 +96,28 @@ public class Patient {
 		this.address = address;
 	}
 
-	public String getRelation() {
-		return relation;
+	public String getRelationName() {
+		return relationName;
 	}
 
-	public void setRelation(String relation) {
-		this.relation = relation;
+	public void setRelationName(String relationName) {
+		this.relationName = relationName;
 	}
 
-	public String getNoTel() {
-		return noTel;
+	public String getRelationType() {
+		return relationType;
 	}
 
-	public void setNoTel(String noTel) {
-		this.noTel = noTel;
+	public void setRelationType(String relationType) {
+		this.relationType = relationType;
+	}
+
+	public String getRelationContact() {
+		return relationContact;
+	}
+
+	public void setRelationContact(String relationContact) {
+		this.relationContact = relationContact;
 	}
 
 }

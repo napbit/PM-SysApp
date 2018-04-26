@@ -14,17 +14,17 @@
 	<h:body>
 		<h:form id="form">
 			<div class="ui-g">
-				<div class="ui-g-12">
-					<div style="border-width: 5px; border-style: solid; border-radius: 10px;">
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div style="border-width: 5px; border-style: none; border-radius: 10px;">
+						<h:outputText value="Personal" style="font-size: 24px;" /><br />
+						<p:separator />
 						<h:panelGrid columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap" />
-							<p:inputText />
-							
-							<h:outputText value="E-Mail (Bila Ada)" />
-							<p:inputText />
+							<p:inputText value="#{registrationBacking.patient.name}" />
 							
 							<h:outputText value="Jenis Kelamin" />
-							<p:selectOneMenu>
+							<p:selectOneMenu value="#{registrationBacking.patient.gender}">
 								<f:selectItem itemLabel="Kelamin" noSelectionOption="true" />
 								<f:selectItem itemLabel="Laki-laki" itemValue="1" />
 								<f:selectItem itemLabel="Perempuan" itemValue="0" />
@@ -32,14 +32,14 @@
 							
 							<h:outputText value="Tanggal Lahir" />
 							<h:panelGrid columns="3">
-								<p:selectOneMenu>
+								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;"> 
 									<f:selectItem itemLabel="YYYY" />
 								</p:selectOneMenu>
-								<p:selectOneMenu>
-									<f:selectItem itemLabel="YYYY" />
+								<p:selectOneMenu value="#{registrationBacking.month}" style="margin-right: 5px;">
+									<f:selectItem itemLabel="MM" />
 								</p:selectOneMenu>
-								<p:selectOneMenu>
-									<f:selectItem itemLabel="YYYY" />
+								<p:selectOneMenu value="#{registrationBacking.day}" style="margin-right: 5px;">
+									<f:selectItem itemLabel="DD" />
 								</p:selectOneMenu>
 								<h:outputText value="Tahun" />
 								<h:outputText value="Bulan" />
@@ -47,51 +47,67 @@
 							</h:panelGrid>
 							
 							<h:outputText value="Tinggi (CM)" />
-							<p:spinner />
+							<p:spinner value="#{registrationBacking.patient.height}" />
 							
 							<h:outputText value="Berat Badan (KG)" />
-							<p:spinner />
+							<p:spinner value="#{registrationBacking.patient.weight}" />
 						</h:panelGrid>
 					</div>
 				</div>
+				<div class="ui-g-2" />
 				
-				<div class="ui-g-12">	
-					<div style="border-width: 5px; border-style: solid; border-radius: 10px;">
+				<div class="ui-g-2" />
+				<div class="ui-g-8">	
+					<div style="border-width: 5px; border-style: none; border-radius: 10px;">
+						<h:outputText value="Data Kontak" style="font-size: 24px;" /><br />
+						<p:separator />
 						<h:panelGrid columns="1" cellpadding="10">
 							<h:outputText value="Nomor Handphone" />
-							<p:inputText />
+							<p:inputText value="#{registrationBacking.patient.address.noHP}" />
 							
 							<h:outputText value="Nomor Telephone" />
-							<p:inputText />
+							<p:inputText value="#{registrationBacking.patient.address.noTel}" />
 							
 							<h:outputText value="Alamat Tempat Tinggal" />
 							<h:column>
-								<p:inputTextarea rows="5" cols="50"/><br/>
+								<p:inputTextarea value="#{registrationBacking.patient.address.address}" rows="5" cols="50" counter="counter" maxlength="500" counterTemplate="{0} karakter tersedia."/><br/>
+								<h:outputText id="counter" />
 							</h:column>
 						</h:panelGrid>
 					</div>
 				</div>
+				<div class="ui-g-2" />
 				
-				<div class="ui-g-12">
-				<div style="border-width: 5px; border-style: solid; border-radius: 10px;">
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+				<div style="border-width: 5px; border-style: none; border-radius: 10px;">
+					<h:outputText value="Kontak Darurat" style="font-size: 24px;" /><br />
+					<p:separator />
 					<h:panelGrid columns="1" cellpadding="10">
+						<h:outputText value="Nama Kontak" />
+						<p:inputText value="#{registrationBacking.patient.relationName}" />
+						
 						<h:outputText value="Hubungan" />
-						<p:inputText />
+						<p:inputText value="#{registrationBacking.patient.relationType}" />
 						
 						<h:outputText value="Nomor Kontak" />
-						<p:inputText />
+						<p:inputText value="#{registrationBacking.patient.relationContact}" />
 					</h:panelGrid>
+					<p:separator />
 				</div>
 				</div>
+				<div class="ui-g-2" />
 				
-				<div class="ui-g-12">
-					<div style="border-width: 5px; border-style: solid; border-radius: 10px;">
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div style="border-width: 5px; border-style: none; border-radius: 10px; float: right;">
 						<h:panelGrid columns="2" cellpadding="10">
-							<p:commandButton value="Berikutnya" />
 							<p:commandButton value="Batal" />
+							<p:commandButton value="Berikutnya" />
 						</h:panelGrid>
 					</div>
 				</div>
+				<div class="ui-g-2" />
 				
 			</div>
 		</h:form>
