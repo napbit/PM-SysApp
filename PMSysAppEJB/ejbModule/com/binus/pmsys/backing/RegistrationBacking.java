@@ -1,9 +1,8 @@
 package com.binus.pmsys.backing;
 
-import java.text.DateFormatSymbols;
-import java.time.YearMonth;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -12,7 +11,6 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import com.binus.pmsys.entity.ListInteger;
 import com.binus.pmsys.entity.Patient;
 import com.binus.pmsys.utils.DateHelper;
 
@@ -35,6 +33,7 @@ public class RegistrationBacking extends BasicBacking {
 	
 	@PostConstruct
 	public void init() {
+		patient = new Patient();
 		generateLists();
 	}
 
@@ -105,5 +104,16 @@ public class RegistrationBacking extends BasicBacking {
 			int len = DateHelper.findLengthDaysinMonthYear(year, month);
 			dayList = IntStream.rangeClosed(1, len).boxed().collect(Collectors.toList());
 		}
+	}
+	
+	private void makeDate() {
+		LocalDate dob = LocalDate.of(year, month, day);
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+		patient.setBirthDate(dob.format(formatter));
+	}
+	
+	public String berikutnya() {
+		makeDate();
+		return "review.xhtml?faces-redirect=true";
 	}
 }

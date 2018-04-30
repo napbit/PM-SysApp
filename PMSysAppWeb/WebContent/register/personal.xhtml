@@ -16,7 +16,7 @@
 			<div class="ui-g">
 				<div class="ui-g-2" />
 				<div class="ui-g-8">
-					<div style="border-width: 5px; border-style: none; border-radius: 10px;">
+					<div>
 						<h:outputText value="Personal" style="font-size: 24px;" /><br />
 						<p:separator />
 						<h:panelGrid columns="1" cellpadding="10">
@@ -34,13 +34,16 @@
 							<h:panelGrid columns="3">
 								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;">
 									<p:ajax listener="#{registrationBacking.monthYearDayListener}" update=":form:cmb_days" />
+									<f:selectItem itemValue="---" noSelectionOption="true" />
 									<f:selectItems value="#{registrationBacking.yearList}" />
 								</p:selectOneMenu>
 								<p:selectOneMenu value="#{registrationBacking.month}" style="margin-right: 5px;">
 									<p:ajax listener="#{registrationBacking.monthYearDayListener}" update=":form:cmb_days" />
+									<f:selectItem itemValue="---" noSelectionOption="true" />
 									<f:selectItems value="#{registrationBacking.monthList}" />
 								</p:selectOneMenu>
 								<p:selectOneMenu value="#{registrationBacking.day}" id="cmb_days">
+									<f:selectItem itemValue="---" noSelectionOption="true" />
 									<f:selectItems value="#{registrationBacking.dayList}"  />
 								</p:selectOneMenu>
 								<h:outputText value="Tahun" />
@@ -60,7 +63,7 @@
 				
 				<div class="ui-g-2" />
 				<div class="ui-g-8">	
-					<div style="border-width: 5px; border-style: none; border-radius: 10px;">
+					<div>
 						<h:outputText value="Data Kontak" style="font-size: 24px;" /><br />
 						<p:separator />
 						<h:panelGrid columns="1" cellpadding="10">
@@ -82,7 +85,7 @@
 				
 				<div class="ui-g-2" />
 				<div class="ui-g-8">
-				<div style="border-width: 5px; border-style: none; border-radius: 10px;">
+				<div>
 					<h:outputText value="Kontak Darurat" style="font-size: 24px;" /><br />
 					<p:separator />
 					<h:panelGrid columns="1" cellpadding="10">
@@ -105,7 +108,7 @@
 					<div style="border-width: 5px; border-style: none; border-radius: 10px; float: right;">
 						<h:panelGrid columns="2" cellpadding="10">
 							<p:commandButton value="Batal" />
-							<p:commandButton value="Berikutnya" />
+							<p:commandButton value="Berikutnya" action="#{registrationBacking.berikutnya}" />
 						</h:panelGrid>
 					</div>
 				</div>

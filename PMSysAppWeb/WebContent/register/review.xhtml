@@ -4,17 +4,89 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core">
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
 
-<ui:composition template="">
-	<ui:define name="header">
-	    Add your header here or delete to use the default
-	</ui:define>
-	<ui:define name="content">
-	    Add your content here or delete to use the default
-	</ui:define>
-	<ui:define name="footer">
-	    Add your footer here or delete to use the default
-	</ui:define>
-</ui:composition>
+	<h:head>
+	</h:head>
+	
+	<h:body>
+		<h:form id="form">
+			<div class="ui-g">
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div>
+					<h:outputText value="Personal" style="font-size: 24px;" /><br />
+					<p:separator />
+					<h:panelGrid columns="1" cellpadding="10">
+							<h:outputText value="Nama Lengkap:" />
+							<h:outputText value="#{registrationBacking.patient.name}" />
+							
+							<h:outputText value="Jenis Kelamin:" />
+							<h:outputText value="#{registrationBacking.patient.gender}" />
+							
+							<h:outputText value="Tanggal Lahir:" />
+							<h:outputText value="#{registrationBacking.patient.birthDate}" />
+							
+							<h:outputText value="Tinggi (CM):" />
+							<h:outputText value="#{registrationBacking.patient.height}" />
+							
+							<h:outputText value="Berat Badan (KG):" />
+							<h:outputText value="#{registrationBacking.patient.weight}" />
+						</h:panelGrid>
+					</div>
+				</div>
+				<div class="ui-g-2" />
+				
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div>
+					<h:outputText value="Data Kontak" style="font-size: 24px;" /><br />
+					<p:separator />
+					<h:panelGrid columns="1" cellpadding="10">
+							<h:outputText value="Nomor Handphone:" />
+							<h:outputText value="#{registrationBacking.patient.address.noHP}" />
+							
+							<h:outputText value="Nomor Telephone:" />
+							<h:outputText value="#{registrationBacking.patient.address.noTel}" />
+							
+							<h:outputText value="Alamat Tempat Tinggal:" />
+							<h:outputText value="#{registrationBacking.patient.address.address}"></h:outputText>
+						</h:panelGrid>
+					</div>
+				</div>
+				<div class="ui-g-2" />
+				
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div>
+					<h:outputText value="Kontak Darurat" style="font-size: 24px;" /><br />
+					<p:separator />
+					<h:panelGrid columns="1" cellpadding="10">
+						<h:outputText value="Nama Kontak:"/>
+						<h:outputText value="#{registrationBacking.patient.relationName}" />
+						
+						<h:outputText value="Hubungan:" />
+						<h:outputText value="#{registrationBacking.patient.relationType}" />
+						
+						<h:outputText value="Nomor Kontak:" />
+						<h:outputText value="#{registrationBacking.patient.relationContact}" />
+					</h:panelGrid>
+					</div>
+				</div>
+				<div class="ui-g-2" />
+				
+				<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div style="border-width: 5px; border-style: none; border-radius: 10px; float: right;">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:commandButton value="Batal" />
+							<p:commandButton value="Selesai" />
+						</h:panelGrid>
+					</div>
+				</div>
+				<div class="ui-g-2" />
+			</div>
+		</h:form>
+	</h:body>
 </html>
