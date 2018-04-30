@@ -25,21 +25,23 @@
 							
 							<h:outputText value="Jenis Kelamin" />
 							<p:selectOneMenu value="#{registrationBacking.patient.gender}">
-								<f:selectItem itemLabel="Kelamin" noSelectionOption="true" />
+								<f:selectItem itemLabel="Pilih Kelamin" noSelectionOption="true" />
 								<f:selectItem itemLabel="Laki-laki" itemValue="1" />
 								<f:selectItem itemLabel="Perempuan" itemValue="0" />
 							</p:selectOneMenu>
 							
 							<h:outputText value="Tanggal Lahir" />
 							<h:panelGrid columns="3">
-								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;"> 
-									<f:selectItem itemLabel="YYYY" />
+								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;">
+									<p:ajax listener="#{registrationBacking.monthYearDayListener}" update=":form:cmb_days" />
+									<f:selectItems value="#{registrationBacking.yearList}" />
 								</p:selectOneMenu>
 								<p:selectOneMenu value="#{registrationBacking.month}" style="margin-right: 5px;">
-									<f:selectItem itemLabel="MM" />
+									<p:ajax listener="#{registrationBacking.monthYearDayListener}" update=":form:cmb_days" />
+									<f:selectItems value="#{registrationBacking.monthList}" />
 								</p:selectOneMenu>
-								<p:selectOneMenu value="#{registrationBacking.day}" style="margin-right: 5px;">
-									<f:selectItem itemLabel="DD" />
+								<p:selectOneMenu value="#{registrationBacking.day}" id="cmb_days">
+									<f:selectItems value="#{registrationBacking.dayList}"  />
 								</p:selectOneMenu>
 								<h:outputText value="Tahun" />
 								<h:outputText value="Bulan" />
@@ -47,10 +49,10 @@
 							</h:panelGrid>
 							
 							<h:outputText value="Tinggi (CM)" />
-							<p:spinner value="#{registrationBacking.patient.height}" />
+							<p:inputText value="#{registrationBacking.patient.height}" />
 							
 							<h:outputText value="Berat Badan (KG)" />
-							<p:spinner value="#{registrationBacking.patient.weight}" />
+							<p:inputText value="#{registrationBacking.patient.weight}" />
 						</h:panelGrid>
 					</div>
 				</div>

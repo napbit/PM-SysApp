@@ -1,12 +1,23 @@
 package com.binus.pmsys.backing;
 
-import javax.faces.bean.ViewScoped;
+import java.text.DateFormatSymbols;
+import java.time.YearMonth;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import com.binus.pmsys.entity.ListInteger;
 import com.binus.pmsys.entity.Patient;
+import com.binus.pmsys.utils.DateHelper;
 
 @Named
-@ViewScoped
+@SessionScoped
 public class RegistrationBacking extends BasicBacking {
 	private static final long serialVersionUID = 8664948727348463034L;
 	
@@ -16,7 +27,16 @@ public class RegistrationBacking extends BasicBacking {
 	private int month;
 	private int day;
 	
+	private List<Integer> yearList = new ArrayList<Integer>();
+	private List<Integer> monthList = new ArrayList<Integer>();
+	private List<Integer> dayList = new ArrayList<Integer>();
+	
 	public RegistrationBacking() { }
+	
+	@PostConstruct
+	public void init() {
+		generateLists();
+	}
 
 	public Patient getPatient() {
 		return patient;
@@ -50,4 +70,40 @@ public class RegistrationBacking extends BasicBacking {
 		this.day = day;
 	}
 
+	public List<Integer> getYearList() {
+		return yearList;
+	}
+
+	public void setYearList(List<Integer> yearList) {
+		this.yearList = yearList;
+	}
+
+	public List<Integer> getMonthList() {
+		return monthList;
+	}
+
+	public void setMonthList(List<Integer> monthList) {
+		this.monthList = monthList;
+	}
+
+	public List<Integer> getDayList() {
+		return dayList;
+	}
+
+	public void setDayList(List<Integer> dayList) {
+		this.dayList = dayList;
+	}
+
+	private void generateLists() {
+		yearList = IntStream.rangeClosed(1900, 2018).boxed().collect(Collectors.toList());
+		monthList = IntStream.rangeClosed(1, 12).boxed().collect(Collectors.toList());
+	}
+	
+	public void monthYearDayListener() {
+		if(month > 0) {
+			dayList.removeAll(dayList);
+			int len = DateHelper.findLengthDaysinMonthYear(year, month);
+			dayList = IntStream.rangeClosed(1, len).boxed().collect(Collectors.toList());
+		}
+	}
 }
