@@ -114,6 +114,10 @@ public class RegistrationBacking extends BasicBacking {
 	
 	public String berikutnya() {
 		makeDate();
+		return "insurance.xhtml?faces-redirect=true";
+	}
+	
+	public String berikutnyaInsurance() {
 		return "review.xhtml?faces-redirect=true";
 	}
 }

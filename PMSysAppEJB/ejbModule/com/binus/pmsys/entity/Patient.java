@@ -4,6 +4,7 @@ public class Patient {
 	
 	private int id;
 	private String KTP;
+	private String BPJS;
 	private String name;
 	private String gender;
 	private String birthDate;
@@ -46,6 +47,14 @@ public class Patient {
 
 	public void setKTP(String kTP) {
 		KTP = kTP;
+	}
+
+	public String getBPJS() {
+		return BPJS;
+	}
+
+	public void setBPJS(String bPJS) {
+		BPJS = bPJS;
 	}
 
 	public String getName() {

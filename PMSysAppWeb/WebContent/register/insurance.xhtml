@@ -18,10 +18,25 @@
     				<h:outputText value="Data Pribadi" style="font-size: 24px;" /><br />
 					<p:separator />
 					<h:panelGrid columns="1" cellpadding="10">
+						<h:outputText value="Nomor KTP" />
+						<p:inputText value="#{registrationBacking.patient.KTP}" />
 						
+						<h:outputText value="Nomor BPJS" />
+						<p:inputText value="#{registrationBacking.patient.BPJS}" />
 					</h:panelGrid>
     			</div>
     			<div class="ui-g-2" />
+    			
+    			<div class="ui-g-2" />
+				<div class="ui-g-8">
+					<div style="float: right;">
+						<h:panelGrid columns="2" cellpadding="10">
+							<p:commandButton value="Batal" />
+							<p:commandButton value="Selesai" />
+						</h:panelGrid>
+					</div>
+				</div>
+				<div class="ui-g-2" />
     		</div>
     	</h:form>
     </h:body>
