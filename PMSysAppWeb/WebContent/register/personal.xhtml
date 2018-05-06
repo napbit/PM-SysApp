@@ -33,18 +33,13 @@
 							<h:outputText value="Tanggal Lahir" />
 							<h:panelGrid columns="3">
 								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;">
-									<p:ajax listener="#{registrationBacking.monthYearDayListener}" update=":form:cmb_days" />
-									<f:selectItem itemValue="---" noSelectionOption="true" />
-									<f:selectItems value="#{registrationBacking.yearList}" />
+									<f:selectItems value="#{registrationBacking.years}" />
 								</p:selectOneMenu>
 								<p:selectOneMenu value="#{registrationBacking.month}" style="margin-right: 5px;">
-									<p:ajax listener="#{registrationBacking.monthYearDayListener}" update=":form:cmb_days" />
-									<f:selectItem itemValue="---" noSelectionOption="true" />
-									<f:selectItems value="#{registrationBacking.monthList}" />
+									<f:selectItems value="#{registrationBacking.months}" />
 								</p:selectOneMenu>
 								<p:selectOneMenu value="#{registrationBacking.day}" id="cmb_days">
-									<f:selectItem itemValue="---" noSelectionOption="true" />
-									<f:selectItems value="#{registrationBacking.dayList}"  />
+									<f:selectItems value="#{registrationBacking.days}"  />
 								</p:selectOneMenu>
 								<h:outputText value="Tahun" />
 								<h:outputText value="Bulan" />
@@ -75,7 +70,8 @@
 							
 							<h:outputText value="Alamat Tempat Tinggal" />
 							<h:column>
-								<p:inputTextarea value="#{registrationBacking.patient.address.address}" rows="5" cols="50" counter="counter" maxlength="500" counterTemplate="{0} karakter tersedia."/><br/>
+								<p:inputTextarea value="#{registrationBacking.patient.address.address}" rows="5" cols="50" 
+								counter="counter" maxlength="500" counterTemplate="{0} huruf tersedia."/><br/>
 								<h:outputText id="counter" />
 							</h:column>
 						</h:panelGrid>

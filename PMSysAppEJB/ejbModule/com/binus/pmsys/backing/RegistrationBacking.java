@@ -1,9 +1,12 @@
 package com.binus.pmsys.backing;
 
+import java.text.DateFormatSymbols;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -25,9 +28,10 @@ public class RegistrationBacking extends BasicBacking {
 	private int month;
 	private int day;
 	
-	private List<Integer> yearList = new ArrayList<Integer>();
-	private List<Integer> monthList = new ArrayList<Integer>();
-	private List<Integer> dayList = new ArrayList<Integer>();
+	private int[] years;
+	private List<String> months = new ArrayList<String>();
+	private int[] days;
+	
 	
 	public RegistrationBacking() { }
 	
@@ -68,52 +72,48 @@ public class RegistrationBacking extends BasicBacking {
 	public void setDay(int day) {
 		this.day = day;
 	}
-
-	public List<Integer> getYearList() {
-		return yearList;
+	
+	public int[] getYears() {
+		return years;
 	}
 
-	public void setYearList(List<Integer> yearList) {
-		this.yearList = yearList;
+	public void setYears(int[] years) {
+		this.years = years;
 	}
 
-	public List<Integer> getMonthList() {
-		return monthList;
+	public List<String> getMonths() {
+		return months;
 	}
 
-	public void setMonthList(List<Integer> monthList) {
-		this.monthList = monthList;
+	public void setMonths(List<String> months) {
+		this.months = months;
 	}
 
-	public List<Integer> getDayList() {
-		return dayList;
+	public int[] getDays() {
+		return days;
 	}
 
-	public void setDayList(List<Integer> dayList) {
-		this.dayList = dayList;
+	public void setDays(int[] days) {
+		this.days = days;
 	}
 
 	private void generateLists() {
-		yearList = IntStream.rangeClosed(1900, 2018).boxed().collect(Collectors.toList());
-		monthList = IntStream.rangeClosed(1, 12).boxed().collect(Collectors.toList());
+		DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
+		months.addAll(Arrays.asList(dfs.getMonths()));
+		months.remove("");
+		years = IntStream.rangeClosed(1900,  2018).toArray();
+		days = IntStream.rangeClosed(1, 31).toArray();
 	}
 	
-	public void monthYearDayListener() {
-		if(month > 0) {
-			dayList.removeAll(dayList);
-			int len = DateHelper.findLengthDaysinMonthYear(year, month);
-			dayList = IntStream.rangeClosed(1, len).boxed().collect(Collectors.toList());
-		}
-	}
-	
-	private void makeDate() {
+	private void makeDate() { 
 		LocalDate dob = LocalDate.of(year, month, day);
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
 		patient.setBirthDate(dob.format(formatter));
 	}
 	
 	public String berikutnya() {
-		makeDate();
+		makeDate(); //TODO: test/fix this
+		//TODO: verify date
 		return "insurance.xhtml?faces-redirect=true";
 	}
 	
