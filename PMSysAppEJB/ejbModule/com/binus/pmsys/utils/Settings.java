@@ -8,7 +8,7 @@ public class Settings {
 		Connection con = null;
 		try
 		{
-		 	con = ConnectionManager.getConnection("jdbc/Adrena");
+		 	con = ConnectionManager.getConnection("jdbc/PMSys");
 		} catch (Exception e)
 		{
 			e.printStackTrace();
