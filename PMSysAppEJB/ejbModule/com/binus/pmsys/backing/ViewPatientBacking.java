@@ -1,17 +1,24 @@
 package com.binus.pmsys.backing;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.binus.pmsys.entity.Patient;
+import com.binus.pmsys.rules.ViewPatientRules;
 
 @Named
 @SessionScoped
 public class ViewPatientBacking implements Serializable {
 	private static final long serialVersionUID = -513189841959490721L;
+	
+	@EJB
+	private ViewPatientRules rules;
 	
 	private String search;
 
@@ -23,6 +30,12 @@ public class ViewPatientBacking implements Serializable {
 	private boolean emergencyEdit = false;
 	
 	public ViewPatientBacking() { }
+	
+	@PostConstruct
+	public void init() {
+		patients = new ArrayList<Patient>();
+		patients = rules.getPatients();
+	}
 	
 	public String getSearch() {
 		return search;

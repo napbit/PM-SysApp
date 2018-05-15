@@ -16,30 +16,32 @@
 				<div class="ui-g-2" />
 				<div class="ui-g-8">
 					<h:panelGrid columns="1">
-						<h:outputText value="Mengelola Data Pasien" style="font-size: 24px;"/>
+						<p:outputLabel value="Mengelola Data Pasien" style="font-size: 24px;"/>
 						<p:separator style="visibility: hidden;"/>
-						<h:outputText value="Cari Data Pasien" />
+						<p:outputLabel value="Cari Data Pasien" />
 						<h:column>
-							<p:inputText placeholder="Nama pasien, Nomor KTP, Nomor BPJS" style="margin-right: 10px; width: 350px;"/>
+							<p:inputText placeholder="Nama pasien, Nomor KTP, Nomor BPJS" value="#{viewPatientBacking.search}" style="margin-right: 10px; width: 350px;"/>
 							<p:commandButton value="Cari" />
 						</h:column>
 						<p:separator style="visibility: hidden;" />
 					</h:panelGrid>
 					
 					<h:panelGrid columns="1">
-						<p:dataTable>
+						<p:dataTable value="#{viewPatientBacking.patients}" var="p" style="text-align:center;">
 							<p:column headerText="Action">
-								<p:commandLink value="Melihat Data Pasien" />
+								<p:commandLink value="Melihat" />
+							</p:column>
+							<p:column headerText="ID">
+								<h:outputText value="#{p.id}" />
 							</p:column>
 							<p:column headerText="Nama">
+								<h:outputText value="#{p.name}" />
 							</p:column>
 							<p:column headerText="Jenis Kelamin">
+								<h:outputText value="#{p.gender}" />
 							</p:column>
 							<p:column headerText="Tanggal Lahir">
-							</p:column>
-							<p:column headerText="No. HP">
-							</p:column>
-							<p:column headerText="Lokasi">
+								<h:outputText value="#{p.birthDate}" />
 							</p:column>
 						</p:dataTable>
 					</h:panelGrid>
