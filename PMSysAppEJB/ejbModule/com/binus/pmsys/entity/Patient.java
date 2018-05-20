@@ -8,8 +8,6 @@ public class Patient {
 	private String name;
 	private String gender;
 	private String birthDate;
-	private	int height;
-	private int weight;
 	private String relationName;
 	private String relationType;
 	private String relationContact;
@@ -79,26 +77,6 @@ public class Patient {
 
 	public void setBirthDate(String birthDate) {
 		this.birthDate = birthDate;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getWeight() {
-		return weight;
-	}
-
-	public void setWeight(int weight) {
-		this.weight = weight;
-	}
-
-	public Address getAddress() {
-		return address;
 	}
 
 	public void setAddress(Address address) {
