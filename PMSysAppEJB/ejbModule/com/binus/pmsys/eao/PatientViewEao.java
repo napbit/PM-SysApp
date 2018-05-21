@@ -50,5 +50,19 @@ public class PatientViewEao {
 		
 		return patientList;
 	}
+	
+	public void savePatient(Patient patientData) {
+		Connection connection = null;
+		CallableStatement cs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("");
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
+	}
     
 }

@@ -114,6 +114,7 @@ public class PatientViewBacking implements Serializable {
 	}
 	
 	private void savePersonal() {
+		rules.savePatient(this.patient);
 		personalEdit = false;
 	}
 	
@@ -123,6 +124,11 @@ public class PatientViewBacking implements Serializable {
 	
 	private void saveEmergency() {
 		emergencyEdit = false;
+	}
+	
+	public String onClickEdit(Patient patientData) {
+		this.patient = patientData;
+		return "view.xhtml?faces-redirect=true";
 	}
 
 }

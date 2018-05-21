@@ -3,8 +3,8 @@ package com.binus.pmsys.entity;
 public class Patient {
 	
 	private int id;
-	private String KTP;
-	private String BPJS;
+	private String patientKTP;
+	private String patientBPJS;
 	private String name;
 	private String gender;
 	private String birthDate;
@@ -13,18 +13,13 @@ public class Patient {
 	private String relationContact;
 	private Address address;
 	
-	public Patient() { 
-		address = new Address();
-	}
-	
 	public Patient(Patient p) {
 		setId(p.getId());
-		setKTP(p.getKTP());
+		setPatientKTP(p.getPatientKTP());
+		setPatientBPJS(p.getPatientBPJS());
 		setName(p.getName());
 		setGender(p.getGender());
 		setBirthDate(p.getBirthDate());
-		setHeight(p.getHeight());
-		setWeight(p.getWeight());
 		setRelationName(p.getRelationName());
 		setRelationType(p.getRelationType());
 		setRelationContact(p.getRelationContact());
@@ -39,20 +34,20 @@ public class Patient {
 		this.id = id;
 	}
 
-	public String getKTP() {
-		return KTP;
+	public String getPatientKTP() {
+		return patientKTP;
 	}
 
-	public void setKTP(String kTP) {
-		KTP = kTP;
+	public void setPatientKTP(String patientKTP) {
+		this.patientKTP = patientKTP;
 	}
 
-	public String getBPJS() {
-		return BPJS;
+	public String getPatientBPJS() {
+		return patientBPJS;
 	}
 
-	public void setBPJS(String bPJS) {
-		BPJS = bPJS;
+	public void setPatientBPJS(String patientBPJS) {
+		this.patientBPJS = patientBPJS;
 	}
 
 	public String getName() {
@@ -105,6 +100,14 @@ public class Patient {
 
 	public void setRelationContact(String relationContact) {
 		this.relationContact = relationContact;
+	}
+	
+	public Address getAddress() {
+		return address;
+	}
+
+	public Patient() { 
+		address = new Address();
 	}
 
 }

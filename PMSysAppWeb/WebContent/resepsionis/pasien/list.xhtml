@@ -29,10 +29,10 @@
 					<h:panelGrid columns="1">
 						<p:dataTable value="#{viewPatientBacking.patients}" var="p" style="text-align:center;">
 							<p:column headerText="Action">
-								<p:commandLink value="Melihat" />
+								<p:commandLink value="Melihat" action="#{patientViewBacking.onClickEdit(p)}"/>
 							</p:column>
-							<p:column headerText="ID">
-								<h:outputText value="#{p.id}" />
+							<p:column headerText="KTP">
+								<h:outputText value="#{p.patientKTP}" />
 							</p:column>
 							<p:column headerText="Nama">
 								<h:outputText value="#{p.name}" />
