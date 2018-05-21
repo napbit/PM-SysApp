@@ -25,30 +25,30 @@
 					<p:separator />
 						<h:panelGrid rendered="#{viewPatientBacking.personalEdit == false}" columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap:" />
-							<h:outputText value="#{viewPatientBacking.patient.name}" />
+							<h:outputText value="#{PatientViewBacking.patient.name}" />
 							
 							<h:outputText value="Jenis Kelamin:" />
-							<h:outputText value="#{viewPatientBacking.patient.gender}" />
+							<h:outputText value="#{PatientViewBacking.patient.gender}" />
 							
 							<h:outputText value="Tanggal Lahir:" />
-							<h:outputText value="#{viewPatientBacking.patient.birthDate}" />
+							<h:outputText value="#{PatientViewBacking.patient.birthDate}" />
 							
 							<h:outputText value="Tinggi (CM):" />
-							<h:outputText value="#{viewPatientBacking.patient.height}" />
+							<h:outputText value="#{PatientViewBacking.patient.height}" />
 							
 							<h:outputText value="Berat Badan (KG):" />
-							<h:outputText value="#{viewPatientBacking.patient.weight}" />
+							<h:outputText value="#{PatientViewBacking.patient.weight}" />
 						</h:panelGrid>
 						
 						<h:panelGrid id="e_personal" rendered="#{viewPatientBacking.personalEdit}" columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap:" />
-							<p:inputText value="#{viewPatientBacking.patient.name}" />
+							<p:inputText value="#{PatientViewBacking.patient.name}" />
 							
 							<h:outputText value="Jenis Kelamin:" />
-							<p:inputText value="#{viewPatientBacking.patient.gender}" />
+							<p:inputText value="#{PatientViewBacking.patient.gender}" />
 							
 							<h:outputText value="Tanggal Lahir:" />
-							<p:inputText value="#{viewPatientBacking.patient.birthDate}" />
+							<p:inputText value="#{PatientViewBacking.patient.birthDate}" />
 						</h:panelGrid>
 					</div>
 				</p:outputPanel>

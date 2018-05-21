@@ -10,15 +10,15 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.binus.pmsys.entity.Patient;
-import com.binus.pmsys.rules.ViewPatientRules;
+import com.binus.pmsys.rules.PatientViewRules;
 
 @Named
 @SessionScoped
-public class ViewPatientBacking implements Serializable {
+public class PatientViewBacking implements Serializable {
 	private static final long serialVersionUID = -513189841959490721L;
 	
 	@EJB
-	private ViewPatientRules rules;
+	private PatientViewRules rules;
 	
 	private String search;
 
@@ -29,7 +29,7 @@ public class ViewPatientBacking implements Serializable {
 	private boolean kontakEdit = false;
 	private boolean emergencyEdit = false;
 	
-	public ViewPatientBacking() { }
+	public PatientViewBacking() { }
 	
 	@PostConstruct
 	public void init() {

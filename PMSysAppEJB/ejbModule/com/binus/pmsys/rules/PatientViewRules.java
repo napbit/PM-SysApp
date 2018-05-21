@@ -6,7 +6,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.binus.pmsys.eao.ViewPatientEao;
+import com.binus.pmsys.eao.PatientViewEao;
 import com.binus.pmsys.entity.Patient;
 
 /**
@@ -14,12 +14,12 @@ import com.binus.pmsys.entity.Patient;
  */
 @Stateless
 @LocalBean
-public class ViewPatientRules {
+public class PatientViewRules {
 	
 	@EJB
-	private ViewPatientEao eao;
+	private PatientViewEao eao;
 	
-    public ViewPatientRules() { }
+    public PatientViewRules() { }
     
     public List<Patient> getPatients() {
     	List<Patient> patientList = null;

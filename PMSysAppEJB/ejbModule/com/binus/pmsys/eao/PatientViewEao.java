@@ -18,9 +18,9 @@ import com.binus.pmsys.utils.Settings;
  */
 @Stateless
 @LocalBean
-public class ViewPatientEao {
+public class PatientViewEao {
 
-    public ViewPatientEao() { }
+    public PatientViewEao() { }
     
 	public List<Patient> getPatients() {
 		List<Patient> patientList = new ArrayList<Patient>();
