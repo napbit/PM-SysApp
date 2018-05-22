@@ -55,6 +55,33 @@ public class PatientViewEao {
 		return patientList;
 	}
 	
+	public List<Patient> getPatientSearch(String term) {
+		List<Patient> patients = new ArrayList<Patient>();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("Patient_Search(?)");
+			cs.setString(1, term);
+			rs = cs.executeQuery();
+			
+			Patient p = null;
+			while(rs.next()) {
+				
+				patients.add(p);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
+		
+		return patients;
+	}
+	
 	public Patient getPatient(int id) {
 		Patient patient = new Patient();
 		Address address = new Address();
@@ -64,7 +91,7 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call PatientGetAllData(?)}");
+			cs = connection.prepareCall("{call Patient_GetAllData(?)}");
 			cs.setInt(1, id);
 			rs = cs.executeQuery();
 			
@@ -84,7 +111,6 @@ public class PatientViewEao {
 				patient.setRelationName(rs.getString(12));
 				patient.setRelationType(rs.getString(13));
 				patient.setRelationContact(rs.getString(14));
-				
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -99,7 +125,6 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("");
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
