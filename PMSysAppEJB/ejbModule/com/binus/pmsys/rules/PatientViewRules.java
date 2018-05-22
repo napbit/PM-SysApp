@@ -33,6 +33,18 @@ public class PatientViewRules {
 		return patientList;
     }
     
+    public Patient getPatient(int id) {
+    	Patient patient = null;
+    	
+    	try {
+			patient = eao.getPatient(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	return patient;
+    }
+    
     public void savePatient(Patient patientData) {
     	try {
 			eao.savePatient(patientData);

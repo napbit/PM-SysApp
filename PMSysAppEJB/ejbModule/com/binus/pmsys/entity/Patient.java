@@ -8,10 +8,13 @@ public class Patient {
 	private String name;
 	private String gender;
 	private String birthDate;
+	private int relationID;
 	private String relationName;
 	private String relationType;
 	private String relationContact;
 	private Address address;
+	
+	public Patient() { }
 	
 	public Patient(Patient p) {
 		setId(p.getId());
@@ -20,6 +23,7 @@ public class Patient {
 		setName(p.getName());
 		setGender(p.getGender());
 		setBirthDate(p.getBirthDate());
+		setRelationID(p.getRelationID());
 		setRelationName(p.getRelationName());
 		setRelationType(p.getRelationType());
 		setRelationContact(p.getRelationContact());
@@ -74,8 +78,12 @@ public class Patient {
 		this.birthDate = birthDate;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public int getRelationID() {
+		return relationID;
+	}
+
+	public void setRelationID(int relationID) {
+		this.relationID = relationID;
 	}
 
 	public String getRelationName() {
@@ -101,13 +109,13 @@ public class Patient {
 	public void setRelationContact(String relationContact) {
 		this.relationContact = relationContact;
 	}
-	
+
 	public Address getAddress() {
 		return address;
 	}
 
-	public Patient() { 
-		address = new Address();
+	public void setAddress(Address address) {
+		this.address = address;
 	}
 
 }

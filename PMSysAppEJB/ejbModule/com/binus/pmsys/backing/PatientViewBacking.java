@@ -127,7 +127,8 @@ public class PatientViewBacking implements Serializable {
 	}
 	
 	public String onClickEdit(Patient patientData) {
-		this.patient = patientData;
+		System.out.println("view: " + patientData.getId());
+		patient = new Patient(rules.getPatient(patientData.getId()));
 		return "view.xhtml?faces-redirect=true";
 	}
 

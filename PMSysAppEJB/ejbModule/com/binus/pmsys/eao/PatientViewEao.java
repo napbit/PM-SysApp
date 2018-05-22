@@ -9,6 +9,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.binus.pmsys.entity.Address;
 import com.binus.pmsys.entity.Patient;
 import com.binus.pmsys.utils.ReleaseConnection;
 import com.binus.pmsys.utils.Settings;
@@ -30,18 +31,21 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call Patient_GetAll()}");
+			cs = connection.prepareCall("{call Patient_GetAllList()}");
 			rs = cs.executeQuery();
 			
 			Patient patient;
+			
 			while(rs.next()) {
 				patient = new Patient();
 				patient.setId(rs.getInt(1));
-				patient.setName(rs.getString(2));
-				patient.setGender(rs.getString(3));
-				patient.setBirthDate(rs.getString(4));
+				patient.setPatientKTP(rs.getString(2));
+				patient.setName(rs.getString(3));
+				patient.setGender(rs.getString(4));
+				patient.setBirthDate(rs.getString(5));
 				patientList.add(patient);
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -49,6 +53,44 @@ public class PatientViewEao {
 		}
 		
 		return patientList;
+	}
+	
+	public Patient getPatient(int id) {
+		Patient patient = new Patient();
+		Address address = new Address();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call PatientGetAllData(?)}");
+			cs.setInt(1, id);
+			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				patient.setId(rs.getInt(1));
+				patient.setPatientKTP(rs.getString(2));
+				patient.setName(rs.getString(3));
+				patient.setGender(rs.getString(4));
+				patient.setBirthDate(rs.getString(5));
+				patient.setPatientBPJS(rs.getString(6));
+				address.setAddressID(rs.getInt(7));
+				address.setNoHP(rs.getString(8));
+				address.setNoTel(rs.getString(9));
+				address.setAddress(rs.getString(10));
+				patient.setAddress(address);
+				patient.setRelationID(rs.getInt(11));
+				patient.setRelationName(rs.getString(12));
+				patient.setRelationType(rs.getString(13));
+				patient.setRelationContact(rs.getString(14));
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return patient;
 	}
 	
 	public void savePatient(Patient patientData) {

@@ -19,11 +19,11 @@
 				<p:outputPanel id="d_personal">
 					<div>
 					<h:outputText value="Personal" style="font-size: 24px;" />
-					<p:commandButton value="Edit" actionListener="#{viewPatientBacking.editPanel(1)}" rendered="#{viewPatientBacking.personalEdit == false}" update=":form:d_personal" style="float: right; width: 100px;" />
-					<p:commandButton value="Simpan" process="@this" actionListener="#{viewPatientBacking.savePanel(1)}" rendered="#{viewPatientBacking.personalEdit}" update=":form:d_personal" style="float: right; width: 100px;" />
+					<p:commandButton value="Edit" actionListener="#{patientViewBacking.editPanel(1)}" rendered="#{patientViewBacking.personalEdit == false}" update=":form:d_personal" style="float: right; width: 100px;" />
+					<p:commandButton value="Simpan" process="@this" actionListener="#{patientViewBacking.savePanel(1)}" rendered="#{patientViewBacking.personalEdit}" update=":form:d_personal" style="float: right; width: 100px;" />
 					<br/>
 					<p:separator />
-						<h:panelGrid rendered="#{viewPatientBacking.personalEdit == false}" columns="1" cellpadding="10">
+						<h:panelGrid rendered="#{patientViewBacking.personalEdit == false}" columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap:" />
 							<h:outputText value="#{PatientViewBacking.patient.name}" />
 							
@@ -34,7 +34,7 @@
 							<h:outputText value="#{PatientViewBacking.patient.birthDate}" />
 						</h:panelGrid>
 						
-						<h:panelGrid id="e_personal" rendered="#{viewPatientBacking.personalEdit}" columns="1" cellpadding="10">
+						<h:panelGrid id="e_personal" rendered="#{patientViewBacking.personalEdit}" columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap:" />
 							<p:inputText value="#{PatientViewBacking.patient.name}" />
 							
@@ -56,30 +56,30 @@
 				<p:outputPanel id="d_kontak">
 					<div>
 					<h:outputText value="Data Kontak" style="font-size: 24px;" />
-					<p:commandButton value="Edit" actionListener="#{viewPatientBacking.editPanel(2)}" rendered="#{viewPatientBacking.kontakEdit == false}" update=":form:d_kontak" style="float: right; width: 100px;" />
-					<p:commandButton value="Simpan" process="@this" actionListener="#{viewPatientBacking.savePanel(2)}" rendered="#{viewPatientBacking.kontakEdit}" update=":form:d_kontak" style="float: right; width: 100px;" />
+					<p:commandButton value="Edit" actionListener="#{patientViewBacking.editPanel(2)}" rendered="#{patientViewBacking.kontakEdit == false}" update=":form:d_kontak" style="float: right; width: 100px;" />
+					<p:commandButton value="Simpan" process="@this" actionListener="#{patientViewBacking.savePanel(2)}" rendered="#{patientViewBacking.kontakEdit}" update=":form:d_kontak" style="float: right; width: 100px;" />
 					<br/>
 					<p:separator />
-						<h:panelGrid rendered="#{viewPatientBacking.kontakEdit == false}" columns="1" cellpadding="10">
+						<h:panelGrid rendered="#{patientViewBacking.kontakEdit == false}" columns="1" cellpadding="10">
 							<h:outputText value="Nomor Handphone:" />
-							<h:outputText value="#{viewPatientBacking.patient.address.noHP}" />
+							<h:outputText value="#{patientViewBacking.patient.address.noHP}" />
 							
 							<h:outputText value="Nomor Telephone:" />
-							<h:outputText value="#{viewPatientBacking.patient.address.noTel}" />
+							<h:outputText value="#{patientViewBacking.patient.address.noTel}" />
 							
 							<h:outputText value="Alamat Tempat Tinggal:" />
-							<h:outputText value="#{viewPatientBacking.patient.address.address}" />
+							<h:outputText value="#{patientViewBacking.patient.address.address}" />
 						</h:panelGrid>
 						
-						<h:panelGrid columns="1" rendered="#{viewPatientBacking.kontakEdit}" cellpadding="10">
+						<h:panelGrid columns="1" rendered="#{patientViewBacking.kontakEdit}" cellpadding="10">
 							<h:outputText value="Nomor Handphone:" />
-							<p:inputText value="#{viewPatientBacking.patient.address.noHP}" />
+							<p:inputText value="#{patientViewBacking.patient.address.noHP}" />
 							
 							<h:outputText value="Nomor Telephone:" />
-							<p:inputText value="#{viewPatientBacking.patient.address.noTel}" />
+							<p:inputText value="#{patientViewBacking.patient.address.noTel}" />
 							
 							<h:outputText value="Alamat Tempat Tinggal:" />
-							<p:inputTextarea value="#{viewPatientBacking.patient.address.address}" rows="5" cols="50" 
+							<p:inputTextarea value="#{patientViewBacking.patient.address.address}" rows="5" cols="50" 
 							counter="counter" maxlength="500" counterTemplate="{0} huruf tersedia." />
 							<h:outputText id="counter" />
 						</h:panelGrid>
@@ -95,30 +95,30 @@
 					<p:outputPanel id="d_emergency">
 					<div>
 					<h:outputText value="Kontak Darurat" style="font-size: 24px;" />
-					<p:commandButton value="Edit" actionListener="#{viewPatientBacking.editPanel(3)}" rendered="#{viewPatientBacking.emergencyEdit == false}" update=":form:d_emergency" style="float: right; width: 100px;" />
-					<p:commandButton value="Simpan" process="@this" actionListener="#{viewPatientBacking.savePanel(3)}" rendered="#{viewPatientBacking.emergencyEdit}" update=":form:d_emergency" style="float: right; width: 100px;" />
+					<p:commandButton value="Edit" actionListener="#{patientViewBacking.editPanel(3)}" rendered="#{patientViewBacking.emergencyEdit == false}" update=":form:d_emergency" style="float: right; width: 100px;" />
+					<p:commandButton value="Simpan" process="@this" actionListener="#{patientViewBacking.savePanel(3)}" rendered="#{patientViewBacking.emergencyEdit}" update=":form:d_emergency" style="float: right; width: 100px;" />
 					<br/>
 					<p:separator />
-						<h:panelGrid columns="1" rendered="#{viewPatientBacking.emergencyEdit == false}" cellpadding="10">
+						<h:panelGrid columns="1" rendered="#{patientViewBacking.emergencyEdit == false}" cellpadding="10">
 							<h:outputText value="Nama Kontak:"/>
-							<h:outputText value="#{viewPatientBacking.patient.relationName}" />
+							<h:outputText value="#{patientViewBacking.patient.relationName}" />
 							
 							<h:outputText value="Hubungan:" />
-							<h:outputText value="#{viewPatientBacking.patient.relationType}" />
+							<h:outputText value="#{patientViewBacking.patient.relationType}" />
 							
 							<h:outputText value="Nomor Kontak:" />
-							<h:outputText value="#{viewPatientBacking.patient.relationContact}" />
+							<h:outputText value="#{patientViewBacking.patient.relationContact}" />
 						</h:panelGrid>
 						
-						<h:panelGrid columns="1" rendered="#{viewPatientBacking.emergencyEdit}" cellpadding="10">
+						<h:panelGrid columns="1" rendered="#{patientViewBacking.emergencyEdit}" cellpadding="10">
 							<h:outputText value="Nama Kontak:"/>
-							<p:inputText value="#{viewPatientBacking.patient.relationName}" />
+							<p:inputText value="#{patientViewBacking.patient.relationName}" />
 							
 							<h:outputText value="Hubungan:" />
-							<p:inputText value="#{viewPatientBacking.patient.relationType}" />
+							<p:inputText value="#{patientViewBacking.patient.relationType}" />
 							
 							<h:outputText value="Nomor Kontak:" />
-							<p:inputText value="#{viewPatientBacking.patient.relationContact}" />
+							<p:inputText value="#{patientViewBacking.patient.relationContact}" />
 						</h:panelGrid>
 					</div>
 				</p:outputPanel>
