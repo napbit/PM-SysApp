@@ -14,27 +14,34 @@
     <h:body>
     	<h:form id="form">
     		<div class="ui-g">
-    			<div class="ui-g-2" />
-    			<div class="ui-g-8">
-    				<h:panelGrid columns="2">
-    					<h:outputText value="Selamat Datang." />
-    					<h:outputText value="#USERNAME" />
-    				</h:panelGrid>
-    				
-    				<h:panelGrid columns="2" style="text-align: center;" cellpadding="10">
-    					<h:column>
-    						<i class="fa fa-user-plus fa-5x" style="font-size 24px;" />
-    						<br/>
-    						<h:outputText value="Registrasi Pasien Baru" />
-    					</h:column>
-    					<h:column>
-    						<i class="fa fa-edit fa-5x" style="font-size 24px;" />
-    						<br/>
-    						<h:outputText value="Mengatur Data Pasien" />
-    					</h:column>
-    				</h:panelGrid>
+    			<div class="ui-g-10" style="margin: 0 auto;">
+    				<p:menubar>
+    					<p:submenu label="Registrasi">
+    						<p:menuitem value="Pasien Baru" outcome="/resepsionis/register/personal" />
+    					</p:submenu>
+    					<p:submenu label="Pasien">
+    						<p:menuitem value="Melihat List Pasien" outcome="/resepsionis/pasien/list" />
+    						<p:menuitem value="Mencari Pasien" />
+    					</p:submenu>
+    					<p:submenu label="Atur Rawat Jalan">
+    						<p:menuitem value="Daftar Kunjungan" outcome="/resepsionis/kunjungan/dokter"/>
+    					</p:submenu>
+    					
+    					<f:facet name="options">
+    						<h:outputText value="Selamat Datang, #USER" style="margin-right: 10px;" />
+    						<p:commandButton value="Logout" />
+    					</f:facet>
+    				</p:menubar>
     			</div>
-    			<div class="ui-g-2" />
+    			<div class="ui-g-10" style="margin: 0 auto;">
+    			<center>
+    				<p:panel>
+    					<h:panelGrid>
+    						<h:outputText value="Hello World"></h:outputText>
+    					</h:panelGrid>
+    				</p:panel>
+    			</center>	
+    			</div>
     		</div>
     	</h:form>
     </h:body>

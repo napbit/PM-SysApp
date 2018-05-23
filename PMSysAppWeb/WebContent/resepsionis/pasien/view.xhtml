@@ -25,24 +25,24 @@
 					<p:separator />
 						<h:panelGrid rendered="#{patientViewBacking.personalEdit == false}" columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap:" />
-							<h:outputText value="#{PatientViewBacking.patient.name}" />
+							<h:outputText value="#{patientViewBacking.patient.name}" style="font-weight: bold;" />
 							
 							<h:outputText value="Jenis Kelamin:" />
-							<h:outputText value="#{PatientViewBacking.patient.gender}" />
+							<h:outputText value="#{patientViewBacking.patient.gender}" style="font-weight: bold;" />
 							
 							<h:outputText value="Tanggal Lahir:" />
-							<h:outputText value="#{PatientViewBacking.patient.birthDate}" />
+							<h:outputText value="#{patientViewBacking.patient.birthDate}" style="font-weight: bold;" />
 						</h:panelGrid>
 						
 						<h:panelGrid id="e_personal" rendered="#{patientViewBacking.personalEdit}" columns="1" cellpadding="10">
 							<h:outputText value="Nama Lengkap:" />
-							<p:inputText value="#{PatientViewBacking.patient.name}" />
+							<p:inputText value="#{patientViewBacking.patient.name}" />
 							
 							<h:outputText value="Jenis Kelamin:" />
-							<p:inputText value="#{PatientViewBacking.patient.gender}" />
+							<p:inputText value="#{patientViewBacking.patient.gender}" />
 							
 							<h:outputText value="Tanggal Lahir:" />
-							<p:inputText value="#{PatientViewBacking.patient.birthDate}" />
+							<p:inputText value="#{patientViewBacking.patient.birthDate}" />
 						</h:panelGrid>
 					</div>
 				</p:outputPanel>
@@ -62,13 +62,13 @@
 					<p:separator />
 						<h:panelGrid rendered="#{patientViewBacking.kontakEdit == false}" columns="1" cellpadding="10">
 							<h:outputText value="Nomor Handphone:" />
-							<h:outputText value="#{patientViewBacking.patient.address.noHP}" />
+							<h:outputText value="#{patientViewBacking.patient.address.noHP}" style="font-weight: bold;" />
 							
 							<h:outputText value="Nomor Telephone:" />
-							<h:outputText value="#{patientViewBacking.patient.address.noTel}" />
+							<h:outputText value="#{patientViewBacking.patient.address.noTel}" style="font-weight: bold;" />
 							
 							<h:outputText value="Alamat Tempat Tinggal:" />
-							<h:outputText value="#{patientViewBacking.patient.address.address}" />
+							<h:outputText value="#{patientViewBacking.patient.address.address}" style="font-weight: bold;" />
 						</h:panelGrid>
 						
 						<h:panelGrid columns="1" rendered="#{patientViewBacking.kontakEdit}" cellpadding="10">
@@ -101,13 +101,13 @@
 					<p:separator />
 						<h:panelGrid columns="1" rendered="#{patientViewBacking.emergencyEdit == false}" cellpadding="10">
 							<h:outputText value="Nama Kontak:"/>
-							<h:outputText value="#{patientViewBacking.patient.relationName}" />
+							<h:outputText value="#{patientViewBacking.patient.relationName}" style="font-weight: bold;" />
 							
 							<h:outputText value="Hubungan:" />
-							<h:outputText value="#{patientViewBacking.patient.relationType}" />
+							<h:outputText value="#{patientViewBacking.patient.relationType}" style="font-weight: bold;" />
 							
 							<h:outputText value="Nomor Kontak:" />
-							<h:outputText value="#{patientViewBacking.patient.relationContact}" />
+							<h:outputText value="#{patientViewBacking.patient.relationContact}" style="font-weight: bold;" />
 						</h:panelGrid>
 						
 						<h:panelGrid columns="1" rendered="#{patientViewBacking.emergencyEdit}" cellpadding="10">

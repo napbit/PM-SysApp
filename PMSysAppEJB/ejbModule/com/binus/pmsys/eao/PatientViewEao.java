@@ -31,18 +31,29 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call Patient_GetAllList()}");
+			cs = connection.prepareCall("{call sp_patientGetAllList()}");
 			rs = cs.executeQuery();
 			
 			Patient patient;
-			
+			Address address;
 			while(rs.next()) {
 				patient = new Patient();
+				address = new Address();
 				patient.setId(rs.getInt(1));
 				patient.setPatientKTP(rs.getString(2));
 				patient.setName(rs.getString(3));
 				patient.setGender(rs.getString(4));
 				patient.setBirthDate(rs.getString(5));
+				patient.setPatientBPJS(rs.getString(6));
+				address.setAddressID(rs.getInt(7));
+				address.setNoHP(rs.getString(8));
+				address.setNoTel(rs.getString(9));
+				address.setAddress(rs.getString(10));
+				patient.setAddress(address);
+				patient.setRelationID(rs.getInt(11));
+				patient.setRelationName(rs.getString(12));
+				patient.setRelationType(rs.getString(13));
+				patient.setRelationContact(rs.getString(14));
 				patientList.add(patient);
 			}
 			
@@ -63,13 +74,18 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("Patient_Search(?)");
+			cs = connection.prepareCall("{call sp_patientSearch(?)}");
 			cs.setString(1, term);
 			rs = cs.executeQuery();	
 			
-			Patient p = null;
+			Patient p;
 			while(rs.next()) {
-				
+				p = new Patient();
+				p.setId(rs.getInt(1));
+				p.setPatientKTP(rs.getString(2));
+				p.setName(rs.getString(3));
+				p.setGender(rs.getString(4));
+				p.setBirthDate(rs.getString(5));
 				patients.add(p);
 			}
 			
@@ -91,7 +107,7 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call Patient_GetAllData(?)}");
+			cs = connection.prepareCall("{call sp_patientGetAllData(?)}");
 			cs.setInt(1, id);
 			rs = cs.executeQuery();
 			

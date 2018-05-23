@@ -16,91 +16,99 @@
 			<div class="ui-g">
 				<div class="ui-g-2" />
 				<div class="ui-g-8">
+				<p:outputPanel>
 					<div>
 						<h:outputText value="Personal" style="font-size: 24px;" /><br />
 						<p:separator />
 						<h:panelGrid columns="1" cellpadding="10">
-							<h:outputText value="Nama Lengkap" />
+							<h:outputText value="Nama Lengkap:" />
 							<p:inputText value="#{registrationBacking.patient.name}" />
 							
-							<h:outputText value="Jenis Kelamin" />
+							<h:outputText value="Jenis Kelamin:" />
 							<p:selectOneMenu value="#{registrationBacking.patient.gender}">
 								<f:selectItem itemLabel="Pilih Kelamin" noSelectionOption="true" />
 								<f:selectItem itemLabel="Laki-laki" itemValue="1" />
 								<f:selectItem itemLabel="Perempuan" itemValue="0" />
 							</p:selectOneMenu>
 							
-							<h:outputText value="Tanggal Lahir" />
+							<h:outputText value="Tanggal Lahir:" />
 							<h:panelGrid columns="3">
-								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;">
-									<f:selectItems value="#{registrationBacking.years}" />
+								<p:selectOneMenu value="#{registrationBacking.day}" id="cmb_days">
+									<f:selectItems value="#{registrationBacking.days}"  />
 								</p:selectOneMenu>
 								<p:selectOneMenu value="#{registrationBacking.month}" style="margin-right: 5px;">
 									<f:selectItems value="#{registrationBacking.months}" />
 								</p:selectOneMenu>
-								<p:selectOneMenu value="#{registrationBacking.day}" id="cmb_days">
-									<f:selectItems value="#{registrationBacking.days}"  />
+								<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;">
+									<f:selectItems value="#{registrationBacking.years}" />
 								</p:selectOneMenu>
-								<h:outputText value="Tahun" />
-								<h:outputText value="Bulan" />
 								<h:outputText value="Hari" />
+								<h:outputText value="Bulan" />
+								<h:outputText value="Tahun" />
 							</h:panelGrid>
 						</h:panelGrid>
 					</div>
+				</p:outputPanel>
 				</div>
 				<div class="ui-g-2" />
 				
 				<div class="ui-g-2" />
-				<div class="ui-g-8">	
+				<div class="ui-g-8">
+				<p:outputPanel>	
 					<div>
 						<h:outputText value="Data Kontak" style="font-size: 24px;" /><br />
 						<p:separator />
 						<h:panelGrid columns="1" cellpadding="10">
-							<h:outputText value="Nomor Handphone" />
+							<h:outputText value="Nomor Handphone:" />
 							<p:inputText value="#{registrationBacking.patient.address.noHP}" />
 							
-							<h:outputText value="Nomor Telephone" />
+							<h:outputText value="Nomor Telephone:" />
 							<p:inputText value="#{registrationBacking.patient.address.noTel}" />
 							
-							<h:outputText value="Alamat Tempat Tinggal" />
+							<h:outputText value="Alamat Tempat Tinggal:" />
 							<h:column>
 								<p:inputTextarea value="#{registrationBacking.patient.address.address}" rows="5" cols="50" 
-								counter="counter" maxlength="500" counterTemplate="{0} huruf tersedia."/><br/>
+								counter="counter" maxlength="500" counterTemplate="{0} huruf tersisa."/><br/>
 								<h:outputText id="counter" />
 							</h:column>
 						</h:panelGrid>
 					</div>
+				</p:outputPanel>
 				</div>
 				<div class="ui-g-2" />
 				
 				<div class="ui-g-2" />
 				<div class="ui-g-8">
+				<p:outputPanel>
 				<div>
 					<h:outputText value="Kontak Darurat" style="font-size: 24px;" /><br />
 					<p:separator />
 					<h:panelGrid columns="1" cellpadding="10">
-						<h:outputText value="Nama Kontak" />
+						<h:outputText value="Nama Kontak:" />
 						<p:inputText value="#{registrationBacking.patient.relationName}" />
 						
-						<h:outputText value="Hubungan" />
+						<h:outputText value="Hubungan:" />
 						<p:inputText value="#{registrationBacking.patient.relationType}" />
 						
-						<h:outputText value="Nomor Kontak" />
+						<h:outputText value="Nomor Kontak:" />
 						<p:inputText value="#{registrationBacking.patient.relationContact}" />
 					</h:panelGrid>
 					<p:separator />
 				</div>
+				</p:outputPanel>
 				</div>
 				<div class="ui-g-2" />
 				
 				<div class="ui-g-2" />
 				<div class="ui-g-8">
+				<p:outputPanel>
 					<div style="border-width: 5px; border-style: none; border-radius: 10px; float: right;">
 						<h:panelGrid columns="2" cellpadding="10">
 							<p:commandButton value="Batal" />
 							<p:commandButton value="Berikutnya" action="#{registrationBacking.berikutnya}" />
 						</h:panelGrid>
 					</div>
+				</p:outputPanel>
 				</div>
 				<div class="ui-g-2" />
 				

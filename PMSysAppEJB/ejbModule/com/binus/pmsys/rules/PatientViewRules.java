@@ -45,6 +45,18 @@ public class PatientViewRules {
     	return patient;
     }
     
+    public List<Patient> getPatientSearch(String term) {
+    	List<Patient> patientList = null;
+    	
+    	try {
+			patientList = eao.getPatientSearch(term);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    	return patientList;
+    }
+    
     public void savePatient(Patient patientData) {
     	try {
 			eao.savePatient(patientData);

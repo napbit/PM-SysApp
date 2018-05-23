@@ -20,14 +20,15 @@
 						<p:separator style="visibility: hidden;"/>
 						<p:outputLabel value="Cari Data Pasien" />
 						<h:column>
-							<p:inputText placeholder="Nama pasien, jenis kelamin pasien" value="#{patientViewBacking.search}" style="margin-right: 10px; width: 350px;"/>
-							<p:commandButton value="Cari" />
+							<p:tooltip for="search_box" showEvent="focus" hideEvent="blur" position="bottom" value="Cari berdasarkan nama, nomor KTP, jenis kelamin, dan tanggal lahir." />
+							<p:inputText id="search_box" value="#{patientViewBacking.search}" style="margin-right: 10px; width: 350px;"/>
+							<p:commandButton value="Cari" actionListener="#{patientViewBacking.onClickSearch}" update=":form:patients_data" />
 						</h:column>
 						<p:separator style="visibility: hidden;" />
 					</h:panelGrid>
 					
 					<h:panelGrid columns="1">
-						<p:dataTable value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
+						<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
 							<p:column headerText="Action">
 								<p:commandButton value="Melihat" action="#{patientViewBacking.onClickEdit(p)}" />
 							</p:column>

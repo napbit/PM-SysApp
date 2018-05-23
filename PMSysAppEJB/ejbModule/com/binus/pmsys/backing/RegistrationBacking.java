@@ -99,7 +99,7 @@ public class RegistrationBacking extends BasicBacking {
 		DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
 		months.addAll(Arrays.asList(dfs.getMonths()));
 		months.remove("");
-		years = IntStream.rangeClosed(1900,  2018).toArray();
+		years = IntStream.rangeClosed(1900,  LocalDate.now().getYear()).toArray();
 		days = IntStream.rangeClosed(1, 31).toArray();
 	}
 	
