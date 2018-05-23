@@ -65,7 +65,7 @@ public class PatientViewEao {
 			connection = Settings.getConnection();
 			cs = connection.prepareCall("Patient_Search(?)");
 			cs.setString(1, term);
-			rs = cs.executeQuery();
+			rs = cs.executeQuery();	
 			
 			Patient p = null;
 			while(rs.next()) {
