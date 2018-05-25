@@ -135,6 +135,32 @@ public class PatientViewEao {
 		return patient;
 	}
 	
+	public void editPatient(Patient patientdata) {
+		Connection connection = null;
+		CallableStatement cs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_sp_patientUpdate(?,?,?,?,?,?,?,?,?,?,?,?)}");
+			cs.setInt(1, patientdata.getId());
+			cs.setString(2, patientdata.getPatientKTP());
+			cs.setString(3, patientdata.getPatientBPJS());
+			cs.setString(4, patientdata.getName());
+			cs.setString(5, patientdata.getGender());
+			cs.setString(6, patientdata.getBirthDate());
+			cs.setString(7, patientdata.getAddress().getNoHP());
+			cs.setString(8, patientdata.getAddress().getNoTel());
+			cs.setString(9, patientdata.getAddress().getAddress());
+			cs.setString(10, patientdata.getRelationName());
+			cs.setString(11, patientdata.getRelationType());
+			cs.setString(12, patientdata.getRelationContact());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
+	}
+	
 	public void savePatient(Patient patientData) {
 		Connection connection = null;
 		CallableStatement cs = null;

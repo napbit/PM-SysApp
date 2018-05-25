@@ -57,6 +57,14 @@ public class PatientViewRules {
     	return patientList;
     }
     
+    public void updatePatient(Patient patientData) {
+    	try {
+			eao.editPatient(patientData);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
     public void savePatient(Patient patientData) {
     	try {
 			eao.savePatient(patientData);

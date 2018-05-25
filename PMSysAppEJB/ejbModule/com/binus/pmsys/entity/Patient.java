@@ -14,7 +14,9 @@ public class Patient {
 	private String relationContact;
 	private Address address;
 	
-	public Patient() { }
+	public Patient() { 
+		address = new Address();
+	}
 	
 	public Patient(Patient p) {
 		setId(p.getId());

@@ -5,6 +5,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.binus.pmsys.eao.RegistrationEao;
+import com.binus.pmsys.entity.Patient;
 
 /**
  * Session Bean implementation class RegistrationRules
@@ -17,5 +18,15 @@ public class RegistrationRules {
 	private transient RegistrationEao eao;
 	
     public RegistrationRules() { }
-
+    
+    public void savePatient(Patient patientData) {
+    	
+    	try {
+			eao.savePatient(patientData);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    	
+    }
+    
 }

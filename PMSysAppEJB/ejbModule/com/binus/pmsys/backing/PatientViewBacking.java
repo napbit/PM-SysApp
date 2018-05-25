@@ -114,15 +114,17 @@ public class PatientViewBacking implements Serializable {
 	}
 	
 	private void savePersonal() {
-		rules.savePatient(this.patient);
+		rules.updatePatient(this.patient);
 		personalEdit = false;
 	}
 	
 	private void saveKontak() {
+		rules.updatePatient(this.patient);
 		kontakEdit = false;
 	}
 	
 	private void saveEmergency() {
+		rules.updatePatient(this.patient);
 		emergencyEdit = false;
 	}
 	
