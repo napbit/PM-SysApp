@@ -25,10 +25,6 @@ public class PatientViewBacking implements Serializable {
 	private Patient patient;
 	private List<Patient> patients;
 	
-	private boolean personalEdit = false;
-	private boolean kontakEdit = false;
-	private boolean emergencyEdit = false;
-	
 	public PatientViewBacking() { }
 	
 	@PostConstruct
@@ -59,73 +55,6 @@ public class PatientViewBacking implements Serializable {
 
 	public void setPatients(List<Patient> patients) {
 		this.patients = patients;
-	}
-
-	public boolean isPersonalEdit() {
-		return personalEdit;
-	}
-
-	public void setPersonalEdit(boolean personalEdit) {
-		this.personalEdit = personalEdit;
-	}
-
-	public boolean isKontakEdit() {
-		return kontakEdit;
-	}
-
-	public void setKontakEdit(boolean kontakEdit) {
-		this.kontakEdit = kontakEdit;
-	}
-
-	public boolean isEmergencyEdit() {
-		return emergencyEdit;
-	}
-
-	public void setEmergencyEdit(boolean emergencyEdit) {
-		this.emergencyEdit = emergencyEdit;
-	}
-	
-	public void editPanel(int key) {
-		switch (key) {
-		case 1:
-			personalEdit = true;
-			break;
-		case 2:
-			kontakEdit = true;
-			break;
-		case 3:
-			emergencyEdit = true;
-			break;
-		}
-	}
-	
-	public void savePanel(int key) {
-		switch (key) {
-		case 1:
-			savePersonal();
-			break;
-		case 2:
-			saveKontak();
-			break;
-		case 3:
-			saveEmergency();
-			break;
-		}
-	}
-	
-	private void savePersonal() {
-		rules.updatePatient(this.patient);
-		personalEdit = false;
-	}
-	
-	private void saveKontak() {
-		rules.updatePatient(this.patient);
-		kontakEdit = false;
-	}
-	
-	private void saveEmergency() {
-		rules.updatePatient(this.patient);
-		emergencyEdit = false;
 	}
 	
 	public String onClickEdit(Patient patientData) {

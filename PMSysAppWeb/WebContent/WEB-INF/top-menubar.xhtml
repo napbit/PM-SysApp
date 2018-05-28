@@ -16,11 +16,11 @@
 					<p:submenu label="Pasien">
 						<p:menuitem value="Melihat List Pasien"
 							outcome="/resepsionis/pasien/list" />
-						<p:menuitem value="Mencari Pasien" />
+						<p:menuitem value="Mencari Data Pasien" />
 					</p:submenu>
 					<p:submenu label="Atur Rawat Jalan">
 						<p:menuitem value="Daftar Kunjungan"
-							outcome="/resepsionis/kunjungan/dokter" />
+							outcome="/resepsionis/kunjungan/atur" />
 					</p:submenu>
 
 					<f:facet name="options">
@@ -31,6 +31,9 @@
 				</p:menubar>
 			</div>
 		</div>
+		<p:dialog visible="false" header="Pencarian Pasien">
+		
+		</p:dialog>
 	</h:form>
     	
 </ui:composition>

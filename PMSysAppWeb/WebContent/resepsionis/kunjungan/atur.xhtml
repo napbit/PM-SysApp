@@ -1,0 +1,79 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Atur Rawat Jalan</ui:define>
+    
+    <ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-asterisk fa-5x" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Daftar Kunjungan Pasien" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						<div class="ui-g-12">
+							<p:commandButton value="Pilih Pasien" />
+						</div>
+						<div class="ui-g-12 ui-g-nopad" style="margin-top: 15px;">
+							<div class="ui-g-3" style="height: 100%">
+								<h:panelGrid style="margin: 0 auto; padding: 10px;">
+									<i class="fa fa-male fa-5x" />
+								</h:panelGrid>
+							</div>
+							<div class="ui-g-3">
+								<h:panelGrid columns="1">
+									<h:outputText value="Nomor KTP:" />
+									<h:outputText value="#NOMOR KTP" style="font-weight: bold;" />
+									<p:separator style="visibility: hidden;" />
+									
+									<h:outputText value="Nomor BPJS:" />
+									<h:outputText value="#NOMOR BPJS" style="font-weight: bold;"  />
+									<p:separator style="visibility: hidden;" />
+								</h:panelGrid>
+							</div>
+							<div class="ui-g-3">
+								<h:panelGrid columns="1">
+									<h:outputText value="Nama Lengkap:" />
+									<h:outputText value="#NAMA ORANG" style="font-weight: bold;"  />
+									<p:separator style="visibility: hidden;" />
+									
+									<h:outputText value="Kelamin:" />
+									<h:outputText value="#KELAMIN" style="font-weight: bold;"  />
+									<p:separator style="visibility: hidden;" />
+								</h:panelGrid>
+							</div>
+							<div class="ui-g-3">
+								<h:panelGrid columns="1">
+									<h:outputText value="Tanggal Lahir:" />
+									<h:outputText value="#TANGGAL LAHIR" style="font-weight: bold;"  />
+								</h:panelGrid>
+							</div>
+						</div>
+						<div class="ui-g-12">
+							<h:panelGrid style="margin: 0 auto; padding: 10px;">
+									<i class="fa fa-arrow-down fa-1x" />
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-12">
+							<p:dataGrid columns="1" layout="grid">
+								
+							</p:dataGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+    	
+</ui:composition>

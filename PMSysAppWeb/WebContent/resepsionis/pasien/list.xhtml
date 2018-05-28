@@ -17,7 +17,6 @@
 						<p:separator style="visibility: hidden;"/>
 						<p:outputLabel value="Cari Data Pasien" />
 						<h:column>
-							<p:tooltip for="search_box" showEvent="focus" hideEvent="blur" position="bottom" value="Cari berdasarkan nama, nomor KTP, jenis kelamin, dan tanggal lahir." />
 							<p:inputText id="search_box" value="#{patientViewBacking.search}" style="margin-right: 10px; width: 350px;"/>
 							<p:commandButton value="Cari" actionListener="#{patientViewBacking.onClickSearch}" update=":form:patients_data" />
 						</h:column>
