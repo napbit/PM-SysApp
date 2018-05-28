@@ -1,21 +1,18 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-    xmlns:p="http://primefaces.org/ui">
-	
-	<h:head>
-	</h:head>
-	
-	<h:body>
-		<h:form id="form">
-			<div class="ui-g">
-				<div class="ui-g-2" />
-				<div class="ui-g-8">
-					<h:panelGrid columns="1">
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">List Pasien</ui:define>
+    
+    <ui:define name="content">
+    	<h:form id="form">
+    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+    			<div class="ui-g-10" style="margin: 0 auto;">
+    				<h:panelGrid columns="1">
 						<p:outputLabel value="Mengelola Data Pasien" style="font-size: 24px;"/>
 						<p:separator style="visibility: hidden;"/>
 						<p:outputLabel value="Cari Data Pasien" />
@@ -26,7 +23,6 @@
 						</h:column>
 						<p:separator style="visibility: hidden;" />
 					</h:panelGrid>
-					
 					<h:panelGrid columns="1">
 						<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
 							<p:column headerText="Action">
@@ -46,10 +42,9 @@
 							</p:column>
 						</p:dataTable>
 					</h:panelGrid>
-				</div>
-				<div class="ui-g-2" />
-			</div>
-		</h:form>
-	</h:body>
-	
-</html>
+    			</div>
+    		</div>
+    	</h:form>
+    </ui:define>    
+    	
+</ui:composition>

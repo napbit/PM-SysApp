@@ -1,0 +1,36 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+        
+    <h:form id="menubar_form">
+		<div class="ui-g">
+			<div class="ui-g-10" style="margin: 0 auto;">
+				<p:menubar>
+					<p:submenu label="Registrasi">
+						<p:menuitem value="Pasien Baru"
+							outcome="/resepsionis/register/add" />
+					</p:submenu>
+					<p:submenu label="Pasien">
+						<p:menuitem value="Melihat List Pasien"
+							outcome="/resepsionis/pasien/list" />
+						<p:menuitem value="Mencari Pasien" />
+					</p:submenu>
+					<p:submenu label="Atur Rawat Jalan">
+						<p:menuitem value="Daftar Kunjungan"
+							outcome="/resepsionis/kunjungan/dokter" />
+					</p:submenu>
+
+					<f:facet name="options">
+						<h:outputText value="Selamat Datang, #USER"
+							style="margin-right: 10px;" />
+						<p:commandButton value="Logout" />
+					</f:facet>
+				</p:menubar>
+			</div>
+		</div>
+	</h:form>
+    	
+</ui:composition>
