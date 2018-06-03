@@ -1,0 +1,41 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Kunjungan Pasen dengan Dokter</ui:define>
+    
+    <ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-asterisk fa-5x" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Kunjungan Pasien" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						<div class="ui-g-12">
+							<h:outputText value="Cari Pasien" /><br/><br/>
+							<p:inputText id="search_box" style="margin-right: 10px; width: 350px;"/>
+							<p:commandButton value="Cari" />
+						</div>
+						<div class="ui-g-12">
+							<p:dataGrid>
+							
+							</p:dataGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+    	
+</ui:composition>

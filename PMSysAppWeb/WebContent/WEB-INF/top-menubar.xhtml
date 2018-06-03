@@ -9,20 +9,35 @@
 		<div class="ui-g">
 			<div class="ui-g-10" style="margin: 0 auto;">
 				<p:menubar>
-					<p:submenu label="Registrasi">
-						<p:menuitem value="Pasien Baru"
-							outcome="/resepsionis/register/add" />
+					<p:submenu label="Umum">
+						<p:submenu label="Registrasi">
+							<p:menuitem value="Pasien Baru"
+								outcome="/umum/register/add" />
+							</p:submenu>
+						<p:submenu label="Pasien">
+							<p:menuitem value="Melihat List Pasien"
+								outcome="/umum/pasien/list" />
+							<p:menuitem value="Mencari Data Pasien" />
+						</p:submenu>
+						<p:submenu label="Atur Rawat Jalan">
+							<p:menuitem value="Daftar Kunjungan"
+								outcome="/umum/kunjungan/atur" />
+						</p:submenu>
 					</p:submenu>
-					<p:submenu label="Pasien">
-						<p:menuitem value="Melihat List Pasien"
-							outcome="/resepsionis/pasien/list" />
-						<p:menuitem value="Mencari Data Pasien" />
+					
+					<p:submenu label="Dokter">
+						<p:submenu label="Kunjungan">
+							<p:menuitem value="Lihat List Pasien"
+								outcome="/dokter/kunjungan/list" />
+								
+							<p:menuitem value="Diagnosa Pasien"
+							outcome="/dokter/kunjungan/diagnosa" />
+							
+							<p:menuitem value="Membikin Resep"
+							outcome="/dokter/kunjungan/resep" />
+						</p:submenu>
 					</p:submenu>
-					<p:submenu label="Atur Rawat Jalan">
-						<p:menuitem value="Daftar Kunjungan"
-							outcome="/resepsionis/kunjungan/atur" />
-					</p:submenu>
-
+					
 					<f:facet name="options">
 						<h:outputText value="Selamat Datang, #USER"
 							style="margin-right: 10px;" />

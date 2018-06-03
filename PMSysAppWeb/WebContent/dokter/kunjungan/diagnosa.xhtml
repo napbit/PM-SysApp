@@ -1,0 +1,119 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Diagnosa Pasien</ui:define>
+    
+    <ui:define name="content">
+    	<h:form id="form">
+    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+						<div class="ui-g-2" style="height: 100%;">
+							<h:panelGrid style="float: center; margin: 0 auto;">
+								<i class="fa fa-male fa-5x" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-10 ui-g-nopad">
+							<div class="ui-g-12">
+								<h:outputText value="#Patient Name - #NO SEP - #Tanggal" style="font-size: 24px;"/>
+								<p:commandButton value="Lihat Data Pasien" style="float: right;" />
+								<p:separator />
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1">
+									<h:outputText value="Subject:" />
+									<p:inputTextarea rows="5" cols="50" autoResize="true" 
+									maxlength="500" counter="counter_sub" counterTemplate="{0} karakter tersisa."/>
+									<h:outputText id="counter_sub" />
+								</h:panelGrid>
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1">
+									<h:outputText value="Object:" />
+									<p:inputTextarea rows="5" cols="50" autoResize="true"
+									maxlength="500" counter="counter_obj" counterTemplate="{0} karakter tersisa."/>
+									<h:outputText id="counter_obj" />
+								</h:panelGrid>
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1">
+									<h:outputText value="Assessment:" />
+									<p:inputTextarea rows="5" cols="50" autoResize="true" 
+									maxlength="500" counter="counter_ass" counterTemplate="{0} karakter tersisa."/>
+									<h:outputText id="counter_ass" />
+								</h:panelGrid>
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1">
+									<h:outputText value="Plan:" />
+									<p:inputTextarea rows="5" cols="50" autoResize="true" 
+									maxlength="500" counter="counter_plan" counterTemplate="{0} karakter tersisa."/>
+									<h:outputText id="counter_plan" />
+								</h:panelGrid>
+							</div>
+						</div>
+						
+						<div class="ui-g-10 ui-g-nopad">
+							<div class="ui-g-12">
+								<h:outputText value="Pengukuran" style="font-size: 24px;"/>
+								<p:separator />
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1">
+									<h:outputText value="Tinggi: " />
+									<h:column>
+										<p:inputText style="margin-right: 10px;" /><h:outputText value="cm" />
+									</h:column>
+									
+									<p:separator style="visibility: hidden;" />
+									
+									<h:outputText value="Berat Badan: " />
+									<h:column>
+										<p:inputText style="margin-right: 10px;" /><h:outputText value="kg" />
+									</h:column>
+								</h:panelGrid>
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1">
+									<h:outputText value="Systolic" />
+									<h:column>
+										<p:inputText style="margin-right: 10px;" /><h:outputText value="mm Hg" />
+									</h:column>
+									
+									<p:separator style="visibility: hidden;" />
+									
+									<h:outputText value="Diastolic" />
+									<h:column>
+										<p:inputText style="margin-right: 10px;" /><h:outputText value="mm Hg" />
+									</h:column>
+								</h:panelGrid>
+							</div>
+							
+							<div class="ui-g-12">
+								<p:separator />
+							</div>
+							
+							<div class="ui-g-12">
+								<h:panelGrid columns="2" style="float: right;">
+									<p:commandButton value="Berikutnya" />
+									<p:button value="Kembali" />
+								</h:panelGrid>
+							</div>
+						</div>
+					</div>
+				</div>
+    	</h:form>
+    </ui:define>    
+    	
+</ui:composition>
