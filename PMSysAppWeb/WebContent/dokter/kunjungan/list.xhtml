@@ -22,15 +22,46 @@
 							<h:outputText value="Kunjungan Pasien" style="font-size: 24px;" />
 							<p:separator />
 						</div>
+						
 						<div class="ui-g-12">
-							<h:outputText value="Cari Pasien" /><br/><br/>
-							<p:inputText id="search_box" style="margin-right: 10px; width: 350px;"/>
-							<p:commandButton value="Cari" />
+							<p:panel>
+								<p:messages />
+								<h:panelGrid columns="1">
+									<h:outputText value="Filter Pencarian:" />
+									<p:selectOneRadio layout="grid" columns="2">
+										<f:selectItem itemLabel="No. RM" />
+										<f:selectItem itemLabel="Nama" />
+										<f:selectItem itemLabel="Jenis Kelamin" />
+										<f:selectItem itemLabel="Tanggal Lahir" />
+									</p:selectOneRadio>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:inputText style="width: 350px;" />
+									<p:commandButton  value="Cari" />
+								</h:panelGrid>
+							</p:panel>
 						</div>
+						
 						<div class="ui-g-12">
-							<p:dataGrid>
-							
-							</p:dataGrid>
+							<h:panelGrid columns="1">
+								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
+									<p:column headerText="Action">
+										<p:commandButton value="Diagnosa" />
+									</p:column>
+									<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
+										<h:outputText value="#{p.patientKTP}" />
+									</p:column>
+									<p:column headerText="Nama" sortBy="#{p.name}">
+										<h:outputText value="#{p.name}" />
+									</p:column>
+									<p:column headerText="Jenis Kelamin" sortBy="#{p.gender}">
+										<h:outputText value="#{p.gender}" />
+									</p:column>
+									<p:column headerText="Tanggal Lahir" sortBy="#{p.birthDate}">
+										<h:outputText value="#{p.birthDate}" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
 						</div>
 					</div>
 				</div>

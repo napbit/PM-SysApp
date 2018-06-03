@@ -11,38 +11,61 @@
     <ui:define name="content">
     	<h:form id="form">
     		<div class="ui-g ui-widget" style="margin-top: 30px;">
-    			<div class="ui-g-10" style="margin: 0 auto;">
-    				<h:panelGrid columns="1">
-						<p:outputLabel value="Mengelola Data Pasien" style="font-size: 24px;"/>
-						<p:separator style="visibility: hidden;"/>
-						<p:outputLabel value="Cari Data Pasien" />
-						<h:column>
-							<p:inputText id="search_box" value="#{patientViewBacking.search}" style="margin-right: 10px; width: 350px;"/>
-							<p:commandButton value="Cari" actionListener="#{patientViewBacking.onClickSearch}" update=":form:patients_data" />
-						</h:column>
-						<p:separator style="visibility: hidden;" />
-					</h:panelGrid>
-					<h:panelGrid columns="1">
-						<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
-							<p:column headerText="Action">
-								<p:commandButton value="Melihat" action="#{patientViewBacking.onClickEdit(p)}" />
-							</p:column>
-							<p:column headerText="KTP" sortBy="#{p.patientKTP}">
-								<h:outputText value="#{p.patientKTP}" />
-							</p:column>
-							<p:column headerText="Nama" sortBy="#{p.name}">
-								<h:outputText value="#{p.name}" />
-							</p:column>
-							<p:column headerText="Jenis Kelamin" sortBy="#{p.gender}">
-								<h:outputText value="#{p.gender}" />
-							</p:column>
-							<p:column headerText="Tanggal Lahir" sortBy="#{p.birthDate}">
-								<h:outputText value="#{p.birthDate}" />
-							</p:column>
-						</p:dataTable>
-					</h:panelGrid>
-    			</div>
-    		</div>
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-search fa-5x" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="List Data Pasien" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-12">
+							<p:panel>
+								<p:messages />
+								<h:panelGrid columns="1">
+									<h:outputText value="Filter Pencarian:" />
+									<p:selectOneRadio layout="grid" columns="2">
+										<f:selectItem itemLabel="No. RM" />
+										<f:selectItem itemLabel="Nama" />
+										<f:selectItem itemLabel="Jenis Kelamin" />
+										<f:selectItem itemLabel="Tanggal Lahir" />
+									</p:selectOneRadio>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:inputText id="search_box" value="#{patientViewBacking.search}" style="width: 350px;"  />
+									<p:commandButton value="Cari" actionListener="#{patientViewBacking.onClickSearch}" update=":form:patients_data" />
+								</h:panelGrid>
+							</p:panel>
+						</div>
+						
+						<div class="ui-g-12">
+							<h:panelGrid columns="1">
+								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
+									<p:column headerText="Action">
+										<p:commandButton value="Melihat" action="#{patientViewBacking.onClickEdit(p)}" />
+									</p:column>
+									<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
+										<h:outputText value="#{p.patientKTP}" />
+									</p:column>
+									<p:column headerText="Nama" sortBy="#{p.name}">
+										<h:outputText value="#{p.name}" />
+									</p:column>
+									<p:column headerText="Jenis Kelamin" sortBy="#{p.gender}">
+										<h:outputText value="#{p.gender}" />
+									</p:column>
+									<p:column headerText="Tanggal Lahir" sortBy="#{p.birthDate}">
+										<h:outputText value="#{p.birthDate}" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
     	</h:form>
     </ui:define>    
     	
