@@ -4,6 +4,7 @@ public class Patient {
 	
 	private int id;
 	private String patientKTP;
+	private int hasBPJS;
 	private String patientBPJS;
 	private String name;
 	private String gender;
@@ -29,6 +30,7 @@ public class Patient {
 		setRelationName(p.getRelationName());
 		setRelationType(p.getRelationType());
 		setRelationContact(p.getRelationContact());
+		setHasBPJS(p.getHasBPJS());
 		address = new Address(p.getAddress());
 	}
 
@@ -118,6 +120,14 @@ public class Patient {
 
 	public void setAddress(Address address) {
 		this.address = address;
+	}
+
+	public int getHasBPJS() {
+		return hasBPJS;
+	}
+
+	public void setHasBPJS(int hasBPJS) {
+		this.hasBPJS = hasBPJS;
 	}
 
 }

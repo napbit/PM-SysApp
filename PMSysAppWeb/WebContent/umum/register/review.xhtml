@@ -26,15 +26,15 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.name}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Jenis Kelamin:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.gender}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputLabel value="Tanggal Lahir:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.birthDate}" />
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
@@ -42,11 +42,12 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nomor KTP:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.patientKTP}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Nomor BPJS:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.patientBPJS}" rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<h:outputText value="Tidak punya." rendered="#{registrationBacking.patient.hasBPJS == 0}" />
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
@@ -59,15 +60,15 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nomor Handphone:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.address.noHP}" />
 								<p:separator style="visibility: hidden;" />
 									
 								<h:outputText value="Nomor Telepon:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.address.noTel}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Alamat:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.address.address}" />
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
@@ -80,15 +81,15 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Kontak:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.relationName}" />
 								<p:separator style="visibility: hidden;" />
 									
 								<h:outputText value="Hubungan:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.relationType}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Nomor Kontak:" />
-								<h:outputText value="#DATA PASIEN" />
+								<h:outputText value="#{registrationBacking.patient.relationContact}" />
 							</h:panelGrid>
 						</div>
 						

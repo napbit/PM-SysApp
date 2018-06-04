@@ -1,14 +1,12 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Registrasi Pasien Baru</ui:define>
-    
-    <ui:define name="content">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Registrasi Pasien Baru</ui:define>
+
+	<ui:define name="content">
 		<h:form id="form">
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
@@ -19,32 +17,39 @@
 					</div>
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
-							<h:outputText value="Registrasi Pasien Baru" style="font-size: 24px;"/>
+							<h:outputText value="Registrasi Pasien Baru"
+								style="font-size: 24px;" />
 							<p:separator />
+							<p:messages id="reg_msg" />
 						</div>
 						
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<p:inputText />
+								<p:inputText value="#{registrationBacking.patient.name}"
+									required="true" requiredMessage="Nama perlu di isi." />
 								<p:separator style="visibility: hidden;" />
-								
+
 								<h:outputText value="Jenis Kelamin:" />
-								<p:selectOneMenu>
-									<f:selectItem itemLabel="Laki-laki" />
-									<f:selectItem itemLabel="Perempuan" />
+								<p:selectOneMenu value="#{registrationBacking.patient.gender}"
+									required="true" requiredMessage="Jenis Kelamin perlu dipilih.">
+									<f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
+									<f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
-								
+
 								<h:outputLabel value="Tanggal Lahir:" />
 								<h:panelGrid columns="3">
-									<p:selectOneMenu value="#{registrationBacking.day}" id="cmb_days">
-										<f:selectItems value="#{registrationBacking.days}"  />
+									<p:selectOneMenu value="#{registrationBacking.day}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{registrationBacking.days}" />
 									</p:selectOneMenu>
-									<p:selectOneMenu value="#{registrationBacking.month}" style="margin-right: 5px;">
+									<p:selectOneMenu value="#{registrationBacking.month}"
+										style="margin-right: 5px;">
 										<f:selectItems value="#{registrationBacking.months}" />
 									</p:selectOneMenu>
-									<p:selectOneMenu value="#{registrationBacking.year}" style="margin-right: 5px;">
+									<p:selectOneMenu value="#{registrationBacking.year}"
+										style="margin-right: 5px;">
 										<f:selectItems value="#{registrationBacking.years}" />
 									</p:selectOneMenu>
 									<h:outputText value="Hari" />
@@ -54,68 +59,89 @@
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-6">
-							<h:panelGrid columns="1" cellpadding="5">
+							<h:panelGrid columns="1" cellpadding="5" id="num_data">
 								<h:outputText value="Nomor KTP:" />
-								<p:inputText />
+								<p:inputText value="#{registrationBacking.patient.patientKTP}"
+									required="true" requiredMessage="Nomor KTP perlu di isi." />
 								<p:separator style="visibility: hidden;" />
-								
-								<h:outputText value="Nomor BPJS:" />
-								<p:inputText />
+
+								<h:outputText value="Apakah Mempunyai BPJS?" />
+								<p:selectOneButton required="true"
+									value="#{registrationBacking.patient.hasBPJS}"
+									requiredMessage="BPJS perlu di pilih.">
+									<f:selectItem itemLabel="Ya" itemValue="1" />
+									<f:selectItem itemLabel="Tidak" itemValue="0" />
+									<p:ajax update=":form:num_data" />
+								</p:selectOneButton>
 								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Nomor BPJS:"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<p:inputText value="#{registrationBacking.patient.patientBPJS}"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}"
+									required="true" requiredMessage="Nomor BPJS perlu di isi." />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-12">
-							<h:outputText value="Data Kontak" style="font-size: 24px;"/>
+							<h:outputText value="Data Kontak" style="font-size: 24px;" />
 							<p:separator />
 						</div>
-						
+
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nomor Handphone:" />
-								<p:inputText />
+								<p:inputText value="#{registrationBacking.patient.address.noHP}"
+									required="true" requiredMessage="Nomor Handphone perlu di isi." />
 								<p:separator style="visibility: hidden;" />
-									
-								<h:outputText value="Nomor Telepon:" />
-								<p:inputText />
+
+								<h:outputText value="Nomor Telepon (bila ada):" />
+								<p:inputText
+									value="#{registrationBacking.patient.address.noTel}" />
 								<p:separator style="visibility: hidden;" />
-								
+
 								<h:outputText value="Alamat:" />
 								<h:column>
-									<p:inputTextarea value="#{registrationBacking.patient.address.address}" rows="5" cols="50" 
-									maxlength="500"/>
+									<p:inputTextarea required="true"
+										requiredMessage="Alamat perlu di isi."
+										value="#{registrationBacking.patient.address.address}"
+										rows="5" cols="50" maxlength="500" />
 								</h:column>
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-12">
-							<h:outputText value="Kontak Darurat" style="font-size: 24px;"/>
+							<h:outputText value="Kontak Darurat" style="font-size: 24px;" />
 							<p:separator />
 						</div>
-						
+
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Kontak:" />
-								<p:inputText />
+								<p:inputText value="#{registrationBacking.patient.relationName}"
+									required="true" requiredMessage="Nama Kontak perlu di isi." />
 								<p:separator style="visibility: hidden;" />
-									
+
 								<h:outputText value="Hubungan:" />
-								<p:inputText />
+								<p:inputText value="#{registrationBacking.patient.relationType}"
+									required="true" requiredMessage="Hubungan perlu di isi." />
 								<p:separator style="visibility: hidden;" />
-								
+
 								<h:outputText value="Nomor Kontak:" />
-								<p:inputText />
+								<p:inputText required="true"
+									requiredMessage="Nomor Kontak perlu di isi."
+									value="#{registrationBacking.patient.relationContact}" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-12">
 							<p:separator />
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Berikutnya" />
-								<p:commandButton value="Batal" />
+								<p:commandButton value="Berikutnya" action="#{registrationBacking.berikutnya}" update=":form:reg_msg" />
+								<p:button value="Batal" outcome="/menu" />
 							</h:panelGrid>
 						</div>
 					</div>
@@ -123,5 +149,5 @@
 			</div>
 		</h:form>
 	</ui:define>
-    	
+
 </ui:composition>

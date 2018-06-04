@@ -21,7 +21,8 @@ public class PatientViewBacking implements Serializable {
 	private PatientViewRules rules;
 	
 	private String search;
-
+	private int filterMode;
+	
 	private Patient patient;
 	private List<Patient> patients;
 	
@@ -41,6 +42,14 @@ public class PatientViewBacking implements Serializable {
 		this.search = search;
 	}
 
+	public int getFilterMode() {
+		return filterMode;
+	}
+
+	public void setFilterMode(int filterMode) {
+		this.filterMode = filterMode;
+	}
+
 	public Patient getPatient() {
 		return patient;
 	}
@@ -57,7 +66,7 @@ public class PatientViewBacking implements Serializable {
 		this.patients = patients;
 	}
 	
-	public String onClickEdit(Patient patientData) {
+	public String onClickView(Patient patientData) {
 		patient = new Patient(patientData);
 		return "view.xhtml?faces-redirect=true";
 	}

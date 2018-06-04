@@ -14,6 +14,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import com.binus.pmsys.entity.Patient;
+import com.binus.pmsys.utils.DateHelper;
 
 @Named
 @SessionScoped
@@ -23,7 +24,7 @@ public class RegistrationBacking extends BasicBacking {
 	private Patient patient;
 	
 	private int year;
-	private int month;
+	private String month;
 	private int day;
 	
 	private int[] years;
@@ -36,7 +37,7 @@ public class RegistrationBacking extends BasicBacking {
 	@PostConstruct
 	public void init() {
 		patient = new Patient();
-		generateLists();
+		generateYearMonthDay();
 	}
 
 	public Patient getPatient() {
@@ -55,11 +56,11 @@ public class RegistrationBacking extends BasicBacking {
 		this.year = year;
 	}
 
-	public int getMonth() {
+	public String getMonth() {
 		return month;
 	}
 
-	public void setMonth(int month) {
+	public void setMonth(String month) {
 		this.month = month;
 	}
 
@@ -95,27 +96,23 @@ public class RegistrationBacking extends BasicBacking {
 		this.days = days;
 	}
 
-	private void generateLists() {
+	private void generateYearMonthDay() {
+		LocalDate now = LocalDate.now();
+		
 		DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
 		months.addAll(Arrays.asList(dfs.getMonths()));
 		months.remove("");
+		
 		years = IntStream.rangeClosed(1900,  LocalDate.now().getYear()).toArray();
 		days = IntStream.rangeClosed(1, 31).toArray();
-	}
-	
-	private void makeDate() { 
-		LocalDate dob = LocalDate.of(year, month, day);
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-		patient.setBirthDate(dob.format(formatter));
+		
+		day = now.getDayOfMonth();
+		year = now.getYear();
+		month = DateHelper.getMonthNamefromInt(now.getMonthValue(), Locale.ENGLISH);
 	}
 	
 	public String berikutnya() {
-		makeDate(); //TODO: test/fix this
-		//TODO: verify date
-		return "insurance.xhtml?faces-redirect=true";
-	}
-	
-	public String berikutnyaInsurance() {
+		//TODO: validate date
 		return "review.xhtml?faces-redirect=true";
 	}
 }

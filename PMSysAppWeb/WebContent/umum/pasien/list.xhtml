@@ -28,11 +28,11 @@
 								<p:messages />
 								<h:panelGrid columns="1">
 									<h:outputText value="Filter Pencarian:" />
-									<p:selectOneRadio layout="grid" columns="2">
-										<f:selectItem itemLabel="No. RM" />
-										<f:selectItem itemLabel="Nama" />
-										<f:selectItem itemLabel="Jenis Kelamin" />
-										<f:selectItem itemLabel="Tanggal Lahir" />
+									<p:selectOneRadio value="#{patientViewBacking.filterMode}" layout="grid" columns="2">
+										<f:selectItem itemLabel="No. RM" itemValue="1" />
+										<f:selectItem itemLabel="Nama" itemValue="2" />
+										<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
+										<f:selectItem itemLabel="Tanggal Lahir" itemValue="4" />
 									</p:selectOneRadio>
 								</h:panelGrid>
 								<h:panelGrid columns="2">
@@ -46,7 +46,7 @@
 							<h:panelGrid columns="1">
 								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
 									<p:column headerText="Action">
-										<p:commandButton value="Melihat" action="#{patientViewBacking.onClickEdit(p)}" />
+										<p:commandButton value="Melihat" action="#{patientViewBacking.onClickView(p)}" />
 									</p:column>
 									<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
 										<h:outputText value="#{p.patientKTP}" />
