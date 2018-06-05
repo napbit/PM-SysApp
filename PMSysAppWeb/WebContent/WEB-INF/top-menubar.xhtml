@@ -13,12 +13,13 @@
 						<p:submenu label="Registrasi">
 							<p:menuitem value="Pasien Baru"
 								outcome="/umum/register/add" />
-							</p:submenu>
+						</p:submenu>
+							
 						<p:submenu label="Pasien">
 							<p:menuitem value="Melihat List Pasien"
 								outcome="/umum/pasien/list" />
-							<p:menuitem value="Mencari Data Pasien" />
 						</p:submenu>
+						
 						<p:submenu label="Atur Rawat Jalan">
 							<p:menuitem value="Daftar Kunjungan"
 								outcome="/umum/kunjungan/atur" />
@@ -35,6 +36,23 @@
 							
 							<p:menuitem value="Membikin Resep"
 							outcome="/dokter/kunjungan/resep" />
+						</p:submenu>
+					</p:submenu>
+					
+					<p:submenu label="Admin">
+						<p:submenu label="Registrasi">
+							<p:menuitem value="Staff Baru"
+								outcome="/admin/register/add" />
+						</p:submenu>
+						
+						<p:submenu label="Staff">
+							<p:menuitem value="Melihat List Staff"
+								outcome="/admin/staff/list" />
+						</p:submenu>
+						
+						<p:submenu label="Atur Menu Staff">
+							<p:menuitem value="Daftar Menu"
+								outcome="/admin/menu/atur" />
 						</p:submenu>
 					</p:submenu>
 					
