@@ -71,18 +71,20 @@
 								<p:separator />
 							</div>
 							<div class="ui-g-12">
-								<h:panelGrid columns="2" cellpadding="5" >
-									<h:outputText value="Cari Berdasarkan Tanggal" />
-									<br/>
-									
-									<h:outputText value="Dari Tanggal: " />
-									<h:outputText value="Sampai Tanggal: " />
-									
-									<p:calendar showOn="button"/>
-									<p:calendar showOn="button"/>
-									
-									<p:commandButton value="Cari" />
-								</h:panelGrid>
+								<p:panel>
+									<h:panelGrid columns="2" cellpadding="5" >
+										<h:outputText value="Cari Berdasarkan Tanggal" />
+										<br/>
+										
+										<h:outputText value="Dari Tanggal: " />
+										<h:outputText value="Sampai Tanggal: " />
+										
+										<p:calendar showOn="button"/>
+										<p:calendar showOn="button"/>
+										
+										<p:commandButton value="Cari" />
+									</h:panelGrid>
+								</p:panel>
 							</div>
 							<div class="ui-g-12">
 								<p:dataGrid columns="1" layout="grid">

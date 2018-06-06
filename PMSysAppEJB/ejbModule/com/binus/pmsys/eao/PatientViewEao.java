@@ -130,6 +130,8 @@ public class PatientViewEao {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs, rs);
 		}
 		
 		return patient;

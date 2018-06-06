@@ -47,7 +47,7 @@
 							<h:panelGrid columns="1">
 								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
 									<p:column headerText="Action">
-										<p:commandButton value="Atur" />
+										<p:commandButton value="Atur" action="#{staffMenuBacking.redirectStaff()}" />
 									</p:column>
 									<p:column headerText="NIK">
 										<h:outputText value="#{p.patientKTP}" />
