@@ -61,14 +61,11 @@
 					<f:facet name="options">
 						<h:outputText value="Selamat Datang, #USER"
 							style="margin-right: 10px;" />
-						<p:commandButton value="Logout" />
+						<p:commandButton value="Logout" action="#{loginBacking.doLogout}" immediate="true" />
 					</f:facet>
 				</p:menubar>
 			</div>
 		</div>
-		<p:dialog visible="false" header="Pencarian Pasien">
-		
-		</p:dialog>
 	</h:form>
     	
 </ui:composition>

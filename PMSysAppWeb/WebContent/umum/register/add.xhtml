@@ -22,16 +22,17 @@
 							<p:separator />
 							<p:messages id="reg_msg" />
 						</div>
-						
+
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<p:inputText value="#{registrationBacking.patient.name}"
+								<p:inputText value="#{registrationBacking.patient.patientName}"
 									required="true" requiredMessage="Nama perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Jenis Kelamin:" />
-								<p:selectOneMenu value="#{registrationBacking.patient.gender}"
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.patientGender}"
 									required="true" requiredMessage="Jenis Kelamin perlu dipilih.">
 									<f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
 									<f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
@@ -82,6 +83,18 @@
 								<p:inputText value="#{registrationBacking.patient.patientBPJS}"
 									rendered="#{registrationBacking.patient.hasBPJS == 1}"
 									required="true" requiredMessage="Nomor BPJS perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tipe BPJS:"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<p:selectOneButton required="true"
+									requiredMessage="Tipe BPJS harus di pilih."
+									value="#{registrationBacking.patient.patientBPJSType}"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}">
+									<f:selectItem itemLabel="Kelas A" itemValue="Class A" />
+									<f:selectItem itemLabel="Kelas B" itemValue="Class B" />
+									<f:selectItem itemLabel="Kelas C" itemValue="Class C" />
+								</p:selectOneButton>
 							</h:panelGrid>
 						</div>
 
@@ -91,25 +104,56 @@
 						</div>
 
 						<div class="ui-g-12">
-							<h:panelGrid columns="1" cellpadding="5">
-								<h:outputText value="Nomor Handphone:" />
-								<p:inputText value="#{registrationBacking.patient.address.noHP}"
-									required="true" requiredMessage="Nomor Handphone perlu di isi." />
+							<h:panelGrid columns="1" cellpadding="5" id="kontak_panel">
+								<h:outputText value="Tipe Telepon: " />
+								<p:selectOneButton required="true"
+									requiredMessage="Tipe Kontak harus di pilih."
+									value="#{registrationBacking.patient.phoneType}">
+									<f:selectItem itemLabel="Telepon Seluler" itemValue="HandPhone" />
+									<f:selectItem itemLabel="Telepon Rumah" itemValue="HomePhone" />
+									<p:ajax update=":form:kontak_panel" />
+								</p:selectOneButton>
 								<p:separator style="visibility: hidden;" />
 
-								<h:outputText value="Nomor Telepon (bila ada):" />
-								<p:inputText
-									value="#{registrationBacking.patient.address.noTel}" />
-								<p:separator style="visibility: hidden;" />
+								<h:outputText value="Nomor Telepon Seluler:"
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								<p:inputText value="#{registrationBacking.patient.phoneNumber}"
+									required="true"
+									requiredMessage="Nomor Telepon Seluler perlu di isi."
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								<p:separator style="visibility: hidden;"
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+
+								<h:outputText value="Nomor Telepon Rumah:"
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<p:inputText value="#{registrationBacking.patient.phoneNumber}"
+									required="true"
+									requiredMessage="Nomor Telepon Rumah perlu di isi."
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<p:separator style="visibility: hidden;"
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
 
 								<h:outputText value="Alamat:" />
 								<h:column>
 									<p:inputTextarea required="true"
 										requiredMessage="Alamat perlu di isi."
-										value="#{registrationBacking.patient.address.address}"
-										rows="5" cols="50" maxlength="500" />
+										value="#{registrationBacking.patient.address}" rows="5"
+										cols="50" maxlength="500" counter=":form:counter" counterTemplate="{0} Huruf tersisa." />
+									<br/>
+									<h:outputText id="counter" />
 								</h:column>
 								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Propinsi: " />
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.provinceID}">
+									<f:selectItems />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kode Pos: " />
+								<p:inputText value="#{registrationBacking.patient.postCode}"
+									maxlength="5" />
 							</h:panelGrid>
 						</div>
 
@@ -121,26 +165,29 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Kontak:" />
-								<p:inputText value="#{registrationBacking.patient.relationName}"
+								<p:inputText value="#{registrationBacking.patient.contactName}"
 									required="true" requiredMessage="Nama Kontak perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Hubungan:" />
-								<p:inputText value="#{registrationBacking.patient.relationType}"
+								<p:inputText
+									value="#{registrationBacking.patient.contactRelationship}"
 									required="true" requiredMessage="Hubungan perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Nomor Kontak:" />
 								<p:inputText required="true"
 									requiredMessage="Nomor Kontak perlu di isi."
-									value="#{registrationBacking.patient.relationContact}" />
+									value="#{registrationBacking.patient.contactNumber}" />
 							</h:panelGrid>
 						</div>
 
 						<div class="ui-g-12">
 							<p:separator />
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Berikutnya" action="#{registrationBacking.berikutnya}" update=":form:reg_msg" />
+								<p:commandButton value="Berikutnya"
+									action="#{registrationBacking.berikutnya}"
+									update=":form:reg_msg" />
 								<p:button value="Batal" outcome="/menu" />
 							</h:panelGrid>
 						</div>

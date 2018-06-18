@@ -2,18 +2,19 @@ package com.binus.pmsys.backing;
 
 import java.text.DateFormatSymbols;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
-import com.binus.pmsys.entity.Patient;
+import com.binus.pmsys.entity.NewPatient;
 import com.binus.pmsys.utils.DateHelper;
 
 @Named
@@ -21,7 +22,7 @@ import com.binus.pmsys.utils.DateHelper;
 public class RegistrationBacking extends BasicBacking {
 	private static final long serialVersionUID = 8664948727348463034L;
 	
-	private Patient patient;
+	private NewPatient patient;
 	
 	private int year;
 	private String month;
@@ -31,20 +32,21 @@ public class RegistrationBacking extends BasicBacking {
 	private List<String> months = new ArrayList<String>();
 	private int[] days;
 	
+	private String normalDOB;
 	
 	public RegistrationBacking() { }
 	
 	@PostConstruct
 	public void init() {
-		patient = new Patient();
+		patient = new NewPatient();
 		generateYearMonthDay();
 	}
 
-	public Patient getPatient() {
+	public NewPatient getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(NewPatient patient) {
 		this.patient = patient;
 	}
 
@@ -96,6 +98,14 @@ public class RegistrationBacking extends BasicBacking {
 		this.days = days;
 	}
 
+	public String getNormalDOB() {
+		return normalDOB;
+	}
+
+	public void setNormalDOB(String normalDOB) {
+		this.normalDOB = normalDOB;
+	}
+
 	private void generateYearMonthDay() {
 		LocalDate now = LocalDate.now();
 		
@@ -111,8 +121,19 @@ public class RegistrationBacking extends BasicBacking {
 		month = DateHelper.getMonthNamefromInt(now.getMonthValue(), Locale.ENGLISH);
 	}
 	
+	private void validateDOB() {
+		normalDOB = year + "-" + DateHelper.getMonthfromString(month) + "-" + day;
+		Date dobDate = DateHelper.formatStringToDate(normalDOB, "yyyy-MM-dd");
+		
+		if(day > DateHelper.findLengthDaysinMonthYear(year, DateHelper.getMonthfromString(month))) {
+			messageHandler("Tidak ada hari " + day + "di " + month + " " + year, FacesMessage.SEVERITY_ERROR);
+		} else {
+			patient.setPatientDOB(DateHelper.formatDateToString(dobDate, "yyyy-MM-dd"));
+		}
+	}
+	
 	public String berikutnya() {
-		//TODO: validate date
+		validateDOB();
 		return "review.xhtml?faces-redirect=true";
 	}
 }

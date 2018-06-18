@@ -2,7 +2,7 @@ package com.binus.pmsys.backing;
 
 import java.io.Serializable;
 
-import javax.faces.context.ExternalContext;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 public class BasicBacking implements Serializable{
@@ -10,11 +10,9 @@ public class BasicBacking implements Serializable{
 
 	public BasicBacking() { }
 	
-	public FacesContext getFacesContext(){
-		return FacesContext.getCurrentInstance();
-	}
-	
-	public ExternalContext getExternalContext(){
-		return FacesContext.getCurrentInstance().getExternalContext();
+	protected void messageHandler(String message, FacesMessage.Severity severity) {
+		FacesMessage facesMessage = new FacesMessage(message);
+		facesMessage.setSeverity(severity);
+		FacesContext.getCurrentInstance().addMessage(null, facesMessage);
 	}
 }

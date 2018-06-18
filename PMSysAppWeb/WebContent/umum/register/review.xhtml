@@ -26,15 +26,15 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<h:outputText value="#{registrationBacking.patient.name}" />
+								<h:outputText value="#{registrationBacking.patient.patientName}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Jenis Kelamin:" />
-								<h:outputText value="#{registrationBacking.patient.gender}" />
+								<h:outputText value="#{registrationBacking.patient.patientGender}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputLabel value="Tanggal Lahir:" />
-								<h:outputText value="#{registrationBacking.patient.birthDate}" />
+								<h:outputText value="#{registrationBacking.patient.patientDOB}" />
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
@@ -47,6 +47,7 @@
 								
 								<h:outputText value="Nomor BPJS:" />
 								<h:outputText value="#{registrationBacking.patient.patientBPJS}" rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<h:outputText value="#{registrationBacking.patient.patientBPJSType}" rendered="#{registrationBacking.patient.hasBPJS == 1}" />
 								<h:outputText value="Tidak punya." rendered="#{registrationBacking.patient.hasBPJS == 0}" />
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
@@ -59,17 +60,23 @@
 						
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
-								<h:outputText value="Nomor Handphone:" />
-								<h:outputText value="#{registrationBacking.patient.address.noHP}" />
+								<h:outputText value="Tipe Telepon: " />
+								<h:outputText value="#{registrationBacking.patient.phoneType}" />
 								<p:separator style="visibility: hidden;" />
-									
-								<h:outputText value="Nomor Telepon:" />
-								<h:outputText value="#{registrationBacking.patient.address.noTel}" />
+								
+r								<h:outputText value="Nomor Handphone:" />
+								<h:outputText value="#{registrationBacking.patient.phoneNumber}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Alamat:" />
-								<h:outputText value="#{registrationBacking.patient.address.address}" />
+								<h:outputText value="#{registrationBacking.patient.address}" />
 								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Propinsi:" />
+								<h:outputText value="#{registrationBacking.patient.province}" />
+								
+								<h:outputText value="Kode Pos:" />
+								<h:outputText value="#{registrationBacking.patient.postCode}" />
 							</h:panelGrid>
 						</div>
 						
