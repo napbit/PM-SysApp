@@ -58,13 +58,14 @@ public class LoginBacking extends BasicBacking implements Serializable {
 	
 	public String loginUser() {
 		String redirect = null;
+		FacesContext context = FacesContext.getCurrentInstance();
 		
 		try {
 			Staff user = null;
 			
 			if(!user.equals(null) || user == null) { //TODO: Verify properly
 				userSession.init(user);
-				SessionManager.recordSession(getFacesContext(), user.getsID());
+				SessionManager.recordSession(context, user.getsID());
 				redirect = "";
 			} else {
 				//TODO: MESSAGE

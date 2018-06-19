@@ -122,8 +122,9 @@ public class RegistrationBacking extends BasicBacking {
 	}
 	
 	private void validateDOB() {
-		normalDOB = year + "-" + DateHelper.getMonthfromString(month) + "-" + day;
-		Date dobDate = DateHelper.formatStringToDate(normalDOB, "yyyy-MM-dd");
+		normalDOB = day + "-" + DateHelper.getMonthfromString(month) + "-" + year;
+		String dobString = year + "-" + DateHelper.getMonthfromString(month) + "-" + day;
+		Date dobDate = DateHelper.formatStringToDate(dobString, "yyyy-MM-dd");
 		
 		if(day > DateHelper.findLengthDaysinMonthYear(year, DateHelper.getMonthfromString(month))) {
 			messageHandler("Tidak ada hari " + day + "di " + month + " " + year, FacesMessage.SEVERITY_ERROR);
