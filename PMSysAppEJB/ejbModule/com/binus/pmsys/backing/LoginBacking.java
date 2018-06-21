@@ -82,6 +82,6 @@ public class LoginBacking extends BasicBacking implements Serializable {
 
 	public String doLogout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "menu.xhtml?faces-redirect=true";
+		return "/menu.xhtml?faces-redirect=true";
 	}
 }

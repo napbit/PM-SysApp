@@ -10,6 +10,7 @@
     
     <ui:define name="content">
 		<h:form id="form">
+
 			<p:dialog header="Konfirmasi" id="review_dlg" visible="false">
 				<center>
 					<p:outputPanel>
@@ -24,6 +25,7 @@
 					</p:outputPanel>
 				</center>
 			</p:dialog>
+			
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
@@ -75,7 +77,8 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Tipe Telepon: " />
-								<h:outputText value="#{registrationBacking.patient.phoneType}" />
+								<h:outputText value="Rumah" rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<h:outputText value="Seluler" rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Nomor Telepon Seluler: " rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />

@@ -119,18 +119,20 @@
 
 								<h:outputText value="Nomor Telepon Seluler:"
 									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
-								<p:inputText value="#{registrationBacking.patient.phoneNumber}"
+								<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
 									required="true"
 									requiredMessage="Nomor Telepon Seluler perlu di isi."
+									mask="099-99999999"
 									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
 								<p:separator style="visibility: hidden;"
 									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
 
 								<h:outputText value="Nomor Telepon Rumah:"
 									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
-								<p:inputText value="#{registrationBacking.patient.phoneNumber}"
+								<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
 									required="true"
 									requiredMessage="Nomor Telepon Rumah perlu di isi."
+									mask="0999-999999?99"
 									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
 								<p:separator style="visibility: hidden;"
 									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
