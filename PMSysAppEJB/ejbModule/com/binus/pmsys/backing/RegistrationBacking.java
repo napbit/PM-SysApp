@@ -10,17 +10,23 @@ import java.util.Locale;
 import java.util.stream.IntStream;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
+import com.binus.pmsys.eao.RegistrationEao;
 import com.binus.pmsys.entity.NewPatient;
+import com.binus.pmsys.enums.PatientEnum;
 import com.binus.pmsys.utils.DateHelper;
 
 @Named
 @SessionScoped
 public class RegistrationBacking extends BasicBacking {
 	private static final long serialVersionUID = 8664948727348463034L;
+	
+	@EJB
+	private transient RegistrationEao registrationService;
 	
 	private NewPatient patient;
 	
@@ -32,7 +38,7 @@ public class RegistrationBacking extends BasicBacking {
 	private List<String> months = new ArrayList<String>();
 	private int[] days;
 	
-	private String normalDOB;
+	private String normalDOB; // DOB in user readable format
 	
 	public RegistrationBacking() { }
 	
@@ -122,7 +128,7 @@ public class RegistrationBacking extends BasicBacking {
 	}
 	
 	private void validateDOB() {
-		normalDOB = day + "-" + DateHelper.getMonthfromString(month) + "-" + year;
+		normalDOB = day + "-" + month + "-" + year;
 		String dobString = year + "-" + DateHelper.getMonthfromString(month) + "-" + day;
 		Date dobDate = DateHelper.formatStringToDate(dobString, "yyyy-MM-dd");
 		
@@ -133,8 +139,24 @@ public class RegistrationBacking extends BasicBacking {
 		}
 	}
 	
-	public String berikutnya() {
+	private NewPatient prepackagePatientData(NewPatient patient) {
+		//Removes BPJS and KTP mask
+		patient.setPatientBPJS(patient.getPatientBPJS().replaceAll("\\s+", ""));
+		patient.setPatientKTP(patient.getPatientKTP().replaceAll("\\s+", ""));
+		patient.setPatientBPJSTypeID(PatientEnum.getBPJSClassByString(patient.getPatientBPJSType()));
+		patient.setPhoneTypeID(PatientEnum.getPhoneTypeByString(patient.getPhoneType()));
+		patient.setProvinceID(1);
+		patient.setKabupatenID(1);
+		return patient;
+	}
+	
+	public String redirectToReview() {
 		validateDOB();
 		return "review.xhtml?faces-redirect=true";
+	}
+	
+	public String finalizePatientCreation() {
+		registrationService.savePatient(prepackagePatientData(this.patient));
+		return "/menu.xhtml?faces-redirect=true";
 	}
 }
