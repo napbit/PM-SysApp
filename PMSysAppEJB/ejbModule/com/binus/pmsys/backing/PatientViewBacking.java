@@ -31,6 +31,7 @@ public class PatientViewBacking implements Serializable {
 	@PostConstruct
 	public void init() {
 		patients = new ArrayList<NewPatient>();
+		this.patients = eao.getPatients();
 	}
 	
 	public String getSearch() {
@@ -58,7 +59,6 @@ public class PatientViewBacking implements Serializable {
 	}
 
 	public List<NewPatient> getPatients() {
-		this.patients = eao.getPatients();
 		return patients;
 	}
 
