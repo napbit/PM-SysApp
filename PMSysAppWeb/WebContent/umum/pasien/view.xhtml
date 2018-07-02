@@ -1,100 +1,121 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Melihat Pasien</ui:define>
-    
-    <ui:define name="content">
-    	<h:form id="form">
-    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Melihat Pasien</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
-						
-						<div class="ui-g-2" style="height: 100%;">
-							<h:panelGrid style="float: center; margin: 0 auto;">
-								<i class="fa fa-male fa-5x" />
+
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientViewBacking.patient.patientGender == 'Laki-laki'}">
+							<i class="fa fa-male fa-5x" />
+						</h:panelGrid>
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientViewBacking.patient.patientGender == 'Perempuan'}">
+							<i class="fa fa-female fa-5x" />
+						</h:panelGrid>
+					</div>
+
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="#{patientViewBacking.patient.patientName}"
+								style="font-size: 24px;" />
+							<p:commandButton value="Edit" style="float: right;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nomor KTP:" />
+								<h:outputText value="#{patientViewBacking.patient.patientKTP}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Nomor BPJS:" />
+								<h:outputText value="#{patientViewBacking.patient.patientBPJS}"
+									rendered="#{patientViewBacking.patient.patientBPJS != null}"
+									style="font-weight: bold;" />
+								<h:outputText value="Tidak Punya"
+									rendered="#{patientViewBacking.patient.patientBPJS == null}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kelamin:" />
+								<h:outputText
+									value="#{patientViewBacking.patient.patientGender}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tanggal Lahir:" />
+								<h:outputText value="#{patientViewBacking.patient.patientDOB}"
+									style="font-weight: bold;" />
 							</h:panelGrid>
 						</div>
-						
-						<div class="ui-g-10 ui-g-nopad">
-							<div class="ui-g-12">
-								<h:outputText value="#{patientViewBacking.patient.name}" style="font-size: 24px;"/>
-								<p:commandButton value="Edit" style="float: right;" />
-								<p:separator />
-							</div>
-							
-							<div class="ui-g-6">
-								<h:panelGrid columns="1" cellpadding="5">
-									<h:outputText value="Nomor KTP:" />
-									<h:outputText value="#{patientViewBacking.patient.patientKTP}" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Nomor BPJS:" />
-									<h:outputText value="#{patientViewBacking.patient.patientBPJS}" style="font-weight: bold;"  />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Kelamin:" />
-									<h:outputText value="#{patientViewBacking.patient.gender}" style="font-weight: bold;"  />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Tanggal Lahir:" />
-									<h:outputText value="#{patientViewBacking.patient.birthDate}" style="font-weight: bold;"  />
-								</h:panelGrid>
-							</div>
-							
-							<div class="ui-g-6">
-								<h:panelGrid columns="1" cellpadding="5">
-									<h:outputText value="Nomor Handphone:" />
-									<h:outputText value="#{patientViewBacking.patient.address.noHP}" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Nomor Telephone:" />
-									<h:outputText value="#{patientViewBacking.patient.address.noTel}" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Alamat:" />
-									<h:outputText value="#{patientViewBacking.patient.address.address}" style="font-weight: bold;" />
-								</h:panelGrid>
-							</div>
-						</div>
-					</div>
-					<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto; margin-top: 50px;">
-						<div class="ui-g-2">
-							
-						</div>
-						<div class="ui-g-10 ui-g-nopad">
-							<div class="ui-g-12">
-								<h:outputText value="Kunjungan Sebelumnya" style="font-size: 24px;" />
-								<p:separator />
-							</div>
-							<div class="ui-g-12">
-								<p:panel>
-									<h:panelGrid columns="2" cellpadding="5" >
-										<h:outputText value="Cari Berdasarkan Tanggal" />
-										<br/>
-										
-										<h:outputText value="Dari Tanggal: " />
-										<h:outputText value="Sampai Tanggal: " />
-										
-										<p:calendar showOn="button"/>
-										<p:calendar showOn="button"/>
-										
-										<p:commandButton value="Cari" />
-									</h:panelGrid>
-								</p:panel>
-							</div>
-							<div class="ui-g-12">
-								<p:dataGrid columns="1" layout="grid">
-									
-								</p:dataGrid>
-							</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nomor Handphone: " />
+								<h:outputText value="#{patientViewBacking.patient.phoneNumber}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Alamat: " />
+								<h:outputText value="#{patientViewBacking.patient.address}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Propinsi: " />
+								<h:outputText value="#{patientViewBacking.patient.province}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kabupaten" />
+								<h:outputText value="#{patientViewBacking.patient.kabupaten}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
 						</div>
 					</div>
 				</div>
-    	</h:form>
-    </ui:define>    
-    	
+				<div class="ui-g-10 ui-g-nopad"
+					style="margin: 0 auto; margin-top: 50px;">
+					<div class="ui-g-2"></div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Kunjungan Sebelumnya"
+								style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						<div class="ui-g-12">
+							<p:panel>
+								<h:panelGrid columns="2" cellpadding="5">
+									<h:outputText value="Cari Berdasarkan Tanggal" />
+									<br />
+
+									<h:outputText value="Dari Tanggal: " />
+									<h:outputText value="Sampai Tanggal: " />
+
+									<p:calendar showOn="button" />
+									<p:calendar showOn="button" />
+
+									<p:commandButton value="Cari" />
+								</h:panelGrid>
+							</p:panel>
+						</div>
+						<div class="ui-g-12">
+							<p:dataGrid columns="1" layout="grid">
+
+							</p:dataGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
 </ui:composition>

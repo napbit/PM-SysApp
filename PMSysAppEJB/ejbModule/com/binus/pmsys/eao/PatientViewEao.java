@@ -10,7 +10,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.binus.pmsys.entity.Address;
+import com.binus.pmsys.entity.NewPatient;
 import com.binus.pmsys.entity.Patient;
+import com.binus.pmsys.enums.PatientEnum;
 import com.binus.pmsys.utils.ReleaseConnection;
 import com.binus.pmsys.utils.Settings;
 
@@ -23,8 +25,8 @@ public class PatientViewEao {
 
     public PatientViewEao() { }
     
-	public List<Patient> getPatients() {
-		List<Patient> patientList = new ArrayList<Patient>();
+	public List<NewPatient> getPatients() {
+		List<NewPatient> patients = new ArrayList<NewPatient>();
 		Connection connection = null;
 		CallableStatement cs = null;
 		ResultSet rs = null;
@@ -35,7 +37,32 @@ public class PatientViewEao {
 			rs = cs.executeQuery();
 			
 			while(rs.next()) {
-				
+				NewPatient patient = new NewPatient();
+				patient.setPatientID(rs.getInt(1));
+				patient.setBpjsID(rs.getInt(2));
+				patient.setPhoneID(rs.getInt(3));
+				patient.setAddressID(rs.getInt(4));
+				patient.setEmergencyID(rs.getInt(5));
+				patient.setPatientKTP(rs.getString(6));
+				patient.setPatientName(rs.getString(7));
+				patient.setPatientGender(rs.getString(8));
+				patient.setPatientDOB(rs.getString(9));
+				patient.setPatientBPJSTypeID(rs.getInt(10));
+				patient.setPatientBPJS(rs.getString(11));
+				patient.setPatientBPJSType(rs.getString(12));
+				patient.setPhoneTypeID(rs.getInt(13));
+				patient.setPhoneNumber(rs.getString(14));
+				patient.setPhoneType(rs.getString(15));
+				patient.setContactName(rs.getString(16));
+				patient.setContactRelationship(rs.getString(17));
+				patient.setContactNumber(rs.getString(18));
+				patient.setAddress(rs.getString(19));
+				patient.setProvinceID(rs.getInt(20));
+				patient.setKabupatenID(rs.getInt(21));
+				patient.setPostCode(rs.getString(22));
+				patient.setProvince(rs.getString(23));
+				patient.setKabupaten(rs.getString(24));
+				patients.add(patient);
 			}
 			
 		} catch (Exception e) {
@@ -44,11 +71,11 @@ public class PatientViewEao {
 			ReleaseConnection.close(connection, cs, rs);
 		}
 		
-		return patientList;
+		return patients;
 	}
 	
-	public List<Patient> getPatientSearch(String term) {
-		List<Patient> patients = new ArrayList<Patient>();
+	public List<NewPatient> getPatientSearch(int filterMode, String term) {
+		List<NewPatient> patients = new ArrayList<NewPatient>();
 		Connection connection = null;
 		CallableStatement cs = null;
 		ResultSet rs = null;
@@ -59,15 +86,8 @@ public class PatientViewEao {
 			cs.setString(1, term);
 			rs = cs.executeQuery();	
 			
-			Patient p;
 			while(rs.next()) {
-				p = new Patient();
-				p.setId(rs.getInt(1));
-				p.setPatientKTP(rs.getString(2));
-				p.setName(rs.getString(3));
-				p.setGender(rs.getString(4));
-				p.setBirthDate(rs.getString(5));
-				patients.add(p);
+				NewPatient patient = new NewPatient();
 			}
 			
 		} catch (Exception e) {

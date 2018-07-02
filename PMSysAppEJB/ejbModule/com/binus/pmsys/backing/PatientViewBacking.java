@@ -9,8 +9,8 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
-import com.binus.pmsys.entity.Patient;
-import com.binus.pmsys.rules.PatientViewRules;
+import com.binus.pmsys.eao.PatientViewEao;
+import com.binus.pmsys.entity.NewPatient;
 
 @Named
 @SessionScoped
@@ -18,20 +18,19 @@ public class PatientViewBacking implements Serializable {
 	private static final long serialVersionUID = -513189841959490721L;
 	
 	@EJB
-	private PatientViewRules rules;
+	private PatientViewEao eao;
 	
 	private String search;
 	private int filterMode;
 	
-	private Patient patient;
-	private List<Patient> patients;
+	private NewPatient patient;
+	private List<NewPatient> patients;
 	
 	public PatientViewBacking() { }
 	
 	@PostConstruct
 	public void init() {
-		patients = new ArrayList<Patient>();
-		patients = rules.getPatients();
+		patients = new ArrayList<NewPatient>();
 	}
 	
 	public String getSearch() {
@@ -49,30 +48,31 @@ public class PatientViewBacking implements Serializable {
 	public void setFilterMode(int filterMode) {
 		this.filterMode = filterMode;
 	}
-
-	public Patient getPatient() {
+	
+	public NewPatient getPatient() {
 		return patient;
 	}
 
-	public void setPatient(Patient patient) {
+	public void setPatient(NewPatient patient) {
 		this.patient = patient;
 	}
 
-	public List<Patient> getPatients() {
+	public List<NewPatient> getPatients() {
+		this.patients = eao.getPatients();
 		return patients;
 	}
 
-	public void setPatients(List<Patient> patients) {
+	public void setPatients(List<NewPatient> patients) {
 		this.patients = patients;
 	}
-	
-	public String onClickView(Patient patientData) {
-		patient = new Patient(patientData);
+
+	public String onClickView(NewPatient patientData) {
+		patient = new NewPatient(patientData); 
 		return "view.xhtml?faces-redirect=true";
 	}
 	
 	public void onClickSearch() {
-		patients = rules.getPatientSearch(search);
+		patients = eao.getPatientSearch(filterMode, search);
 	}
 
 }
