@@ -4,6 +4,10 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
+	<f:metadata>
+		<f:viewAction actionListener="#{registrationBacking.pageInitialize}" />
+	</f:metadata>
+
 	<ui:define name="title">Registrasi Pasien Baru</ui:define>
 
 	<ui:define name="content">
@@ -121,21 +125,34 @@
 
 								<h:outputText value="Nomor Telepon Seluler:"
 									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
-								<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
-									required="true"
-									requiredMessage="Nomor Telepon Seluler perlu di isi."
-									mask="+62-99999999999"
-									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}">
+									<p:inputText value="+62" disabled="true" style="width: 40px;"
+										rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+									<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Seluler perlu di isi."
+										mask="99999999999"
+										rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								</h:panelGrid>
 								<p:separator style="visibility: hidden;"
 									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
 
 								<h:outputText value="Nomor Telepon Rumah:"
 									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
-								<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
-									required="true"
-									requiredMessage="Nomor Telepon Rumah perlu di isi."
-									mask="0999-999999?99"
-									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}">
+									<p:inputMask mask="099?9"
+										value="#{registrationBacking.patient.frontExtNum}"
+										style="width: 40px;" required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+									<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										mask="999999?99"
+										rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								</h:panelGrid>
 								<p:separator style="visibility: hidden;"
 									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
 
@@ -155,13 +172,25 @@
 								<p:selectOneMenu
 									value="#{registrationBacking.patient.provinceID}"
 									required="true" requiredMessage="Propinsi perlu di pilih.">
-									<f:selectItem itemLabel="Test Propinsi" itemValue="1" />
+									<f:selectItem itemLabel="Pilih Propinsi"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kabupaten" />
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.kabupatenID}"
+									required="true" requiredMessage="Kabupaten perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Kabupaten"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta Barat" itemValue="1" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Kode Pos: " />
-								<p:inputText value="#{registrationBacking.patient.postCode}"
-									maxlength="5" required="true"
+								<p:inputMask value="#{registrationBacking.patient.postCode}"
+									mask="99999" required="true"
 									requiredMessage="Kode Pos perlu di isi." />
 							</h:panelGrid>
 						</div>
@@ -179,9 +208,12 @@
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Hubungan dengan Kontak:" />
-								<p:inputText
+								<p:selectOneMenu
 									value="#{registrationBacking.patient.contactRelationship}"
-									required="true" requiredMessage="Hubungan perlu di isi." />
+									required="true" requiredMessage="Hubungan perlu di isi.">
+									<f:selectItem itemLabel="Pilih hubungan" noSelectionOption="true" />
+									<f:selectItems value="#{registrationBacking.contactRelation}" />
+								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Nomor Kontak:" />

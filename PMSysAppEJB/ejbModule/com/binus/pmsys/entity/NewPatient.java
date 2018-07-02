@@ -22,6 +22,7 @@ public class NewPatient implements Serializable{
 	private int patientBPJSTypeID;
 	
 	private int phoneID;
+	private String frontExtNum;
 	private String phoneNumber;
 	private String phoneType;
 	private int phoneTypeID;
@@ -70,6 +71,7 @@ public class NewPatient implements Serializable{
 		setHasBPJS(p.getHasBPJS());
 		setPatientBPJSTypeID(p.getPatientBPJSTypeID());
 		setPhoneTypeID(p.getPhoneTypeID());
+		setFrontExtNum(p.getFrontExtNum());
 	}
 	
 	public int getPatientID() {
@@ -278,6 +280,14 @@ public class NewPatient implements Serializable{
 
 	public void setPhoneTypeID(int phoneTypeID) {
 		this.phoneTypeID = phoneTypeID;
+	}
+
+	public String getFrontExtNum() {
+		return frontExtNum;
+	}
+
+	public void setFrontExtNum(String frontExtNum) {
+		this.frontExtNum = frontExtNum;
 	}
 	
 }

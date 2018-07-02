@@ -83,7 +83,7 @@
 								
 								<h:outputText value="Nomor Telepon Seluler: " rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
 								<h:outputText value="Nomor Telepon Rumah: " rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
-								<h:outputText value="#{registrationBacking.patient.phoneNumber}" />
+								<h:outputText value="#{registrationBacking.patient.frontExtNum} #{registrationBacking.patient.phoneNumber}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Alamat:" />
@@ -92,6 +92,9 @@
 								
 								<h:outputText value="Propinsi:" />
 								<h:outputText value="#{registrationBacking.patient.province}" />
+								
+								<h:outputText value="Kabupaten" />
+								<h:outputText value="#{registrationBacking.patient.kabupaten}" />
 								
 								<h:outputText value="Kode Pos:" />
 								<h:outputText value="#{registrationBacking.patient.postCode}" />

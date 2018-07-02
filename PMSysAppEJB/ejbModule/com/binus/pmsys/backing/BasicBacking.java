@@ -10,6 +10,10 @@ public class BasicBacking implements Serializable{
 
 	public BasicBacking() { }
 	
+	protected boolean getIsPostBack() {
+		return FacesContext.getCurrentInstance().isPostback();
+	}
+	
 	protected void messageHandler(String message, FacesMessage.Severity severity) {
 		FacesMessage facesMessage = new FacesMessage(message);
 		facesMessage.setSeverity(severity);

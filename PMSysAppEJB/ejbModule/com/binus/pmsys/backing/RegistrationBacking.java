@@ -35,18 +35,12 @@ public class RegistrationBacking extends BasicBacking {
 	private int day;
 	
 	private int[] years;
-	private List<String> months = new ArrayList<String>();
+	private List<String> months, contactRelation;
 	private int[] days;
 	
 	private String normalDOB; // DOB in user readable format
 	
 	public RegistrationBacking() { }
-	
-	@PostConstruct
-	public void init() {
-		patient = new NewPatient();
-		generateYearMonthDay();
-	}
 
 	public NewPatient getPatient() {
 		return patient;
@@ -88,6 +82,14 @@ public class RegistrationBacking extends BasicBacking {
 		this.years = years;
 	}
 
+	public List<String> getContactRelation() {
+		return contactRelation;
+	}
+
+	public void setContactRelation(List<String> contactRelation) {
+		this.contactRelation = contactRelation;
+	}
+
 	public List<String> getMonths() {
 		return months;
 	}
@@ -111,11 +113,20 @@ public class RegistrationBacking extends BasicBacking {
 	public void setNormalDOB(String normalDOB) {
 		this.normalDOB = normalDOB;
 	}
-
+	
+	public void pageInitialize() {
+		if(!getIsPostBack()) {
+			patient = new NewPatient();
+			generateYearMonthDay();
+			generateRelationList();
+		}
+	}
+	
 	private void generateYearMonthDay() {
 		LocalDate now = LocalDate.now();
 		
 		DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
+		months = new ArrayList<String>();
 		months.addAll(Arrays.asList(dfs.getMonths()));
 		months.remove("");
 		
@@ -125,6 +136,24 @@ public class RegistrationBacking extends BasicBacking {
 		day = now.getDayOfMonth();
 		year = now.getYear();
 		month = DateHelper.getMonthNamefromInt(now.getMonthValue(), Locale.ENGLISH);
+	}
+	
+	private void generateRelationList() {
+		contactRelation = new ArrayList<String>();
+		contactRelation.add("Ayah");
+		contactRelation.add("Ibu");
+		contactRelation.add("Kakak");
+		contactRelation.add("Adik");
+		contactRelation.add("Kakek");
+		contactRelation.add("Nenek");
+		contactRelation.add("Paman");
+		contactRelation.add("Bibi");
+		contactRelation.add("Cucu");
+		contactRelation.add("Suami");
+		contactRelation.add("Istri");
+		contactRelation.add("Saudara");
+		contactRelation.add("Anak");
+		contactRelation.add("Teman");
 	}
 	
 	private void validateDOB() {
@@ -140,13 +169,23 @@ public class RegistrationBacking extends BasicBacking {
 	}
 	
 	private NewPatient prepackagePatientData(NewPatient patient) {
-		//Removes BPJS and KTP mask
-		patient.setPatientBPJS(patient.getPatientBPJS().replaceAll("\\s+", ""));
+		if(patient.getHasBPJS() == PatientEnum.YES_BPJS) {
+			patient.setPatientBPJS(patient.getPatientBPJS().replaceAll("\\s+", ""));
+			patient.setPatientBPJSTypeID(PatientEnum.getBPJSClassByString(patient.getPatientBPJSType()));
+		}
+		
 		patient.setPatientKTP(patient.getPatientKTP().replaceAll("\\s+", ""));
-		patient.setPatientBPJSTypeID(PatientEnum.getBPJSClassByString(patient.getPatientBPJSType()));
-		patient.setPhoneTypeID(PatientEnum.getPhoneTypeByString(patient.getPhoneType()));
+		patient.setPhoneTypeID(PatientEnum.getPhoneTypeByString(patient.getPhoneType()));		
+		
+		if(patient.getPhoneTypeID() == PatientEnum.HOMEPHONE) {
+			patient.setPhoneNumber(patient.getFrontExtNum() + " " + patient.getPhoneNumber());
+		} else {
+			patient.setPhoneNumber("+62 " + patient.getPhoneNumber());
+		}
+		
 		patient.setProvinceID(1);
 		patient.setKabupatenID(1);
+		
 		return patient;
 	}
 	
