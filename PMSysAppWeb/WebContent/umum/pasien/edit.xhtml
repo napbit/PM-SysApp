@@ -25,14 +25,16 @@
 						<div class="ui-g-12">
 							<h:outputText
 								value="Edit #{patientViewBacking.editPatient.patientName}"
-								style="font-size: 24px;" />	
+								style="font-size: 24px;" />
 							<p:separator />
+							<p:messages id="edit_msg" closable="true" />
 						</div>
 
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<p:inputText value="#{patientViewBacking.editPatient.patientName}"
+								<p:inputText
+									value="#{patientViewBacking.editPatient.patientName}"
 									required="true" requiredMessage="Nama perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
@@ -117,7 +119,8 @@
 									rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}">
 									<p:inputText value="+62" disabled="true" style="width: 40px;"
 										rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}" />
-									<p:inputMask value="#{patientViewBacking.editPatient.phoneNumber}"
+									<p:inputMask
+										value="#{patientViewBacking.editPatient.phoneNumber}"
 										required="true"
 										requiredMessage="Nomor Telepon Seluler perlu di isi."
 										mask="99999999999"
@@ -135,7 +138,8 @@
 										style="width: 40px;" required="true"
 										requiredMessage="Nomor Telepon Rumah perlu di isi."
 										rendered="#{patientViewBacking.editPatient.phoneType == 'HomePhone'}" />
-									<p:inputMask value="#{patientViewBacking.editPatient.phoneNumber}"
+									<p:inputMask
+										value="#{patientViewBacking.editPatient.phoneNumber}"
 										required="true"
 										requiredMessage="Nomor Telepon Rumah perlu di isi."
 										mask="999999?99"
@@ -184,7 +188,8 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Kontak:" />
-								<p:inputText value="#{patientViewBacking.editPatient.contactName}"
+								<p:inputText
+									value="#{patientViewBacking.editPatient.contactName}"
 									required="true" requiredMessage="Nama Kontak perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
@@ -208,8 +213,12 @@
 						<div class="ui-g-12">
 							<p:separator />
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Simpan" />
-								<p:button value="Batal" outcome="view"/>
+								<p:commandButton value="Simpan" widgetVar="save_btn"
+									onclick="PF('save_btn').disable();"
+									oncomplete="PF('save_btn').enable();"
+									action="#{patientViewBacking.finalizePatientEdit}" 
+									update=":form:edit_msg" />
+								<p:button value="Batal" outcome="view" />
 							</h:panelGrid>
 						</div>
 					</div>

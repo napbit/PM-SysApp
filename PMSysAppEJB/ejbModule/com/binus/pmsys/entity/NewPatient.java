@@ -42,6 +42,8 @@ public class NewPatient implements Serializable{
 	private int kabupatenID;
 	private String kabupaten;
 	
+	private String patientSEP;
+	
 	public NewPatient() {}
 	
 	public NewPatient(NewPatient p) {
@@ -72,6 +74,7 @@ public class NewPatient implements Serializable{
 		setPatientBPJSTypeID(p.getPatientBPJSTypeID());
 		setPhoneTypeID(p.getPhoneTypeID());
 		setFrontExtNum(p.getFrontExtNum());
+		setPatientSEP(p.getPatientSEP());
 	}
 	
 	public int getPatientID() {
@@ -288,6 +291,14 @@ public class NewPatient implements Serializable{
 
 	public void setFrontExtNum(String frontExtNum) {
 		this.frontExtNum = frontExtNum;
+	}
+
+	public String getPatientSEP() {
+		return patientSEP;
+	}
+
+	public void setPatientSEP(String patientSEP) {
+		this.patientSEP = patientSEP;
 	}
 	
 }
