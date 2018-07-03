@@ -2,6 +2,7 @@ package com.binus.pmsys.backing;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.binus.pmsys.entity.Staff;
@@ -32,5 +33,4 @@ public class UserBacking extends BasicBacking {
 	public void setUser(Staff user) {
 		this.user = user;
 	}
-
 }

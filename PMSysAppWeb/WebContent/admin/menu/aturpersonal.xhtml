@@ -1,0 +1,65 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Atur Menu Staff</ui:define>
+    
+    <ui:define name="content">
+    	<h:form id="form">
+    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+						
+						<div class="ui-g-2" style="height: 100%;">
+							<h:panelGrid style="float: center; margin: 0 auto;">
+								<i class="fa fa-navicon fa-5x" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-10 ui-g-nopad">
+							<div class="ui-g-12">
+								<h:outputText value="Dr. John Smith - 01-1" style="font-size: 24px;"/>
+								<p:separator />
+							</div>
+							
+							<div class="ui-g-6">
+								<h:panelGrid columns="1" cellpadding="5">
+									<h:outputText value="Posisi:" />
+									<h:outputText value="Dokter Umum" style="font-weight: bold;"  />
+									<p:separator style="visibility: hidden;" />
+									
+									<h:outputText value="Join Date:" />
+									<h:outputText value="05 Mei 2010" style="font-weight: bold;"  />
+									<p:separator style="visibility: hidden;" />
+								</h:panelGrid>
+							</div>
+							
+						</div>
+					</div>
+					<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+						<div class="ui-g-2">
+							
+						</div>
+						<div class="ui-g-10 ui-g-nopad">
+							<div class="ui-g-12">
+								<h:outputText value="Assign Menu untuk Staff" style="font-size: 24px;" />
+								<p:separator />
+							</div>
+							<div class="ui-g-12">
+								<p:selectManyCheckbox layout="grid" columns="3">
+									<f:selectItems value="#{staffMenuBacking.menuSource}" var="menus" itemLabel="#{menus}" itemValue="#{menus}" />
+								</p:selectManyCheckbox>
+								<p:separator style="visibility: hidden;" />
+								<p:commandButton value="Simpan" style="margin-right: 10px;"/>
+								<p:button value="Batal" outcome="/admin/menu/atur"/>
+							</div>
+						</div>
+					</div>
+				</div>
+    	</h:form>
+    </ui:define>    
+    	
+</ui:composition>

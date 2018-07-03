@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -57,14 +58,15 @@ public class LoginBacking extends BasicBacking implements Serializable {
 	
 	public String loginUser() {
 		String redirect = null;
+		FacesContext context = FacesContext.getCurrentInstance();
 		
 		try {
 			Staff user = null;
 			
 			if(!user.equals(null) || user == null) { //TODO: Verify properly
 				userSession.init(user);
-				SessionManager.recordSession(getFacesContext(), user.getsID());
-				redirect = "kabupaten.xhtml?faces-redirect=true";
+				SessionManager.recordSession(context, user.getsID());
+				redirect = "";
 			} else {
 				//TODO: MESSAGE
 				redirect = null;
@@ -76,5 +78,10 @@ public class LoginBacking extends BasicBacking implements Serializable {
 		}
 		
 		return redirect;
+	}
+
+	public String doLogout() {
+		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		return "/menu.xhtml?faces-redirect=true";
 	}
 }

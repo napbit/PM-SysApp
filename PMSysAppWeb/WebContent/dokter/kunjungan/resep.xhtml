@@ -1,0 +1,143 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Pembikinan Resep</ui:define>
+    
+    <ui:define name="content">
+    	<h:form id="form">
+    		
+    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+	   			
+	   			<p:dialog id="med_dialog" header="Menambah Obat" visible="#{diagnosePatient.medicineDialog}" modal="true" resizable="false" width="700" closable="true">
+					<p:ajax event="close" listener="#{diagnosePatient.dialogCloseListener}" update=":form:med_dialog" />
+					
+					<p:messages id="med_dlg_msg" />
+					
+					<h:panelGrid columns="1">
+						<h:outputText value="Filter Pencarian:" />
+						<p:selectOneRadio layout="grid" value="#{diagnosePatient.filterMode}" columns="2">
+							<f:selectItem itemLabel="Nama Obat" itemValue="1" />
+							<f:selectItem itemLabel="Kategori" itemValue="2" />
+							<f:selectItem itemLabel="Tipe Obat" itemValue="3" />
+							<f:selectItem itemLabel="Zat Aktif" itemValue="4" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2">
+						<p:inputText style="width: 350px;" />
+						<p:commandButton  value="Cari" />
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" style="margin-top: 20px;">
+						<p:dataTable id="med_data" style="text-align: center;">
+							<p:column headerText="Nama Obat">
+
+							</p:column>
+							<p:column headerText="Kategori">
+
+							</p:column>
+							<p:column headerText="Tipe Obat">
+
+							</p:column>
+							<p:column headerText="Zat Aktif">
+							
+							</p:column>
+						</p:dataTable>
+					</h:panelGrid>
+					
+					<h:panelGrid columns="1" style="margin-top: 20px;">
+						<h:outputText value="Instruksi untuk obat" />
+						<p:inputTextarea rows="5" cols="50" autoResize="true"
+						maxlength="500" counter="counter_ins" counterTemplate="{0} karakter tersisa."/>
+						<h:outputText id="counter_ins" />
+					</h:panelGrid>
+					
+					<h:panelGrid columns="2" style="margin-top: 20px;">
+						<p:commandButton value="Simpan" />
+						<p:commandButton value="Batal" actionListener="#{diagnosePatient.dialogCloseListener}" update=":form:med_dialog" />
+					</h:panelGrid>
+					
+	   			</p:dialog>
+	   			
+	   			<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+	   			
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-male fa-5x" />
+						</h:panelGrid>
+					</div>
+					
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Budi Santoso - SEP - 06/06/2018" style="font-size: 24px;"/>
+							<p:commandButton value="Lihat Data Pasien" style="float: right;" />
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Subject:" />
+								<p style="font-weight: bold">
+									Sakit hati, susah nafas.
+								</p>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Object:" />
+								<p style="font-weight: bold">
+									Paru-paru tidak ada apa-apa.
+								</p>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Assessment:" />
+								<p style="font-weight: bold">
+									Bapak berumur 35. Sedang recover dari operasi.
+								</p>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Plan:" />
+								<p style="font-weight: bold">
+									Ikut diet. Check up ulang 3 hari kemudian.
+								</p>
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12">
+							<h:outputText value="Resep Pasien" style="font-size: 24px;"/>
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-12">
+							<h:panelGrid columns="1">
+								<p:commandButton value="Tambah" actionListener="#{diagnosePatient.openMedicineDialog}" update=":form:med_dialog" />
+								<p:separator style="visibility: hidden;" />
+								
+								<p:dataGrid>
+									
+								</p:dataGrid>
+							</h:panelGrid>
+						</div>
+						
+					</div>
+					
+				</div>
+				
+    		</div>
+    		
+    	</h:form>
+    </ui:define>    
+    	
+</ui:composition>

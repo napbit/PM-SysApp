@@ -1,0 +1,137 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Registrasi Pasien Baru</ui:define>
+    
+    <ui:define name="content">
+		<h:form id="form">
+
+			<p:dialog header="Konfirmasi" id="review_dlg" visible="false">
+				<center>
+					<p:outputPanel>
+						<h:panelGrid columns="1" cellpadding="5">
+							<h:outputText value="Apakah anda yakin untuk menyimpan data pasien baru ini?" />
+						</h:panelGrid>
+						
+						<h:panelGrid columns="2">
+							<p:commandButton value="Ya" />
+							<p:commandButton value="Tidak" />
+						</h:panelGrid>
+					</p:outputPanel>
+				</center>
+			</p:dialog>
+			
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-pencil-square-o fa-5x" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Registrasi Pasien Baru" style="font-size: 24px;"/>
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama Lengkap:" />
+								<h:outputText value="#{registrationBacking.patient.patientName}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Jenis Kelamin:" />
+								<h:outputText value="#{registrationBacking.patient.patientGender}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputLabel value="Tanggal Lahir:" />
+								<h:outputText value="#{registrationBacking.normalDOB}" />
+								<p:separator style="visibility: hidden;" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nomor KTP:" />
+								<h:outputText value="#{registrationBacking.patient.patientKTP}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Data BPJS:" />
+								<h:outputText value="#{registrationBacking.patient.patientBPJS}" rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<h:outputText value="#{registrationBacking.patient.patientBPJSType}" rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<h:outputText value="Tidak punya." rendered="#{registrationBacking.patient.hasBPJS == 0}" />
+								<p:separator style="visibility: hidden;" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12">
+							<h:outputText value="Data Kontak" style="font-size: 24px;"/>
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Tipe Telepon: " />
+								<h:outputText value="Rumah" rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<h:outputText value="Seluler" rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Nomor Telepon Seluler: " rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								<h:outputText value="Nomor Telepon Rumah: " rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<h:outputText value="#{registrationBacking.patient.frontExtNum} #{registrationBacking.patient.phoneNumber}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Alamat:" />
+								<h:outputText value="#{registrationBacking.patient.address}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Propinsi:" />
+								<h:outputText value="#{registrationBacking.patient.province}" />
+								
+								<h:outputText value="Kabupaten" />
+								<h:outputText value="#{registrationBacking.patient.kabupaten}" />
+								
+								<h:outputText value="Kode Pos:" />
+								<h:outputText value="#{registrationBacking.patient.postCode}" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12">
+							<h:outputText value="Kontak Darurat" style="font-size: 24px;"/>
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama Kontak:" />
+								<h:outputText value="#{registrationBacking.patient.contactName}" />
+								<p:separator style="visibility: hidden;" />
+									
+								<h:outputText value="Hubungan dengan Kontak:" />
+								<h:outputText value="#{registrationBacking.patient.contactRelationship}" />
+								<p:separator style="visibility: hidden;" />
+								
+								<h:outputText value="Nomor Kontak:" />
+								<h:outputText value="#{registrationBacking.patient.contactNumber}" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12">
+							<p:separator />
+							<h:panelGrid columns="2" style="float: right;">
+								<p:commandButton value="Simpan" action="#{registrationBacking.finalizePatientCreation}" />
+								<p:commandButton value="Batal" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+    	
+</ui:composition>

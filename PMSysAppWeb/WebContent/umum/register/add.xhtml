@@ -1,0 +1,240 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<f:metadata>
+		<f:viewAction actionListener="#{registrationBacking.pageInitialize}" />
+	</f:metadata>
+
+	<ui:define name="title">Registrasi Pasien Baru</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-pencil-square-o fa-5x" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Registrasi Pasien Baru"
+								style="font-size: 24px;" />
+							<p:separator />
+							<p:messages id="reg_msg" closable="true" />
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama Lengkap:" />
+								<p:inputText value="#{registrationBacking.patient.patientName}"
+									required="true" requiredMessage="Nama perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Jenis Kelamin:" />
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.patientGender}"
+									required="true" requiredMessage="Jenis Kelamin perlu dipilih.">
+									<f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
+									<f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputLabel value="Tanggal Lahir:" />
+								<h:panelGrid columns="3">
+									<p:selectOneMenu value="#{registrationBacking.day}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{registrationBacking.days}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu value="#{registrationBacking.month}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{registrationBacking.months}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu value="#{registrationBacking.year}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{registrationBacking.years}" />
+									</p:selectOneMenu>
+									<h:outputText value="Hari" />
+									<h:outputText value="Bulan" />
+									<h:outputText value="Tahun" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nomor KTP:" />
+								<p:inputMask mask="9999 9999 9999 9999"
+									value="#{registrationBacking.patient.patientKTP}"
+									required="true" requiredMessage="Nomor KTP perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Apakah Mempunyai BPJS?" />
+								<p:selectOneButton required="true"
+									value="#{registrationBacking.patient.hasBPJS}"
+									requiredMessage="BPJS perlu di pilih.">
+									<f:selectItem itemLabel="Ya" itemValue="1" />
+									<f:selectItem itemLabel="Tidak" itemValue="0" />
+									<p:ajax update=":form:num_data" />
+								</p:selectOneButton>
+								<p:separator style="visibility: hidden;" />
+							</h:panelGrid>
+
+							<h:panelGrid columns="1" cellpadding="5" id="num_data">
+								<h:outputText value="Nomor BPJS:"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<p:inputMask mask="999 99999 99999"
+									value="#{registrationBacking.patient.patientBPJS}"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}"
+									required="true" requiredMessage="Nomor BPJS perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tipe BPJS:"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}" />
+								<p:selectOneButton required="true"
+									requiredMessage="Tipe BPJS harus di pilih."
+									value="#{registrationBacking.patient.patientBPJSType}"
+									rendered="#{registrationBacking.patient.hasBPJS == 1}">
+									<f:selectItem itemLabel="Kelas A" itemValue="Class A" />
+									<f:selectItem itemLabel="Kelas B" itemValue="Class B" />
+									<f:selectItem itemLabel="Kelas C" itemValue="Class C" />
+								</p:selectOneButton>
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<h:outputText value="Data Kontak" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5" id="kontak_panel">
+								<h:outputText value="Tipe Telepon: " />
+								<p:selectOneButton required="true"
+									requiredMessage="Tipe Kontak harus di pilih."
+									value="#{registrationBacking.patient.phoneType}">
+									<f:selectItem itemLabel="Telepon Seluler" itemValue="HandPhone" />
+									<f:selectItem itemLabel="Telepon Rumah" itemValue="HomePhone" />
+									<p:ajax update=":form:kontak_panel" />
+								</p:selectOneButton>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Nomor Telepon Seluler:"
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}">
+									<p:inputText value="+62" disabled="true" style="width: 40px;"
+										rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+									<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Seluler perlu di isi."
+										mask="99999999999"
+										rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;"
+									rendered="#{registrationBacking.patient.phoneType == 'HandPhone'}" />
+
+								<h:outputText value="Nomor Telepon Rumah:"
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}">
+									<p:inputMask mask="099?9"
+										value="#{registrationBacking.patient.frontExtNum}"
+										style="width: 40px;" required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+									<p:inputMask value="#{registrationBacking.patient.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										mask="999999?99"
+										rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;"
+									rendered="#{registrationBacking.patient.phoneType == 'HomePhone'}" />
+
+								<h:outputText value="Alamat:" />
+								<h:column>
+									<p:inputTextarea required="true"
+										requiredMessage="Alamat perlu di isi."
+										value="#{registrationBacking.patient.address}" rows="5"
+										cols="50" maxlength="500" counter=":form:counter"
+										counterTemplate="{0} Huruf tersisa." />
+									<br />
+									<h:outputText id="counter" />
+								</h:column>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Propinsi: " />
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.provinceID}"
+									required="true" requiredMessage="Propinsi perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Propinsi"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kabupaten" />
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.kabupatenID}"
+									required="true" requiredMessage="Kabupaten perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Kabupaten"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta Barat" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kode Pos: " />
+								<p:inputMask value="#{registrationBacking.patient.postCode}"
+									mask="99999" required="true"
+									requiredMessage="Kode Pos perlu di isi." />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<h:outputText value="Kontak Darurat" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama Kontak:" />
+								<p:inputText value="#{registrationBacking.patient.contactName}"
+									required="true" requiredMessage="Nama Kontak perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Hubungan dengan Kontak:" />
+								<p:selectOneMenu
+									value="#{registrationBacking.patient.contactRelationship}"
+									required="true" requiredMessage="Hubungan perlu di isi.">
+									<f:selectItem itemLabel="Pilih hubungan" noSelectionOption="true" />
+									<f:selectItems value="#{registrationBacking.contactRelation}" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Nomor Kontak:" />
+								<p:inputText required="true"
+									requiredMessage="Nomor Kontak perlu di isi."
+									value="#{registrationBacking.patient.contactNumber}" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<p:separator />
+							<h:panelGrid columns="2" style="float: right;">
+								<p:commandButton value="Berikutnya"
+									action="#{registrationBacking.redirectToReview}" ajax="false" />
+								<p:button value="Batal" outcome="/menu" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

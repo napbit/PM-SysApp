@@ -2,6 +2,7 @@ package com.binus.pmsys.entity;
 
 public class Address {
 	
+	private int addressID;
 	private String address;
 	private String propinsi;
 	private String kabupaten;
@@ -12,6 +13,7 @@ public class Address {
 	public Address() { }
 	
 	public Address(Address a) {
+		setAddressID(a.getAddressID());
 		setAddress(a.getAddress());
 		setPropinsi(a.getPropinsi());
 		setKabupaten(a.getKabupaten());
@@ -19,7 +21,15 @@ public class Address {
 		setNoHP(a.getNoHP());
 		setNoTel(a.getNoTel());
 	}
-	
+
+	public int getAddressID() {
+		return addressID;
+	}
+
+	public void setAddressID(int addressID) {
+		this.addressID = addressID;
+	}
+
 	public String getAddress() {
 		return address;
 	}

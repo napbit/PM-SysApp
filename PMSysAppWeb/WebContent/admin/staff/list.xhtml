@@ -1,0 +1,76 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    template="/WEB-INF/template.xhtml">
+    
+    <ui:define name="title">Staff</ui:define>
+    
+    <ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-users fa-5x" />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Staff" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-12">
+							<p:panel>
+								<p:messages />
+								<h:panelGrid columns="1">
+									<h:outputText value="Filter Pencarian:" />
+									<p:selectOneRadio layout="grid" value="#{assignPatientBacking.filterMode}" columns="3">
+										<f:selectItem itemLabel="NIK" itemValue="1" />
+										<f:selectItem itemLabel="Nama" itemValue="2" />
+										<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
+										<f:selectItem itemLabel="Posisi" itemValue="4" />
+										<f:selectItem itemLabel="Join Date" itemValue="5"/>
+									</p:selectOneRadio>
+								</h:panelGrid>
+								<h:panelGrid columns="2">
+									<p:inputText style="width: 350px;" />
+									<p:commandButton  value="Cari" />
+								</h:panelGrid>
+							</p:panel>
+						</div>
+						
+						<div class="ui-g-12">
+							<h:panelGrid columns="1">
+								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
+									<p:column headerText="Action">
+										<p:commandButton value="Melihat" action="#{staffMenuBacking.redirectStaff()}" />
+									</p:column>
+									<p:column headerText="NIK">
+										<h:outputText value="#{p.patientKTP}" />
+									</p:column>
+									<p:column headerText="Nama">
+										<h:outputText value="#{p.name}" />
+									</p:column>
+									<p:column headerText="Jenis Kelamin">
+										<h:outputText value="#{p.gender}" />
+									</p:column>
+									<p:column headerText="Posisi">
+										<h:outputText value="#Posisi" />
+									</p:column>
+									<p:column headerText="Join Date">
+										<h:outputText value="05/05/18" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+    	
+</ui:composition>
