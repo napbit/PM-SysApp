@@ -17,6 +17,7 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
 import com.binus.pmsys.eao.PatientViewEao;
+import com.binus.pmsys.entity.MedicalRecord;
 import com.binus.pmsys.entity.NewPatient;
 import com.binus.pmsys.enums.BasicEnum;
 import com.binus.pmsys.enums.PatientEnum;
@@ -35,6 +36,9 @@ public class PatientViewBacking extends BasicBacking implements Serializable {
 	
 	private NewPatient patient, editPatient;
 	private List<NewPatient> patients;
+	
+	private MedicalRecord medicalRecord;
+	private List<MedicalRecord> medicalRecords;
 	
 	private int year;
 	private String month;
@@ -157,8 +161,25 @@ public class PatientViewBacking extends BasicBacking implements Serializable {
 		this.contactRelation = contactRelation;
 	}
 	
+	public MedicalRecord getMedicalRecord() {
+		return medicalRecord;
+	}
+
+	public void setMedicalRecord(MedicalRecord medicalRecord) {
+		this.medicalRecord = medicalRecord;
+	}
+
+	public List<MedicalRecord> getMedicalRecords() {
+		return medicalRecords;
+	}
+
+	public void setMedicalRecords(List<MedicalRecord> medicalRecords) {
+		this.medicalRecords = medicalRecords;
+	}
+
 	public String onClickView(NewPatient patientData) {
 		patient = new NewPatient(patientData);
+		getPatientMedicalRecord();
 		return "view.xhtml?faces-redirect=true";
 	}
 	
@@ -169,6 +190,10 @@ public class PatientViewBacking extends BasicBacking implements Serializable {
 	
 	public void refreshPatientData() {
 		this.patients = eao.getPatients();
+	}
+	
+	private void getPatientMedicalRecord() {
+		this.medicalRecords = eao.getPatientMedicalRecordList(this.patient.getPatientID());
 	}
 	
 	private void unpackPatientData() {

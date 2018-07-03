@@ -10,6 +10,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.binus.pmsys.entity.Address;
+import com.binus.pmsys.entity.MedicalRecord;
 import com.binus.pmsys.entity.NewPatient;
 import com.binus.pmsys.entity.Patient;
 import com.binus.pmsys.enums.PatientEnum;
@@ -283,5 +284,43 @@ public class PatientViewEao {
 		}
 		
 		return patients;
+	}
+	
+	public List<MedicalRecord> getPatientMedicalRecordList(int patientID) {
+		List<MedicalRecord> medicalRecords = new ArrayList<MedicalRecord>();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_medicalRecordGetAllList(?)}");
+			cs.setInt(1, patientID);
+			
+			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				MedicalRecord record = new MedicalRecord();
+				record.setRecordID(rs.getInt(1));
+				record.setPatientID(rs.getInt(2));
+				record.setPatientName(rs.getString(3));
+				record.setRecordSEP(rs.getString(4));
+				record.setMedicalSubject(rs.getString(5));
+				record.setMedicalObject(rs.getString(6));
+				record.setMedicalAssessment(rs.getString(7));
+				record.setMedicalPlanning(rs.getString(8));
+				record.setBloodPressure(rs.getInt(9));
+				record.setPatientWeight(rs.getInt(10));
+				record.setPatientHeight(rs.getInt(11));
+				record.setRecordDate(rs.getString(12));
+				medicalRecords.add(record);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs, rs);
+		}
+		
+		return medicalRecords;
 	}
 }

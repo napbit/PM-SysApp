@@ -5,11 +5,11 @@
 	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
 	<ui:define name="title">Melihat Pasien</ui:define>
-	
+
 	<ui:define name="viewname">
 		<h:outputText value="view" />
 	</ui:define>
-	
+
 	<ui:define name="content">
 		<h:form id="form">
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
@@ -30,8 +30,11 @@
 						<div class="ui-g-12">
 							<h:outputText value="#{patientViewBacking.patient.patientName}"
 								style="font-size: 24px;" />
-							<p:button value="Kembali" outcome="list" style="float: right; width: 100px" />
-							<p:commandButton value="Edit" style="float: right; margin-right: 5px; width: 100px;" action="#{patientViewBacking.onClickEdit}" />
+							<p:button value="Kembali" outcome="list"
+								style="float: right; width: 100px" />
+							<p:commandButton value="Edit"
+								style="float: right; margin-right: 5px; width: 100px;"
+								action="#{patientViewBacking.onClickEdit}" />
 							<p:separator />
 						</div>
 
@@ -113,9 +116,24 @@
 							</p:panel>
 						</div>
 						<div class="ui-g-12">
-							<p:dataGrid columns="1" layout="grid">
-
-							</p:dataGrid>
+							<p:dataTable value="#{patientViewBacking.medicalRecords}"
+								var="records" style="text-align:center;">
+								<p:column headerText="Action">
+									<p:commandButton value="Melihat" />
+								</p:column>
+								<p:column headerText="Tanggal">
+									<h:outputText value="#{records.recordDate}" />
+								</p:column>
+								<p:column headerText="Nama Pasien">
+									<h:outputText value="#{records.patientName}" />
+								</p:column>
+								<p:column headerText="Berat Badan">
+									<h:outputText value="#{records.patientWeight}" />
+								</p:column>
+								<p:column headerText="Tinggi">
+									<h:outputText value="#{records.patientHeight}" />
+								</p:column>
+							</p:dataTable>
 						</div>
 					</div>
 				</div>
