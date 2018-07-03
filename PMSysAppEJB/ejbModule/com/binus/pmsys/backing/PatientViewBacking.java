@@ -30,7 +30,7 @@ public class PatientViewBacking implements Serializable {
 	private String search;
 	private int filterMode;
 	
-	private NewPatient patient;
+	private NewPatient patient, editPatient;
 	private List<NewPatient> patients;
 	
 	private int year;
@@ -71,6 +71,14 @@ public class PatientViewBacking implements Serializable {
 
 	public void setPatient(NewPatient patient) {
 		this.patient = patient;
+	}
+
+	public NewPatient getEditPatient() {
+		return editPatient;
+	}
+
+	public void setEditPatient(NewPatient editPatient) {
+		this.editPatient = editPatient;
 	}
 
 	public List<NewPatient> getPatients() {
@@ -146,28 +154,38 @@ public class PatientViewBacking implements Serializable {
 	}
 	
 	public String onClickView(NewPatient patientData) {
-		patient = new NewPatient(patientData); 
+		patient = new NewPatient(patientData);
 		return "view.xhtml?faces-redirect=true";
 	}
 	
 	public String onClickEdit() {
-		generateYearMonthDay();
-		generateRelationList();
-		if(patient.getPhoneTypeID() == PatientEnum.HOMEPHONE && patient.getPhoneNumber().contains(" ")) {
-			splitPatientPhoneNumber();
-			System.out.println("split");
-		}
+		unpackPatientData();
 		return "edit.xhtml?faces-redirect=true";
 	}
 	
-	private void splitPatientPhoneNumber() {
-		String[] splitted = patient.getPhoneNumber().split(" ");
-		patient.setFrontExtNum(splitted[0]);
-		patient.setPhoneNumber(splitted[1]);
+	private void unpackPatientData() {
+		editPatient = new NewPatient(this.patient);
+		splitPatientNumber();
+		generateYearMonthDay();
+		generateRelationList();
+		if(editPatient.getPatientBPJS() != null) {
+			editPatient.setHasBPJS(1);
+		}
+	}
+	
+	private void splitPatientNumber() {
+		String[] splitted = editPatient.getPhoneNumber().split(" ");
+		
+		if(editPatient.getPhoneTypeID() == PatientEnum.HOMEPHONE) {
+			editPatient.setFrontExtNum(splitted[0]);
+			editPatient.setPhoneNumber(splitted[1]);
+		} else if(editPatient.getPhoneTypeID() == PatientEnum.HANDPHONE) {
+			editPatient.setPhoneNumber(splitted[1]);
+		}
 	}
 	
 	private void generateYearMonthDay() {
-		LocalDate now = LocalDate.now();
+		String[] splitDOB = editPatient.getPatientDOB().split("-");
 		
 		DateFormatSymbols dfs = new DateFormatSymbols(Locale.ENGLISH);
 		months = new ArrayList<String>();
@@ -177,9 +195,9 @@ public class PatientViewBacking implements Serializable {
 		years = IntStream.rangeClosed(1900,  LocalDate.now().getYear()).toArray();
 		days = IntStream.rangeClosed(1, 31).toArray();
 		
-		day = now.getDayOfMonth();
-		year = now.getYear();
-		month = DateHelper.getMonthNamefromInt(now.getMonthValue(), Locale.ENGLISH);
+		day = Integer.valueOf(splitDOB[2]);
+		year = Integer.valueOf(splitDOB[0]);
+		month = DateHelper.getMonthNamefromInt(Integer.valueOf(splitDOB[1]), Locale.ENGLISH);
 	}
 	
 	private void generateRelationList() {
