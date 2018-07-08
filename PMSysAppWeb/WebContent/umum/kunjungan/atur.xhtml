@@ -9,7 +9,10 @@
 	<ui:define name="content">
 		<h:form id="form">
 			<p:dialog header="Memilih Pasien"
-				rendered="#{patientVisitationBacking.patientDialog}">
+				visible="#{patientVisitationBacking.patientDialog}"
+				id="patient_dialog" width="750">
+				<p:ajax event="close" update=":form:patient_dialog"
+					listener="#{patientVisitationBacking.handleDialog}" />
 				<p:panel>
 					<p:messages />
 					<h:panelGrid columns="1">
@@ -42,12 +45,41 @@
 						</h:panelGrid>
 						<p:inputText id="search_box"
 							rendered="#{patientVisitationBacking.filterMode ne 4}"
-							value="#{patientVisitationBacking.search}" style="width: 350px;" />
+							value="#{patientVisitationBacking.searchTerm}"
+							style="width: 350px;" />
 						<p:commandButton value="Cari"
 							actionListener="#{patientVisitationBacking.onClickSearch}"
 							update=":form:patients_data" />
 					</h:panelGrid>
 				</p:panel>
+				<p:dataTable id="patients_data"
+					value="#{patientVisitationBacking.patients}" var="p"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+					rows="5" style="text-align:center; margin-top: 10px;"
+					selectionMode="single"
+					selection="#{patientVisitationBacking.patient}"
+					rowKey="#{p.patientID}">
+					<p:ajax event="rowDblselect"
+						listener="#{patientVisitationBacking.handlePatientSelection}"
+						update=":form:patient_dialog :form:patient_view :form:doctor_view" />
+					<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
+						<h:outputText value="#{p.patientKTP}" />
+					</p:column>
+					<p:column headerText="Nama" sortBy="#{p.patientName}">
+						<h:outputText value="#{p.patientName}" />
+					</p:column>
+					<p:column headerText="Jenis Kelamin" sortBy="#{p.patientGender}">
+						<h:outputText value="#{p.patientGender}" />
+					</p:column>
+					<p:column headerText="Tanggal Lahir" sortBy="#{p.patientDOB}">
+						<h:outputText value="#{p.patientDOB}" />
+					</p:column>
+				</p:dataTable>
+				<p:commandButton value="Refresh"
+					style="margin-top: 10px; float: right; "
+					actionListener="#{patientVisitationBacking.refreshPatients}"
+					update=":form:patients_data" />
 			</p:dialog>
 
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
@@ -61,57 +93,117 @@
 						<div class="ui-g-12">
 							<h:outputText value="Daftar Kunjungan Pasien"
 								style="font-size: 24px;" />
+							<p:commandButton value="Pilih Pasien"
+								actionListener="#{patientVisitationBacking.openPatientDialog}"
+								update=":form:patient_dialog" style="float: right;" />
 							<p:separator />
 						</div>
-						<div class="ui-g-12">
-							<p:commandButton value="Pilih Pasien" />
-						</div>
-						<p:outputPanel>
-							<div class="ui-g-12 ui-g-nopad" style="margin-top: 15px;">
-								<div class="ui-g-3" style="height: 100%">
+
+						<p:outputPanel id="patient_view">
+							<p:outputPanel rendered="#{patientVisitationBacking.patientView}">
+								<div class="ui-g-12 ui-g-nopad" style="margin-top: 15px;">
+									<div class="ui-g-3" style="height: 100%">
+										<h:panelGrid style="margin: 0 auto; padding: 10px;"
+											rendered="#{patientVisitationBacking.patient.patientGender == 'Laki-laki'}">
+											<i class="fa fa-male fa-5x" />
+										</h:panelGrid>
+										<h:panelGrid style="margin: 0 auto; padding: 10px;"
+											rendered="#{patientVisitationBacking.patient.patientGender == 'Perempuan'}">
+											<i class="fa fa-female fa-5x" />
+										</h:panelGrid>
+									</div>
+									<div class="ui-g-3">
+										<h:panelGrid columns="1">
+											<h:outputText value="BPJS: "
+												rendered="#{patientVisitationBacking.patient.patientBPJS == null}" />
+											<h:outputText value="Tidak Punya" style="font-weight: bold;"
+												rendered="#{patientVisitationBacking.patient.patientBPJS == null}" />
+											<p:separator style="visibility: hidden;"
+												rendered="#{patientVisitationBacking.patient.patientBPJS == null}" />
+
+											<h:outputText value="Nomor BPJS:"
+												rendered="#{patientVisitationBacking.patient.patientBPJS != null}" />
+											<h:outputText
+												value="#{patientVisitationBacking.patient.patientBPJS}"
+												style="font-weight: bold;"
+												rendered="#{patientVisitationBacking.patient.patientBPJS != null}" />
+											<p:separator style="visibility: hidden;"
+												rendered="#{patientVisitationBacking.patient.patientBPJS != null}" />
+
+											<h:outputText value="Tipe BPJS:"
+												rendered="#{patientVisitationBacking.patient.patientBPJS != null}" />
+											<h:outputText
+												value="#{patientVisitationBacking.patient.patientBPJSType}"
+												style="font-weight: bold;"
+												rendered="#{patientVisitationBacking.patient.patientBPJS != null}" />
+											<p:separator style="visibility: hidden;"
+												rendered="#{patientVisitationBacking.patient.patientBPJS != null}" />
+										</h:panelGrid>
+									</div>
+									<div class="ui-g-3">
+										<h:panelGrid columns="1">
+											<h:outputText value="Nama Lengkap:" />
+											<h:outputText
+												value="#{patientVisitationBacking.patient.patientName}"
+												style="font-weight: bold;" />
+											<p:separator style="visibility: hidden;" />
+
+											<h:outputText value="Kelamin:" />
+											<h:outputText
+												value="#{patientVisitationBacking.patient.patientGender}"
+												style="font-weight: bold;" />
+											<p:separator style="visibility: hidden;" />
+										</h:panelGrid>
+									</div>
+									<div class="ui-g-3">
+										<h:panelGrid columns="1">
+											<h:outputText value="Tanggal Lahir:" />
+											<h:outputText
+												value="#{patientVisitationBacking.patient.patientDOB}"
+												style="font-weight: bold;" />
+										</h:panelGrid>
+									</div>
+								</div>
+							</p:outputPanel>
+						</p:outputPanel>
+
+						<p:outputPanel id="doctor_view">
+							<p:outputPanel rendered="#{patientVisitationBacking.doctorView}">
+								<div class="ui-g-12">
 									<h:panelGrid style="margin: 0 auto; padding: 10px;">
-										<i class="fa fa-male fa-5x" />
+										<i class="fa fa-arrow-down fa-1x" />
 									</h:panelGrid>
 								</div>
-								<div class="ui-g-3">
-									<h:panelGrid columns="1">
-										<h:outputText value="Nomor KTP:" />
-										<h:outputText value="#NOMOR KTP" style="font-weight: bold;" />
-										<p:separator style="visibility: hidden;" />
-
-										<h:outputText value="Nomor BPJS:" />
-										<h:outputText value="#NOMOR BPJS" style="font-weight: bold;" />
-										<p:separator style="visibility: hidden;" />
-									</h:panelGrid>
+								<div class="ui-g-12">
+									<p:dataTable id="doctors_data"
+										value="#{patientVisitationBacking.doctors}" var="d"
+										selectionMode="single"
+										selection="#{patientVisitationBacking.doctor}"
+										rowKey="#{d.doctorID}" style="text-align:center;">
+										<p:ajax event="rowSelect" update=":form:finish_btn" />
+										<p:column headerText="Nama">
+											<h:outputText value="#{d.staffName}" />
+										</p:column>
+										<p:column headerText="Posisi">
+											<h:outputText value="#{d.staffPosition}" />
+										</p:column>
+										<p:column headerText="Tipe Dokter">
+											<h:outputText value="#{d.doctorType}" />
+										</p:column>
+									</p:dataTable>
 								</div>
-								<div class="ui-g-3">
-									<h:panelGrid columns="1">
-										<h:outputText value="Nama Lengkap:" />
-										<h:outputText value="#NAMA ORANG" style="font-weight: bold;" />
-										<p:separator style="visibility: hidden;" />
-
-										<h:outputText value="Kelamin:" />
-										<h:outputText value="#KELAMIN" style="font-weight: bold;" />
-										<p:separator style="visibility: hidden;" />
-									</h:panelGrid>
-								</div>
-								<div class="ui-g-3">
-									<h:panelGrid columns="1">
-										<h:outputText value="Tanggal Lahir:" />
-										<h:outputText value="#TANGGAL LAHIR"
-											style="font-weight: bold;" />
-									</h:panelGrid>
-								</div>
-							</div>
+								<p:outputPanel id="finish_btn">
+									<div class="ui-g-12">
+										<p:commandButton
+											rendered="#{patientVisitationBacking.doctor ne null}"
+											value="Selesai" style="float: right;"
+											action="#{patientVisitationBacking.assignPatient}"
+											ajax="false" />
+									</div>
+								</p:outputPanel>
+							</p:outputPanel>
 						</p:outputPanel>
-						<p:outputPanel>
-							<div class="ui-g-12">
-								<h:panelGrid style="margin: 0 auto; padding: 10px;">
-									<i class="fa fa-arrow-down fa-1x" />
-								</h:panelGrid>
-							</div>
-							<div class="ui-g-12"></div>
-						</p:outputPanel>
+
 					</div>
 				</div>
 			</div>
