@@ -294,7 +294,7 @@ public class PatientViewEao {
 		
 		try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call sp_medicalRecordGetAllList(?)}");
+			cs = connection.prepareCall("{call sp_medicalRecordGetAllListPatient(?)}");
 			cs.setInt(1, patientID);
 			
 			rs = cs.executeQuery();
@@ -303,16 +303,64 @@ public class PatientViewEao {
 				MedicalRecord record = new MedicalRecord();
 				record.setRecordID(rs.getInt(1));
 				record.setPatientID(rs.getInt(2));
-				record.setPatientName(rs.getString(3));
-				record.setRecordSEP(rs.getString(4));
-				record.setMedicalSubject(rs.getString(5));
-				record.setMedicalObject(rs.getString(6));
-				record.setMedicalAssessment(rs.getString(7));
-				record.setMedicalPlanning(rs.getString(8));
-				record.setBloodPressure(rs.getInt(9));
-				record.setPatientWeight(rs.getInt(10));
-				record.setPatientHeight(rs.getInt(11));
-				record.setRecordDate(rs.getString(12));
+				record.setDoctorID(rs.getInt(3));
+				record.setDoctorName(rs.getString(6));
+				record.setPatientName(rs.getString(7));
+				record.setRecordSEP(rs.getString(8));
+				record.setMedicalSubject(rs.getString(9));
+				record.setMedicalObject(rs.getString(10));
+				record.setMedicalAssessment(rs.getString(11));
+				record.setMedicalPlanning(rs.getString(12));
+				record.setPatientSystolic(rs.getInt(13));
+				record.setPatientDiastolic(rs.getInt(14));
+				record.setPatientWeight(rs.getInt(15));
+				record.setPatientHeight(rs.getInt(16));
+				record.setPatientBMI(rs.getInt(17));
+				record.setRecordDate(rs.getString(18));
+				medicalRecords.add(record);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs, rs);
+		}
+		
+		return medicalRecords;
+	}
+	
+	public List<MedicalRecord> searchMedicalRecordPatient(int patientID, String fromDate, String toDate){
+		List<MedicalRecord> medicalRecords = new ArrayList<MedicalRecord>();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_medicalRecordSearchPatient(?,?,?)}");
+			cs.setInt(1, patientID);
+			cs.setString(2, fromDate);
+			cs.setString(3, toDate);
+			
+			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				MedicalRecord record = new MedicalRecord();
+				record.setRecordID(rs.getInt(1));
+				record.setPatientID(rs.getInt(2));
+				record.setDoctorID(rs.getInt(3));
+				record.setDoctorName(rs.getString(6));
+				record.setPatientName(rs.getString(7));
+				record.setRecordSEP(rs.getString(8));
+				record.setMedicalSubject(rs.getString(9));
+				record.setMedicalObject(rs.getString(10));
+				record.setMedicalAssessment(rs.getString(11));
+				record.setMedicalPlanning(rs.getString(12));
+				record.setPatientSystolic(rs.getInt(13));
+				record.setPatientDiastolic(rs.getInt(14));
+				record.setPatientWeight(rs.getInt(15));
+				record.setPatientHeight(rs.getInt(16));
+				record.setPatientBMI(rs.getInt(17));
+				record.setRecordDate(rs.getString(18));
 				medicalRecords.add(record);
 			}
 		} catch (Exception e) {

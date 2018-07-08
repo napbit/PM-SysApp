@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Melihat Pasien Medical Record</ui:define>
+
+	<ui:define name="viewname">
+		<h:outputText value="view" />
+	</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-stethoscope fa-5x" />
+						</h:panelGrid>
+					</div>
+
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText
+								value="#{patientViewBacking.medicalRecord.patientName}"
+								style="font-size: 24px;" />
+							<p:button value="Kembali" outcome="view"
+								style="float: right; width: 100px" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Tanggal Kunjungan:" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.recordDate}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Dokter yang Dikunjungi" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.doctorName}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nomor SEP:" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.recordSEP}"
+									rendered="#{patientViewBacking.medicalRecord.recordSEP != null}"
+									style="font-weight: bold;" />
+								<h:outputText value="Tidak ada."
+									rendered="#{patientViewBacking.medicalRecord.recordSEP == null}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-10 ui-g-nopad"
+					style="margin: 0 auto; margin-top: 50px;">
+					<div class="ui-g-2"></div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Medical Record" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Subject:" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.medicalSubject}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Object:" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.medicalObject}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Assessment:" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.medicalAssessment}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1">
+								<h:outputText value="Plan:" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.medicalPlanning}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+				<div class="ui-g-10 ui-g-nopad"
+					style="margin: 0 auto; margin-top: 50px;">
+					<div class="ui-g-2"></div>
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="Pengukuran" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Tinggi: " />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.patientHeight} cm"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Weight: " />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.patientWeight} kg"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Body Mass Index (BMI): " />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.patientBMI}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Systolic: " />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.patientSystolic} mm Hg"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Diastolic :" />
+								<h:outputText
+									value="#{patientViewBacking.medicalRecord.patientDiastolic} mm Hg"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

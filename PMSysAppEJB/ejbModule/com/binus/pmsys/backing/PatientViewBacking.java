@@ -48,6 +48,9 @@ public class PatientViewBacking extends BasicBacking implements Serializable {
 	private List<String> months, contactRelation = new ArrayList<String>();
 	private int[] days;
 	
+	private Date fromDate;
+	private Date toDate;
+	
 	public PatientViewBacking() { }
 	
 	@PostConstruct
@@ -153,6 +156,22 @@ public class PatientViewBacking extends BasicBacking implements Serializable {
 		this.days = days;
 	}
 
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
 	public List<String> getContactRelation() {
 		return contactRelation;
 	}
@@ -194,6 +213,18 @@ public class PatientViewBacking extends BasicBacking implements Serializable {
 	
 	private void getPatientMedicalRecord() {
 		this.medicalRecords = eao.getPatientMedicalRecordList(this.patient.getPatientID());
+	}
+	
+	public void searchPatientMedicalRecord() {
+		String fromDate = DateHelper.formatDateToString(this.fromDate, "yyyy-MM-dd");
+		String toDate = DateHelper.formatDateToString(this.toDate, "yyyy-MM-dd");
+		System.out.println(fromDate + " " + toDate);
+		this.medicalRecords = eao.searchMedicalRecordPatient(this.patient.getPatientID(), fromDate, toDate);
+	}
+	
+	public String viewPatientMedicalRecord(MedicalRecord medicalRecord) {
+		this.medicalRecord = new MedicalRecord(medicalRecord);
+		return "medicalrecord.xhtml?faces-redirect=true";
 	}
 	
 	private void unpackPatientData() {

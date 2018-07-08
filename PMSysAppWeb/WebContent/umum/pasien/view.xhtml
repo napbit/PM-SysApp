@@ -52,6 +52,7 @@
 											style="font-weight: bold;" />
 										<p:separator style="visibility: hidden;" />
 										<p:separator style="visibility: hidden;" />
+										
 										<h:outputText value="Tanggal Lahir:" />
 										<h:outputText value="Nomor BPJS:" />
 										<h:outputText value="#{patientViewBacking.patient.patientDOB}"
@@ -166,18 +167,20 @@
 									<h:outputText value="Dari Tanggal: " />
 									<h:outputText value="Sampai Tanggal: " />
 
-									<p:calendar showOn="button" />
-									<p:calendar showOn="button" />
+									<p:calendar value="#{patientViewBacking.fromDate}"
+										navigator="true" pattern="yyyy-MM-dd" showOn="button" />
+									<p:calendar value="#{patientViewBacking.toDate}"
+										navigator="true" pattern="yyyy-MM-dd" showOn="button" />
 
-									<p:commandButton value="Cari" />
+									<p:commandButton value="Cari" actionListener="#{patientViewBacking.searchPatientMedicalRecord}" update=":form:dt_medicalRecord" />
 								</h:panelGrid>
 							</p:panel>
 						</div>
 						<div class="ui-g-12">
-							<p:dataTable value="#{patientViewBacking.medicalRecords}"
+							<p:dataTable id="dt_medicalRecord" value="#{patientViewBacking.medicalRecords}"
 								var="records" style="text-align:center;">
 								<p:column headerText="Action">
-									<p:commandButton value="Melihat" />
+									<p:commandButton value="Melihat" action="#{patientViewBacking.viewPatientMedicalRecord(records)}" />
 								</p:column>
 								<p:column headerText="Tanggal">
 									<h:outputText value="#{records.recordDate}" />
@@ -185,10 +188,10 @@
 								<p:column headerText="Nama Pasien">
 									<h:outputText value="#{records.patientName}" />
 								</p:column>
-								<p:column headerText="Berat Badan">
+								<p:column headerText="Berat Badan (KG)">
 									<h:outputText value="#{records.patientWeight}" />
 								</p:column>
-								<p:column headerText="Tinggi">
+								<p:column headerText="Tinggi (CM)">
 									<h:outputText value="#{records.patientHeight}" />
 								</p:column>
 							</p:dataTable>

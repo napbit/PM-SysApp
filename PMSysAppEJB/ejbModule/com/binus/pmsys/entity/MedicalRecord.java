@@ -18,9 +18,10 @@ public class MedicalRecord {
 	
 	private int bloodPressure;
 	private int patientSystolic;
-	private int patientSiastolic;
+	private int patientDiastolic;
 	private float patientWeight;
 	private float patientHeight;
+	private float patientBMI;
 	
 	private String recordDate;
 	
@@ -28,6 +29,25 @@ public class MedicalRecord {
 		
 	}
 
+	public MedicalRecord(MedicalRecord mr) {
+		setRecordID(mr.getRecordID());
+		setRecordSEP(mr.getRecordSEP());
+		setDoctorID(mr.getDoctorID());
+		setDoctorName(mr.getDoctorName());
+		setPatientID(mr.getPatientID());
+		setPatientName(mr.getPatientName());
+		setMedicalSubject(mr.getMedicalSubject());
+		setMedicalObject(mr.getMedicalObject());
+		setMedicalAssessment(mr.getMedicalAssessment());
+		setMedicalPlanning(mr.getMedicalPlanning());
+		setPatientSystolic(mr.getPatientSystolic());
+		setPatientDiastolic(mr.getPatientDiastolic());
+		setPatientWeight(mr.getPatientWeight());
+		setPatientHeight(mr.getPatientHeight());
+		setPatientBMI(mr.getPatientBMI());
+		setRecordDate(mr.getRecordDate());
+	}
+	
 	public int getRecordID() {
 		return recordID;
 	}
@@ -92,12 +112,12 @@ public class MedicalRecord {
 		this.patientSystolic = patientSystolic;
 	}
 
-	public int getPatientSiastolic() {
-		return patientSiastolic;
+	public int getPatientDiastolic() {
+		return patientDiastolic;
 	}
 
-	public void setPatientSiastolic(int patientSiastolic) {
-		this.patientSiastolic = patientSiastolic;
+	public void setPatientDiastolic(int patientDiastolic) {
+		this.patientDiastolic = patientDiastolic;
 	}
 
 	public float getPatientWeight() {
@@ -154,6 +174,14 @@ public class MedicalRecord {
 
 	public void setDoctorName(String doctorName) {
 		this.doctorName = doctorName;
+	}
+
+	public float getPatientBMI() {
+		return patientBMI;
+	}
+
+	public void setPatientBMI(float patientBMI) {
+		this.patientBMI = patientBMI;
 	}
 
 }
