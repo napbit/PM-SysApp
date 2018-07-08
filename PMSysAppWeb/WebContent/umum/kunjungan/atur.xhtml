@@ -1,15 +1,55 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Atur Rawat Jalan</ui:define>
-    
-    <ui:define name="content">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Atur Rawat Jalan</ui:define>
+
+	<ui:define name="content">
 		<h:form id="form">
+			<p:dialog header="Memilih Pasien"
+				rendered="#{patientVisitationBacking.patientDialog}">
+				<p:panel>
+					<p:messages />
+					<h:panelGrid columns="1">
+						<h:outputText value="Filter Pencarian:" />
+						<p:selectOneRadio value="#{patientVisitationBacking.filterMode}"
+							layout="grid" columns="2">
+							<f:selectItem itemLabel="No. RM" itemValue="1" />
+							<f:selectItem itemLabel="Nama" itemValue="2" />
+							<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
+							<f:selectItem itemLabel="Tanggal Lahir" itemValue="4" />
+							<p:ajax update=":form:search_input"
+								listener="#{patientVisitationBacking.clearSearchTerm}" />
+						</p:selectOneRadio>
+					</h:panelGrid>
+					<h:panelGrid columns="2" id="search_input">
+						<h:panelGrid columns="3"
+							rendered="#{patientVisitationBacking.filterMode == 4}">
+							<p:selectOneMenu value="#{patientVisitationBacking.day}"
+								style="margin-right: 5px;">
+								<f:selectItems value="#{patientVisitationBacking.days}" />
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{patientVisitationBacking.month}"
+								style="margin-right: 5px;">
+								<f:selectItems value="#{patientVisitationBacking.months}" />
+							</p:selectOneMenu>
+							<p:selectOneMenu value="#{patientVisitationBacking.year}"
+								style="margin-right: 5px;">
+								<f:selectItems value="#{patientVisitationBacking.years}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+						<p:inputText id="search_box"
+							rendered="#{patientVisitationBacking.filterMode ne 4}"
+							value="#{patientVisitationBacking.search}" style="width: 350px;" />
+						<p:commandButton value="Cari"
+							actionListener="#{patientVisitationBacking.onClickSearch}"
+							update=":form:patients_data" />
+					</h:panelGrid>
+				</p:panel>
+			</p:dialog>
+
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
@@ -19,61 +59,63 @@
 					</div>
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
-							<h:outputText value="Daftar Kunjungan Pasien" style="font-size: 24px;" />
+							<h:outputText value="Daftar Kunjungan Pasien"
+								style="font-size: 24px;" />
 							<p:separator />
 						</div>
 						<div class="ui-g-12">
 							<p:commandButton value="Pilih Pasien" />
 						</div>
-						<div class="ui-g-12 ui-g-nopad" style="margin-top: 15px;">
-							<div class="ui-g-3" style="height: 100%">
+						<p:outputPanel>
+							<div class="ui-g-12 ui-g-nopad" style="margin-top: 15px;">
+								<div class="ui-g-3" style="height: 100%">
+									<h:panelGrid style="margin: 0 auto; padding: 10px;">
+										<i class="fa fa-male fa-5x" />
+									</h:panelGrid>
+								</div>
+								<div class="ui-g-3">
+									<h:panelGrid columns="1">
+										<h:outputText value="Nomor KTP:" />
+										<h:outputText value="#NOMOR KTP" style="font-weight: bold;" />
+										<p:separator style="visibility: hidden;" />
+
+										<h:outputText value="Nomor BPJS:" />
+										<h:outputText value="#NOMOR BPJS" style="font-weight: bold;" />
+										<p:separator style="visibility: hidden;" />
+									</h:panelGrid>
+								</div>
+								<div class="ui-g-3">
+									<h:panelGrid columns="1">
+										<h:outputText value="Nama Lengkap:" />
+										<h:outputText value="#NAMA ORANG" style="font-weight: bold;" />
+										<p:separator style="visibility: hidden;" />
+
+										<h:outputText value="Kelamin:" />
+										<h:outputText value="#KELAMIN" style="font-weight: bold;" />
+										<p:separator style="visibility: hidden;" />
+									</h:panelGrid>
+								</div>
+								<div class="ui-g-3">
+									<h:panelGrid columns="1">
+										<h:outputText value="Tanggal Lahir:" />
+										<h:outputText value="#TANGGAL LAHIR"
+											style="font-weight: bold;" />
+									</h:panelGrid>
+								</div>
+							</div>
+						</p:outputPanel>
+						<p:outputPanel>
+							<div class="ui-g-12">
 								<h:panelGrid style="margin: 0 auto; padding: 10px;">
-									<i class="fa fa-male fa-5x" />
-								</h:panelGrid>
-							</div>
-							<div class="ui-g-3">
-								<h:panelGrid columns="1">
-									<h:outputText value="Nomor KTP:" />
-									<h:outputText value="#NOMOR KTP" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Nomor BPJS:" />
-									<h:outputText value="#NOMOR BPJS" style="font-weight: bold;"  />
-									<p:separator style="visibility: hidden;" />
-								</h:panelGrid>
-							</div>
-							<div class="ui-g-3">
-								<h:panelGrid columns="1">
-									<h:outputText value="Nama Lengkap:" />
-									<h:outputText value="#NAMA ORANG" style="font-weight: bold;"  />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Kelamin:" />
-									<h:outputText value="#KELAMIN" style="font-weight: bold;"  />
-									<p:separator style="visibility: hidden;" />
-								</h:panelGrid>
-							</div>
-							<div class="ui-g-3">
-								<h:panelGrid columns="1">
-									<h:outputText value="Tanggal Lahir:" />
-									<h:outputText value="#TANGGAL LAHIR" style="font-weight: bold;"  />
-								</h:panelGrid>
-							</div>
-						</div>
-						<div class="ui-g-12">
-							<h:panelGrid style="margin: 0 auto; padding: 10px;">
 									<i class="fa fa-arrow-down fa-1x" />
-							</h:panelGrid>
-						</div>
-						<div class="ui-g-12">
-							<p:dataGrid columns="1" layout="grid">
-								
-							</p:dataGrid>
-						</div>
+								</h:panelGrid>
+							</div>
+							<div class="ui-g-12"></div>
+						</p:outputPanel>
 					</div>
 				</div>
 			</div>
 		</h:form>
 	</ui:define>
-    	
+
 </ui:composition>
