@@ -1,16 +1,14 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">List Pasien</ui:define>
-    
-    <ui:define name="content">
-    	<h:form id="form">
-    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">List Pasien</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
 						<h:panelGrid style="float: center; margin: 0 auto;">
@@ -20,45 +18,73 @@
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
 							<h:outputText value="List Data Pasien" style="font-size: 24px;" />
+							<p:commandButton value="Refresh Data"
+								actionListener="#{patientViewBacking.refreshPatientData}"
+								ajax="false"
+								update=":form:patients_data"
+								style="float: right;" />
 							<p:separator />
 						</div>
-						
+
 						<div class="ui-g-12">
 							<p:panel>
 								<p:messages />
 								<h:panelGrid columns="1">
 									<h:outputText value="Filter Pencarian:" />
-									<p:selectOneRadio value="#{patientViewBacking.filterMode}" layout="grid" columns="2">
+									<p:selectOneRadio value="#{patientViewBacking.filterMode}"
+										layout="grid" columns="2">
 										<f:selectItem itemLabel="No. RM" itemValue="1" />
 										<f:selectItem itemLabel="Nama" itemValue="2" />
 										<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
 										<f:selectItem itemLabel="Tanggal Lahir" itemValue="4" />
+										<p:ajax update=":form:search_input" listener="#{patientViewBacking.clearSearchTerm}" />
 									</p:selectOneRadio>
 								</h:panelGrid>
-								<h:panelGrid columns="2">
-									<p:inputText id="search_box" value="#{patientViewBacking.search}" style="width: 350px;"  />
-									<p:commandButton value="Cari" actionListener="#{patientViewBacking.onClickSearch}" update=":form:patients_data" />
+								<h:panelGrid columns="2" id="search_input">
+									<h:panelGrid columns="3" rendered="#{patientViewBacking.filterMode == 4}">
+										<p:selectOneMenu value="#{patientViewBacking.day}"
+											style="margin-right: 5px;">
+											<f:selectItems value="#{patientViewBacking.days}" />
+										</p:selectOneMenu>
+										<p:selectOneMenu value="#{patientViewBacking.month}"
+											style="margin-right: 5px;">
+											<f:selectItems value="#{patientViewBacking.months}" />
+										</p:selectOneMenu>
+										<p:selectOneMenu value="#{patientViewBacking.year}"
+											style="margin-right: 5px;">
+											<f:selectItems value="#{patientViewBacking.years}" />
+										</p:selectOneMenu>
+									</h:panelGrid>
+									<p:inputText id="search_box" rendered="#{patientViewBacking.filterMode ne 4}"
+										value="#{patientViewBacking.search}" style="width: 350px;" />
+									<p:commandButton value="Cari"
+										actionListener="#{patientViewBacking.onClickSearch}"
+										update=":form:patients_data" />
 								</h:panelGrid>
 							</p:panel>
 						</div>
-						
+
 						<div class="ui-g-12">
 							<h:panelGrid columns="1">
-								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
+								<p:dataTable id="patients_data"
+									value="#{patientViewBacking.patients}" var="p"
+									style="text-align:center;">
 									<p:column headerText="Action">
-										<p:commandButton value="Melihat" action="#{patientViewBacking.onClickView(p)}" />
+										<p:commandButton value="Melihat"
+											action="#{patientViewBacking.onClickView(p)}" />
 									</p:column>
 									<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
 										<h:outputText value="#{p.patientKTP}" />
 									</p:column>
-									<p:column headerText="Nama" sortBy="#{p.name}">
-										<h:outputText value="#{p.name}" />
+									<p:column headerText="Nama" sortBy="#{p.patientName}">
+										<h:outputText value="#{p.patientName}" />
 									</p:column>
-									<p:column headerText="Jenis Kelamin" sortBy="#{p.gender}">
-										<h:outputText value="#{p.gender}" />
+									<p:column headerText="Jenis Kelamin"
+										sortBy="#{p.patientGender}">
+										<h:outputText value="#{p.patientGender}" />
 									</p:column>
-									<p:column headerText="Tanggal Lahir" sortBy="#{p.birthDate}">
-										<h:outputText value="#{p.birthDate}" />
+									<p:column headerText="Tanggal Lahir" sortBy="#{p.patientDOB}">
+										<h:outputText value="#{p.patientDOB}" />
 									</p:column>
 								</p:dataTable>
 							</h:panelGrid>
@@ -66,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-    	</h:form>
-    </ui:define>    
-    	
+		</h:form>
+	</ui:define>
+
 </ui:composition>

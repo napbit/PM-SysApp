@@ -1,37 +1,46 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Edit #PASIEN NAME</ui:define>
-    
-    <ui:define name="content">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Edit Patient</ui:define>
+
+	<ui:define name="content">
 		<h:form id="form">
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
-						<h:panelGrid style="float: center; margin: 0 auto;">
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientViewBacking.editPatient.patientGender == 'Laki-laki'}">
 							<i class="fa fa-male fa-5x" />
 						</h:panelGrid>
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientViewBacking.editPatient.patientGender == 'Perempuan'}">
+							<i class="fa fa-female fa-5x" />
+						</h:panelGrid>
 					</div>
+
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
-							<h:outputText value="Edit Budi Santoso" style="font-size: 24px;"/>
+							<h:outputText
+								value="Edit #{patientViewBacking.editPatient.patientName}"
+								style="font-size: 24px;" />
 							<p:separator />
+							<p:messages id="edit_msg" closable="true" />
 						</div>
-						
+
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<p:inputText value="#{registrationBacking.patient.name}"
+								<p:inputText
+									value="#{patientViewBacking.editPatient.patientName}"
 									required="true" requiredMessage="Nama perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Jenis Kelamin:" />
-								<p:selectOneMenu value="#{registrationBacking.patient.gender}"
+								<p:selectOneMenu
+									value="#{patientViewBacking.editPatient.patientGender}"
 									required="true" requiredMessage="Jenis Kelamin perlu dipilih.">
 									<f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
 									<f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
@@ -40,17 +49,17 @@
 
 								<h:outputLabel value="Tanggal Lahir:" />
 								<h:panelGrid columns="3">
-									<p:selectOneMenu value="#{registrationBacking.day}"
+									<p:selectOneMenu value="#{patientViewBacking.day}"
 										style="margin-right: 5px;">
-										<f:selectItems value="#{registrationBacking.days}" />
+										<f:selectItems value="#{patientViewBacking.days}" />
 									</p:selectOneMenu>
-									<p:selectOneMenu value="#{registrationBacking.month}"
+									<p:selectOneMenu value="#{patientViewBacking.month}"
 										style="margin-right: 5px;">
-										<f:selectItems value="#{registrationBacking.months}" />
+										<f:selectItems value="#{patientViewBacking.months}" />
 									</p:selectOneMenu>
-									<p:selectOneMenu value="#{registrationBacking.year}"
+									<p:selectOneMenu value="#{patientViewBacking.year}"
 										style="margin-right: 5px;">
-										<f:selectItems value="#{registrationBacking.years}" />
+										<f:selectItems value="#{patientViewBacking.years}" />
 									</p:selectOneMenu>
 									<h:outputText value="Hari" />
 									<h:outputText value="Bulan" />
@@ -63,13 +72,14 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5" id="num_data">
 								<h:outputText value="Nomor KTP:" />
-								<p:inputText value="#{registrationBacking.patient.patientKTP}"
+								<p:inputMask mask="9999999999999999"
+									value="#{patientViewBacking.editPatient.patientKTP}"
 									required="true" requiredMessage="Nomor KTP perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Apakah Mempunyai BPJS?" />
 								<p:selectOneButton required="true"
-									value="#{registrationBacking.patient.hasBPJS}"
+									value="#{patientViewBacking.editPatient.hasBPJS}"
 									requiredMessage="BPJS perlu di pilih.">
 									<f:selectItem itemLabel="Ya" itemValue="1" />
 									<f:selectItem itemLabel="Tidak" itemValue="0" />
@@ -78,9 +88,10 @@
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Nomor BPJS:"
-									rendered="#{registrationBacking.patient.hasBPJS == 1}" />
-								<p:inputText value="#{registrationBacking.patient.patientBPJS}"
-									rendered="#{registrationBacking.patient.hasBPJS == 1}"
+									rendered="#{patientViewBacking.editPatient.hasBPJS == 1}" />
+								<p:inputMask mask="9999999999999"
+									value="#{patientViewBacking.editPatient.patientBPJS}"
+									rendered="#{patientViewBacking.editPatient.hasBPJS == 1}"
 									required="true" requiredMessage="Nomor BPJS perlu di isi." />
 							</h:panelGrid>
 						</div>
@@ -91,25 +102,81 @@
 						</div>
 
 						<div class="ui-g-12">
-							<h:panelGrid columns="1" cellpadding="5">
-								<h:outputText value="Nomor Handphone:" />
-								<p:inputText value="#{registrationBacking.patient.address.noHP}"
-									required="true" requiredMessage="Nomor Handphone perlu di isi." />
+							<h:panelGrid columns="1" cellpadding="5" id="kontak_panel">
+								<h:outputText value="Tipe Telepon: " />
+								<p:selectOneButton required="true"
+									requiredMessage="Tipe Kontak harus di pilih."
+									value="#{patientViewBacking.editPatient.phoneType}">
+									<f:selectItem itemLabel="Telepon Seluler" itemValue="HandPhone" />
+									<f:selectItem itemLabel="Telepon Rumah" itemValue="HomePhone" />
+									<p:ajax update=":form:kontak_panel" />
+								</p:selectOneButton>
 								<p:separator style="visibility: hidden;" />
 
-								<h:outputText value="Nomor Telepon (bila ada):" />
-								<p:inputText
-									value="#{registrationBacking.patient.address.noTel}" />
-								<p:separator style="visibility: hidden;" />
+								<h:outputText value="Nomor Telepon Seluler:"
+									rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}">
+									<p:inputText value="+62" disabled="true" style="width: 40px;"
+										rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}" />
+									<p:inputMask
+										value="#{patientViewBacking.editPatient.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Seluler perlu di isi."
+										mask="99999999999"
+										rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;"
+									rendered="#{patientViewBacking.editPatient.phoneType == 'HandPhone'}" />
+
+								<h:outputText value="Nomor Telepon Rumah:"
+									rendered="#{patientViewBacking.editPatient.phoneType == 'HomePhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{patientViewBacking.editPatient.phoneType == 'HomePhone'}">
+									<p:inputMask mask="099?9"
+										value="#{patientViewBacking.editPatient.frontExtNum}"
+										style="width: 40px;" required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										rendered="#{patientViewBacking.editPatient.phoneType == 'HomePhone'}" />
+									<p:inputMask
+										value="#{patientViewBacking.editPatient.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										mask="999999?99"
+										rendered="#{patientViewBacking.editPatient.phoneType == 'HomePhone'}" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;"
+									rendered="#{patientViewBacking.editPatient.phoneType == 'HomePhone'}" />
 
 								<h:outputText value="Alamat:" />
 								<h:column>
 									<p:inputTextarea required="true"
 										requiredMessage="Alamat perlu di isi."
-										value="#{registrationBacking.patient.address.address}"
-										rows="5" cols="50" maxlength="500" />
+										value="#{patientViewBacking.editPatient.address}" rows="5"
+										cols="50" maxlength="500" />
 								</h:column>
 								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Propinsi: " />
+								<p:selectOneMenu
+									value="#{patientViewBacking.editPatient.provinceID}"
+									required="true" requiredMessage="Propinsi perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Propinsi"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kabupaten" />
+								<p:selectOneMenu
+									value="#{patientViewBacking.editPatient.kabupatenID}"
+									required="true" requiredMessage="Kabupaten perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Kabupaten"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta Barat" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
 							</h:panelGrid>
 						</div>
 
@@ -121,27 +188,37 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Kontak:" />
-								<p:inputText value="#{registrationBacking.patient.relationName}"
+								<p:inputText
+									value="#{patientViewBacking.editPatient.contactName}"
 									required="true" requiredMessage="Nama Kontak perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Hubungan:" />
-								<p:inputText value="#{registrationBacking.patient.relationType}"
-									required="true" requiredMessage="Hubungan perlu di isi." />
+								<p:selectOneMenu
+									value="#{patientViewBacking.editPatient.contactRelationship}"
+									required="true" requiredMessage="Hubungan perlu di isi.">
+									<f:selectItem itemLabel="Pilih hubungan"
+										noSelectionOption="true" />
+									<f:selectItems value="#{patientViewBacking.contactRelation}" />
+								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Nomor Kontak:" />
 								<p:inputText required="true"
 									requiredMessage="Nomor Kontak perlu di isi."
-									value="#{registrationBacking.patient.relationContact}" />
+									value="#{patientViewBacking.editPatient.contactNumber}" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-12">
 							<p:separator />
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Simpan" />
-								<p:commandButton value="Batal" />
+								<p:commandButton value="Simpan" widgetVar="save_btn"
+									onclick="PF('save_btn').disable();"
+									oncomplete="PF('save_btn').enable();"
+									action="#{patientViewBacking.finalizePatientEdit}" 
+									update=":form:edit_msg" />
+								<p:button value="Batal" outcome="view" />
 							</h:panelGrid>
 						</div>
 					</div>
@@ -149,5 +226,5 @@
 			</div>
 		</h:form>
 	</ui:define>
-    	
+
 </ui:composition>
