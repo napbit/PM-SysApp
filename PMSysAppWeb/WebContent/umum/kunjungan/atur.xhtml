@@ -62,7 +62,7 @@
 					rowKey="#{p.patientID}">
 					<p:ajax event="rowDblselect"
 						listener="#{patientVisitationBacking.handlePatientSelection}"
-						update=":form:patient_dialog :form:patient_view :form:doctor_view" />
+						update=":form:patient_dialog :form:patient_view :form:doctor_view :form:welcome_view" />
 					<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
 						<h:outputText value="#{p.patientKTP}" />
 					</p:column>
@@ -98,6 +98,16 @@
 								update=":form:patient_dialog" style="float: right;" />
 							<p:separator />
 						</div>
+
+						<p:outputPanel id="welcome_view">
+							<p:outputPanel rendered="#{patientVisitationBacking.welcomeView}">
+								<div class="ui-g-12" style="margin-top: 100px;">
+									<h:panelGrid columns="1" style="text-align: center; margin: 0 auto;">
+										<h:outputText value="Silahkan Memilih Pasien" style="font-size: 32px;" />
+									</h:panelGrid>
+								</div>
+							</p:outputPanel>
+						</p:outputPanel>
 
 						<p:outputPanel id="patient_view">
 							<p:outputPanel rendered="#{patientVisitationBacking.patientView}">

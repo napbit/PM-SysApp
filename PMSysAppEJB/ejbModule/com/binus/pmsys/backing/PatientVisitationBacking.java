@@ -258,6 +258,7 @@ public class PatientVisitationBacking extends BasicBacking {
 	
 	public void handlePatientSelection() {
 		handleDialog();
+		setWelcomeView(false);
 		setPatientView(true);
 		initilizeDoctors();
 		setDoctorView(true);
