@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import com.binus.pmsys.eao.PatientDiagnosisEao;
 import com.binus.pmsys.entity.MedicalRecord;
+import com.binus.pmsys.entity.NewPatient;
 import com.binus.pmsys.entity.Visitation;
 
 @Named
@@ -24,17 +25,20 @@ public class PatientDiagnosisBacking implements Serializable {
 	private String search;
 	private int filterMode;
 	
+	private NewPatient patient;
 	private MedicalRecord medicalRecord;
+	
+	private Visitation visit;
 	private List<Visitation> visits;
 	
-	private boolean medicineDialog, sepDialog;
+	private boolean medicineDialog;
 	
 	public PatientDiagnosisBacking() {	}
 	
 	@PostConstruct
 	public void init() {
 		visits = new ArrayList<Visitation>();
-		visits = eao.getListByDoctor(1);
+		visits = eao.getListByDoctor(1); // TODO: get by login
 	}
 	
 	public boolean isMedicineDialog() {
@@ -45,14 +49,6 @@ public class PatientDiagnosisBacking implements Serializable {
 		this.medicineDialog = medicineDialog;
 	}
 	
-	public boolean isSepDialog() {
-		return sepDialog;
-	}
-
-	public void setSepDialog(boolean sepDialog) {
-		this.sepDialog = sepDialog;
-	}
-
 	public String getSearch() {
 		return search;
 	}
@@ -85,6 +81,14 @@ public class PatientDiagnosisBacking implements Serializable {
 		this.medicalRecord = medicalRecord;
 	}
 
+	public Visitation getVisit() {
+		return visit;
+	}
+
+	public void setVisit(Visitation visit) {
+		this.visit = visit;
+	}
+
 	public void dialogCloseListener() {
 		setMedicineDialog(false);
 	}
@@ -93,12 +97,9 @@ public class PatientDiagnosisBacking implements Serializable {
 		setMedicineDialog(true);
 	}
 	
-	public void openDiagnoseDialog() {
+	public String diagnosePatient(Visitation visit) {
+		this.visit = new Visitation(visit);
 		medicalRecord = new MedicalRecord();
-		setSepDialog(true);
-	}
-	
-	public void diagnosePatient(Visitation visit) {
-		
+		return "diagnosa.xhtml?faces-redirect=true";
 	}
 }

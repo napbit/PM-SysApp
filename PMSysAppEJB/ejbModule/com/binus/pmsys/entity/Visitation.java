@@ -24,6 +24,8 @@ public class Visitation implements Serializable {
 	private String apptTime;
 	private String apptDate;
 	
+	private int apptFinish;
+	
 	public Visitation() { }
 	
 	public Visitation(Visitation vis) {
@@ -39,6 +41,7 @@ public class Visitation implements Serializable {
 		setStaffName(vis.getStaffName());
 		setApptTime(vis.getApptTime());
 		setApptDate(vis.getApptDate());
+		setApptFinish(vis.getApptFinish());
 	}
 	
 	public int getApptID() {
@@ -135,6 +138,14 @@ public class Visitation implements Serializable {
 
 	public void setApptDate(String apptDate) {
 		this.apptDate = apptDate;
+	}
+
+	public int getApptFinish() {
+		return apptFinish;
+	}
+
+	public void setApptFinish(int apptFinish) {
+		this.apptFinish = apptFinish;
 	}
 
 }

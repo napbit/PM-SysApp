@@ -8,20 +8,6 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<p:dialog id="sep_dialog" header="Surat Eligibilitas Peserta"
-				visible="#{patientDiagnosisBacking.sepDialog}">
-				<h:panelGrid columns="1" cellpadding="5">
-					<h:outputText value="Nomor SEP: " />
-					<h:inputText
-						value="#{patientDiagnosisBacking.medicalRecord.recordSEP}" />
-					<p:separator style="visibility: hidden;" />
-				</h:panelGrid>
-				<h:panelGrid columns="2">
-					<p:commandButton value="Simpan" />
-					<p:commandButton value="Batal" />
-				</h:panelGrid>
-			</p:dialog>
-
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
@@ -46,6 +32,8 @@
 										<f:selectItem itemLabel="Nama" itemValue="2" />
 										<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
 										<f:selectItem itemLabel="Tanggal Lahir" itemValue="4" />
+										<f:selectItem itemLabel="Tanggal Daftar Kunjung" itemValue="5" />
+										<f:selectItem itemLabel="Jam Daftar Kunjung" itemValue="6" />
 									</p:selectOneRadio>
 								</h:panelGrid>
 								<h:panelGrid columns="2">
@@ -58,11 +46,11 @@
 						<div class="ui-g-12">
 							<h:panelGrid columns="1">
 								<p:dataTable id="patients_data"
-									value="#{patientDiagnosisBacking.visits}" var="v">
+									value="#{patientDiagnosisBacking.visits}" var="v"
+									style="text-align: center;">
 									<p:column headerText="Action">
-										<p:commandButton value="Diagnosa"
-											actionListener="#{patientDiagnosisBacking.openDiagnoseDialog}"
-											update=":form:sep_dialog" />
+										<p:commandButton value="Diagnosa" process="@this"
+											action="#{patientDiagnosisBacking.diagnosePatient(v)}" />
 									</p:column>
 									<p:column headerText="Nama Pasien" sortBy="#{v.patientName}">
 										<h:outputText value="#{v.patientName}" />
@@ -74,16 +62,10 @@
 									<p:column headerText="Tanggal Lahir" sortBy="#{v.patientDOB}">
 										<h:outputText value="#{v.patientDOB}" />
 									</p:column>
-									<p:column headerText="Dokter" sortBy="#{v.staffName}">
-										<h:outputText value="#{v.staffName}" />
-									</p:column>
-									<p:column headerText="Tipe Dokter" sortBy="#{v.doctorType}">
-										<h:outputText value="#{v.doctorType}" />
-									</p:column>
-									<p:column headerText="Tanggal">
+									<p:column headerText="Tanggal Daftar Kunjung" sortBy="#{v.apptDate}">
 										<h:outputText value="#{v.apptDate}" />
 									</p:column>
-									<p:column headerText="Jam">
+									<p:column headerText="Jam Daftar Kunjung" sortBy="#{v.apptTime}">
 										<h:outputText value="#{v.apptTime}" />
 									</p:column>
 								</p:dataTable>
