@@ -1,15 +1,27 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Kunjungan Pasen dengan Dokter</ui:define>
-    
-    <ui:define name="content">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Kunjungan Pasien dengan Dokter</ui:define>
+
+	<ui:define name="content">
 		<h:form id="form">
+			<p:dialog id="sep_dialog" header="Surat Eligibilitas Peserta"
+				visible="#{patientDiagnosisBacking.sepDialog}">
+				<h:panelGrid columns="1" cellpadding="5">
+					<h:outputText value="Nomor SEP: " />
+					<h:inputText
+						value="#{patientDiagnosisBacking.medicalRecord.recordSEP}" />
+					<p:separator style="visibility: hidden;" />
+				</h:panelGrid>
+				<h:panelGrid columns="2">
+					<p:commandButton value="Simpan" />
+					<p:commandButton value="Batal" />
+				</h:panelGrid>
+			</p:dialog>
+
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
@@ -22,13 +34,14 @@
 							<h:outputText value="Kunjungan Pasien" style="font-size: 24px;" />
 							<p:separator />
 						</div>
-						
+
 						<div class="ui-g-12">
 							<p:panel>
 								<p:messages />
 								<h:panelGrid columns="1">
 									<h:outputText value="Filter Pencarian:" />
-									<p:selectOneRadio layout="grid" value="#{assignPatientBacking.filterMode}" columns="2">
+									<p:selectOneRadio layout="grid"
+										value="#{patientDiagnosis.filterMode}" columns="2">
 										<f:selectItem itemLabel="No. RM" itemValue="1" />
 										<f:selectItem itemLabel="Nama" itemValue="2" />
 										<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
@@ -37,28 +50,41 @@
 								</h:panelGrid>
 								<h:panelGrid columns="2">
 									<p:inputText style="width: 350px;" />
-									<p:commandButton  value="Cari" />
+									<p:commandButton value="Cari" />
 								</h:panelGrid>
 							</p:panel>
 						</div>
-						
+
 						<div class="ui-g-12">
 							<h:panelGrid columns="1">
-								<p:dataTable id="patients_data" value="#{patientViewBacking.patients}" var="p" style="text-align:center;">
+								<p:dataTable id="patients_data"
+									value="#{patientDiagnosisBacking.visits}" var="v">
 									<p:column headerText="Action">
-										<p:commandButton value="Diagnosa" />
+										<p:commandButton value="Diagnosa"
+											actionListener="#{patientDiagnosisBacking.openDiagnoseDialog}"
+											update=":form:sep_dialog" />
 									</p:column>
-									<p:column headerText="No. RM" sortBy="#{p.patientKTP}">
-										<h:outputText value="#{p.patientKTP}" />
+									<p:column headerText="Nama Pasien" sortBy="#{v.patientName}">
+										<h:outputText value="#{v.patientName}" />
 									</p:column>
-									<p:column headerText="Nama" sortBy="#{p.name}">
-										<h:outputText value="#{p.name}" />
+									<p:column headerText="Jenis Kelamin Pasien"
+										sortBy="#{v.patientGender}">
+										<h:outputText value="#{v.patientGender}" />
 									</p:column>
-									<p:column headerText="Jenis Kelamin" sortBy="#{p.gender}">
-										<h:outputText value="#{p.gender}" />
+									<p:column headerText="Tanggal Lahir" sortBy="#{v.patientDOB}">
+										<h:outputText value="#{v.patientDOB}" />
 									</p:column>
-									<p:column headerText="Tanggal Lahir" sortBy="#{p.birthDate}">
-										<h:outputText value="#{p.birthDate}" />
+									<p:column headerText="Dokter" sortBy="#{v.staffName}">
+										<h:outputText value="#{v.staffName}" />
+									</p:column>
+									<p:column headerText="Tipe Dokter" sortBy="#{v.doctorType}">
+										<h:outputText value="#{v.doctorType}" />
+									</p:column>
+									<p:column headerText="Tanggal">
+										<h:outputText value="#{v.apptDate}" />
+									</p:column>
+									<p:column headerText="Jam">
+										<h:outputText value="#{v.apptTime}" />
 									</p:column>
 								</p:dataTable>
 							</h:panelGrid>
@@ -68,5 +94,5 @@
 			</div>
 		</h:form>
 	</ui:define>
-    	
+
 </ui:composition>

@@ -1,0 +1,104 @@
+package com.binus.pmsys.backing;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
+import com.binus.pmsys.eao.PatientDiagnosisEao;
+import com.binus.pmsys.entity.MedicalRecord;
+import com.binus.pmsys.entity.Visitation;
+
+@Named
+@SessionScoped
+public class PatientDiagnosisBacking implements Serializable {
+	private static final long serialVersionUID = 700326609867752540L;
+	
+	@EJB
+	private transient PatientDiagnosisEao eao;
+	
+	private String search;
+	private int filterMode;
+	
+	private MedicalRecord medicalRecord;
+	private List<Visitation> visits;
+	
+	private boolean medicineDialog, sepDialog;
+	
+	public PatientDiagnosisBacking() {	}
+	
+	@PostConstruct
+	public void init() {
+		visits = new ArrayList<Visitation>();
+		visits = eao.getListByDoctor(1);
+	}
+	
+	public boolean isMedicineDialog() {
+		return medicineDialog;
+	}
+
+	public void setMedicineDialog(boolean medicineDialog) {
+		this.medicineDialog = medicineDialog;
+	}
+	
+	public boolean isSepDialog() {
+		return sepDialog;
+	}
+
+	public void setSepDialog(boolean sepDialog) {
+		this.sepDialog = sepDialog;
+	}
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	public int getFilterMode() {
+		return filterMode;
+	}
+
+	public void setFilterMode(int filterMode) {
+		this.filterMode = filterMode;
+	}
+
+	public List<Visitation> getVisits() {
+		return visits;
+	}
+
+	public void setVisits(List<Visitation> visits) {
+		this.visits = visits;
+	}
+
+	public MedicalRecord getMedicalRecord() {
+		return medicalRecord;
+	}
+
+	public void setMedicalRecord(MedicalRecord medicalRecord) {
+		this.medicalRecord = medicalRecord;
+	}
+
+	public void dialogCloseListener() {
+		setMedicineDialog(false);
+	}
+	
+	public void openMedicineDialog() {
+		setMedicineDialog(true);
+	}
+	
+	public void openDiagnoseDialog() {
+		medicalRecord = new MedicalRecord();
+		setSepDialog(true);
+	}
+	
+	public void diagnosePatient(Visitation visit) {
+		
+	}
+}
