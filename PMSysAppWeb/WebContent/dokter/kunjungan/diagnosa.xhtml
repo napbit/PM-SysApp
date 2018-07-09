@@ -8,6 +8,10 @@
 
 	<ui:define name="content">
 		<h:form id="form">
+			<p:panel header="Data Pasien" visible>
+				
+			</p:panel>
+		
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
@@ -95,12 +99,6 @@
 										style="margin-right: 10px;" />
 									<h:outputText value="kg" />
 								</h:column>
-
-								<p:separator style="visibility: hidden;" />
-
-								<h:outputText value="Body Mass Index (BMI): " />
-								<h:outputText
-									value="#{patientDiagnosisBacking.medicalRecord.patientBMI}" />
 							</h:panelGrid>
 						</div>
 

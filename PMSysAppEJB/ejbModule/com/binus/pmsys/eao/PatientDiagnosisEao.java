@@ -44,6 +44,7 @@ public class PatientDiagnosisEao {
 				visit.setStaffName(rs.getString(10));
 				visit.setApptTime(rs.getString(11));
 				visit.setApptDate(rs.getString(12));
+				visit.setApptFinish(rs.getInt(13));
 				visits.add(visit);
 			}
 		} catch (Exception e) {

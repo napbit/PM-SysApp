@@ -89,6 +89,14 @@ public class PatientDiagnosisBacking implements Serializable {
 		this.visit = visit;
 	}
 
+	public NewPatient getPatient() {
+		return patient;
+	}
+
+	public void setPatient(NewPatient patient) {
+		this.patient = patient;
+	}
+
 	public void dialogCloseListener() {
 		setMedicineDialog(false);
 	}
