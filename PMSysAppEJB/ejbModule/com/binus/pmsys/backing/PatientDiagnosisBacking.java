@@ -22,7 +22,7 @@ import com.binus.pmsys.enums.DiagnosisEnum;
 
 @Named
 @SessionScoped
-public class PatientDiagnosisBacking implements Serializable {
+public class PatientDiagnosisBacking extends BasicBacking {
 	private static final long serialVersionUID = 700326609867752540L;
 	
 	@EJB
@@ -209,7 +209,7 @@ public class PatientDiagnosisBacking implements Serializable {
 	}
 	
 	public String redirectPerscription() {
-		if(perscriptions != null) {
+		if(perscriptions == null) {
 			perscriptions = new ArrayList<Perscription>();
 		}
 		

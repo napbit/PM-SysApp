@@ -244,6 +244,9 @@
 								actionListener="#{patientDiagnosisBacking.openPatientDialog}"
 								style="float: right;" />
 							<p:separator />
+							<p:messages>
+								<p:autoUpdate />
+							</p:messages>
 						</div>
 
 						<div class="ui-g-12">
@@ -378,7 +381,7 @@
 
 						<div class="ui-g-12">
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Selesai" />
+								<p:commandButton value="Selesai" action="#{patientDiagnosisBacking.finalizeDiagnoseVisitation}" />
 								<p:button value="Kembali" outcome="diagnosa" />
 							</h:panelGrid>
 						</div>

@@ -95,6 +95,7 @@ public class PatientDiagnosisEao {
 			cs.setInt(10, record.getPatientWeight());
 			cs.setInt(11, record.getPatientHeight());
 			cs.setString(12, record.getRecordDate());
+			cs.execute();
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
