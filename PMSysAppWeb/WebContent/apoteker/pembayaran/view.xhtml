@@ -12,16 +12,64 @@
 
 	<ui:define name="content">
 		<h:form id="form">
+			<p:dialog header="Bayar" width="500" visible="true" modal="true">
+				<div class="ui-g">
+					<div class="ui-g-6">
+						<h:panelGrid>
+							<h:outputText value="Total pembayaran: " />
+							<p:separator style="visibility: hidden;" />
+							<h:outputText value="Total bayar: " />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-6">
+						<h:panelGrid>
+							<h:outputText value="#{paymentBacking.payment.finalPrice}"
+								style="font-weight: bold;">
+								<f:convertNumber type="currency" currencySymbol="Rp. " />
+							</h:outputText>
+							<p:separator style="visibility: hidden;" />
+							<p:inputText value="#{paymentBacking.payment.paid}">
+								<p:ajax event="blur"
+									listener="#{paymentBacking.calculateChange}"
+									update=":form:change_txt" />
+							</p:inputText>
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-12">
+						<p:separator />
+					</div>
+					<div class="ui-g-6">
+						<h:panelGrid>
+							<h:outputText value="Kembalian: " />
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-6">
+						<h:panelGrid>
+							<h:outputText id="change_txt"
+								value="#{paymentBacking.payment.change}" style="font-weight: bold;" >
+								<f:convertNumber type="currency" currencySymbol="Rp. " />	
+							</h:outputText>
+						</h:panelGrid>
+					</div>
+					<div class="ui-g-12">
+						<h:panelGrid columns="2" style="float: center;">
+							<p:commandButton value="Selesai" />
+							<p:commandButton value="Batal" />
+						</h:panelGrid>
+					</div>
+				</div>
+			</p:dialog>
+
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 
 					<div class="ui-g-2" style="height: 100%;">
 						<h:panelGrid style="float: center; margin: 0 auto;"
-							rendered="#{patientViewBacking.patient.patientGender == 'Laki-laki'}">
+							rendered="#{paymentBacking.patient.patientGender == 'Laki-laki'}">
 							<i class="fa fa-male fa-5x" />
 						</h:panelGrid>
 						<h:panelGrid style="float: center; margin: 0 auto;"
-							rendered="#{patientViewBacking.patient.patientGender == 'Perempuan'}">
+							rendered="#{paymentBacking.patient.patientGender == 'Perempuan'}">
 							<i class="fa fa-female fa-5x" />
 						</h:panelGrid>
 					</div>
@@ -32,12 +80,44 @@
 							<p:button value="Kembali" outcome="list"
 								style="float: right; width: 100px" />
 							<p:separator />
-							<p:messages>
-								<p:autoUpdate></p:autoUpdate>
-							</p:messages>
 						</div>
 
-						<div class="ui-g-12"></div>
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama: " />
+								<h:outputText value="#{paymentBacking.patient.patientName}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<p:column>
+									<h:outputText value="Nomor Handphone: "
+										rendered="#{paymentBacking.patient.phoneType == 'HandPhone'}" />
+									<h:outputText value="Nomor Telephone: "
+										rendered="#{paymentBacking.patient.phoneType == 'HomePhone'}" />
+								</p:column>
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid cellpadding="5">
+								<h:outputText value="Nomor BPJS: " />
+								<p:column>
+									<h:outputText value="#{paymentBacking.patient.patientBPJS}"
+										rendered="#{paymentBacking.patient.patientBPJS != null}"
+										style="font-weight: bold;" />
+									<h:outputText value="Tidak Punya"
+										rendered="#{paymentBacking.patient.patientBPJS == null}"
+										style="font-weight: bold;" />
+								</p:column>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tipe BPJS: "
+									rendered="#{paymentBacking.patient.patientBPJS != null}" />
+								<h:outputText value="#{paymentBacking.patient.patientBPJSType}"
+									rendered="#{paymentBacking.patient.patientBPJS != null}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
 
 					</div>
 				</div>
@@ -50,6 +130,27 @@
 							<h:outputText value="Dokter" style="font-size: 24px;" />
 							<p:separator />
 						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama: " />
+								<h:outputText value="#{paymentBacking.doctor.staffName}"
+									style="font-weight: bold" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tipe Dokter: " />
+								<h:outputText value="#{paymentBacking.doctor.doctorType}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid cellpadding="5">
+								<h:outputText value="Tanggal Kunjungan: " />
+								<h:outputText value="#{paymentBacking.payment.date}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
+						</div>
 					</div>
 				</div>
 
@@ -59,18 +160,21 @@
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
 							<h:outputText value="Resep" style="font-size: 24px;" />
+							<p:commandButton value="Kalkulasikan Total"
+								update=":form:final_price"
+								actionListener="#{paymentBacking.calculateFinalTotals}"
+								style="float: right;" />
 							<p:separator />
 						</div>
 						<div class="ui-g-12">
 							<p:dataGrid id="meds_data" columns="1"
-								value="#{patientDiagnosisBacking.perscriptions}" layout="grid"
-								var="meds">
+								value="#{paymentBacking.perscriptions}" layout="grid" var="meds">
 								<f:facet name="header">
 									<h:outputText value="Obat" />
 								</f:facet>
 								<div class="ui-g"
 									style="border-width: 1px; border-style: solid;">
-									<div class="ui-g-6">
+									<div class="ui-g-3">
 										<h:panelGrid columns="1">
 											<h:outputText value="Obat:" />
 											<h:outputText value="#{meds.medName}"
@@ -83,6 +187,27 @@
 
 										</h:panelGrid>
 									</div>
+									<div class="ui-g-3">
+										<h:panelGrid>
+											<h:outputText value="Harga: " />
+											<h:outputText value="#{meds.medPrice}"
+												style="font-weight: bold;">
+												<f:convertNumber type="currency" currencySymbol="Rp. " />
+											</h:outputText>
+											<p:separator style="visibility: hidden;" />
+
+											<h:outputText value="HNA:" />
+											<h:outputText value="#{meds.medHNA}"
+												style="font-weight: bold;">
+												<f:convertNumber type="currency" currencySymbol="Rp. " />
+											</h:outputText>
+											<p:separator style="visibility: hidden;" />
+
+											<h:outputText value="PPN:" />
+											<h:outputText value="#{meds.medPPN}%"
+												style="font-weight: bold;" />
+										</h:panelGrid>
+									</div>
 									<div class="ui-g-6">
 										<h:panelGrid columns="1">
 											<h:outputText value="Instruksi" />
@@ -93,8 +218,39 @@
 								</div>
 							</p:dataGrid>
 						</div>
+
+						<p:outputPanel id="final_price">
+							<p:outputPanel rendered="#{paymentBacking.finalCalcPanel}">
+								<div class="ui-g-12 ui-g-nopad">
+									<div class="ui-g-12">
+										<p:separator />
+									</div>
+									<div class="ui-g-3">
+										<h:panelGrid cellpadding="5">
+											<h:outputText value="Total Pembayaran: " />
+										</h:panelGrid>
+									</div>
+									<div class="ui-g-3">
+										<h:panelGrid cellpadding="5">
+											<h:outputText value="#{paymentBacking.payment.finalPrice}"
+												style="font-weight: bold;">
+												<f:convertNumber type="currency" currencySymbol="Rp. " />
+											</h:outputText>
+										</h:panelGrid>
+									</div>
+									<div class="ui-g-6">
+										<h:panelGrid columns="2" style="float: right;">
+											<p:commandButton value="Bayar" />
+											<p:button value="Batal" outcome="list" />
+										</h:panelGrid>
+									</div>
+								</div>
+							</p:outputPanel>
+						</p:outputPanel>
+
 					</div>
 				</div>
+
 			</div>
 		</h:form>
 	</ui:define>

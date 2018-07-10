@@ -8,7 +8,9 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
+import com.binus.pmsys.eao.DoctorEao;
 import com.binus.pmsys.eao.PatientViewEao;
+import com.binus.pmsys.eao.PaymentEao;
 import com.binus.pmsys.entity.Doctor;
 import com.binus.pmsys.entity.NewPatient;
 import com.binus.pmsys.entity.Payment;
@@ -22,6 +24,12 @@ public class PaymentBacking extends BasicBacking{
 	@EJB
 	private transient PatientViewEao patientEao;
 	
+	@EJB
+	private transient DoctorEao doctorEao;
+	
+	@EJB
+	private transient PaymentEao eao;
+	
 	private int filterMode;
 	private String search;
 	
@@ -33,14 +41,16 @@ public class PaymentBacking extends BasicBacking{
 	
 	private List<Perscription> perscriptions;
 	
+	private boolean finalCalcPanel;
+	
 	public PaymentBacking() { }
 	
 	@PostConstruct
 	public void init() {
-		setPayments(getPreFill());
+		setPayments(dataPreFill());
 	}
 	
-	public List<Payment> getPreFill(){
+	public List<Payment> dataPreFill(){
 		List<Payment> pays = new ArrayList<Payment>();
 		Payment pay = new Payment(1, 1438, "Sandy", 1, "Branningham", 0, 0, "BPJS", "2018-07-10");
 		Payment pay2 = new Payment(2, 1440, "Rio Santoso", 1, "Branningham", 0, 0, "Non-BPJS", "2018-07-10");
@@ -105,9 +115,40 @@ public class PaymentBacking extends BasicBacking{
 		this.perscriptions = perscriptions;
 	}
 
+	public boolean isFinalCalcPanel() {
+		return finalCalcPanel;
+	}
+
+	public void setFinalCalcPanel(boolean finalCalcPanel) {
+		this.finalCalcPanel = finalCalcPanel;
+	}
+
 	public String viewBillingDetail(Payment pay) {
 		this.payment = new Payment(pay);
-		this.patient = patientEao.getPatientAllData(pay.getPatientID());
+		this.patient = patientEao.getPatientAllData(payment.getPatientID());
+		this.doctor = doctorEao.getDoctorAllData(payment.getDoctorID());
+		this.perscriptions = eao.getPerscriptionByPatient(payment.getPatientID());
+		
 		return "view.xhtml?faces-redirect=true";
+	}
+	
+	public void calculateFinalTotals() {
+		for (Perscription pers : perscriptions) {
+			payment.setSum(runningSum(payment.getSum(), pers.getMedFinalPrice()));
+		}
+		
+		payment.setFinalPrice(payment.getSum());
+		
+		setFinalCalcPanel(true);
+		
+		System.out.println(payment.getFinalPrice());
+	}
+	
+	public void calculateChange() {
+		payment.setChange(payment.getPaid() - payment.getFinalPrice());
+	}
+	
+	private float runningSum(float currSum, float finalPrice) {
+		return currSum + finalPrice;
 	}
 }

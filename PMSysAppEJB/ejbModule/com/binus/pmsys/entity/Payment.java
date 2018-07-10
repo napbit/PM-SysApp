@@ -18,6 +18,8 @@ public class Payment implements Serializable{
 	
 	private float sum;
 	private float finalPrice;
+	private float paid;
+	private float change;
 	
 	private String paymentType;
 	private String date;
@@ -34,6 +36,8 @@ public class Payment implements Serializable{
 		setFinalPrice(p.getFinalPrice());
 		setPaymentType(p.getPaymentType());
 		setDate(p.getDate());
+		setPaid(p.getPaid());
+		setChange(p.getChange());
 	}
 	
 	public Payment(int billID, int patientID, String patientName, int doctorID, String doctorName, float sum,
@@ -122,6 +126,22 @@ public class Payment implements Serializable{
 
 	public void setDate(String date) {
 		this.date = date;
+	}
+
+	public float getPaid() {
+		return paid;
+	}
+
+	public void setPaid(float paid) {
+		this.paid = paid;
+	}
+
+	public float getChange() {
+		return change;
+	}
+
+	public void setChange(float change) {
+		this.change = change;
 	}
 
 }

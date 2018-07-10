@@ -26,24 +26,35 @@ public class DoctorEao {
     }
     
     public Doctor getDoctorAllData(int doctorID) {
-    	Doctor doctor = new Doctor();
+    	Doctor doc = new Doctor();
     	Connection connection = null;
     	CallableStatement cs = null;
     	ResultSet rs = null;
     	
     	try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call sp_}");
+			cs = connection.prepareCall("{call sp_doctorGetAllData(?)}");
 			cs.setInt(1, doctorID);
 			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				doc.setDoctorID(rs.getInt(1));
+				doc.setStaffID(rs.getInt(2));
+				doc.setStaffName(rs.getString(3));
+				doc.setStaffGender(rs.getString(4));
+				doc.setPositionID(rs.getInt(5));
+				doc.setStaffPosition(rs.getString(6));
+				doc.setDoctorTypeID(rs.getInt(7));
+				doc.setDoctorType(rs.getString(8));
+				doc.setClinicName(rs.getString(9));
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ReleaseConnection.close(connection, cs, rs);
 		}
     	
-    	
-    	return doctor;
+    	return doc;
     }
 
 }

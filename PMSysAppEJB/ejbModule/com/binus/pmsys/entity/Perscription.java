@@ -16,6 +16,11 @@ public class Perscription implements Serializable{
 	private String medType;
 	private String activeIngredients;
 	
+	private float medFinalPrice;
+	private float medPrice;
+	private float medHNA;
+	private float medPPN;
+	
 	private int patID;
 	private String patName;
 	
@@ -33,6 +38,14 @@ public class Perscription implements Serializable{
 		setMedCategory(per.getMedCategory());
 		setMedType(per.getMedType());
 		setActiveIngredients(per.getActiveIngredients());
+		setMedPrice(per.getMedPrice());
+		setMedHNA(per.getMedHNA());
+		setMedPPN(per.getMedPPN());
+		setMedFinalPrice(per.getMedFinalPrice());
+	}
+	
+	public float calculateFinalPrice() {
+		return (this.medHNA * (this.medPPN/100 + 1)) + medPrice;
 	}
 	
 	public int getPerID() {
@@ -105,6 +118,38 @@ public class Perscription implements Serializable{
 
 	public void setActiveIngredients(String activeIngredients) {
 		this.activeIngredients = activeIngredients;
+	}
+
+	public float getMedPrice() {
+		return medPrice;
+	}
+
+	public void setMedPrice(float medPrice) {
+		this.medPrice = medPrice;
+	}
+
+	public float getMedHNA() {
+		return medHNA;
+	}
+
+	public void setMedHNA(float medHNA) {
+		this.medHNA = medHNA;
+	}
+
+	public float getMedPPN() {
+		return medPPN;
+	}
+
+	public void setMedPPN(float medPPN) {
+		this.medPPN = medPPN;
+	}
+
+	public float getMedFinalPrice() {
+		return medFinalPrice;
+	}
+
+	public void setMedFinalPrice(float medFinalPrice) {
+		this.medFinalPrice = medFinalPrice;
 	}
 
 }

@@ -51,7 +51,7 @@
 									var="p"
 									style="text-align: center;">
 									<p:column headerText="Action">
-										<p:commandButton value="Bayar" />
+										<p:commandButton value="Bayar" action="#{paymentBacking.viewBillingDetail(p)}"/>
 									</p:column>
 									<p:column headerText="Nama Pasien">
 										<h:outputText value="#{p.patientName}" />
