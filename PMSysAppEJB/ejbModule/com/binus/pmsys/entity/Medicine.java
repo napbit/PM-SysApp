@@ -15,9 +15,10 @@ public class Medicine implements Serializable{
 	private String activeIngredients;
 	
 	private int stockQty;
-	private float medicinePrice;
+	private float medicinePrice; // MARKUP
 	private float medicineHNA;
 	private float medicinePPN;
+	private float medicineFinalPrice;
 	
 	private String expDate;
 	
@@ -33,6 +34,12 @@ public class Medicine implements Serializable{
 		setMedicinePrice(m.getMedicinePrice());
 		setMedicineHNA(m.getMedicineHNA());
 		setMedicinePPN(m.getMedicinePPN());
+		setMedicineFinalPrice(m.getMedicineFinalPrice());
+		setExpDate(m.getExpDate());
+	}
+	
+	public float calculateFinalPrice() {
+		return (this.medicineHNA * (this.medicinePPN/100 + 1)) + medicinePrice;
 	}
 	
 	public int getMedID() {
@@ -113,6 +120,14 @@ public class Medicine implements Serializable{
 
 	public void setExpDate(String expDate) {
 		this.expDate = expDate;
+	}
+
+	public float getMedicineFinalPrice() {
+		return medicineFinalPrice;
+	}
+
+	public void setMedicineFinalPrice(float medicineFinalPrice) {
+		this.medicineFinalPrice = medicineFinalPrice;
 	}
 	
 	

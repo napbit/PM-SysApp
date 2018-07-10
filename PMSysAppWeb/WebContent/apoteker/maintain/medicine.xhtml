@@ -51,7 +51,7 @@
 									var="meds"
 									style="text-align: center;">
 									<p:column headerText="Action">
-										<p:commandButton value="Melihat" />
+										<p:commandButton value="Melihat" action="#{medicineBacking.viewMedicine(meds)}" />
 									</p:column>
 									<p:column headerText="Nama Obat">
 										<h:outputText value="#{meds.medName}" />

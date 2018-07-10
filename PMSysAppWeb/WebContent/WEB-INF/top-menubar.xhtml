@@ -1,75 +1,74 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui">
-        
-    <h:form id="menubar_form">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+	<h:form id="menubar_form">
 		<div class="ui-g">
 			<div class="ui-g-10" style="margin: 0 auto;">
 				<p:menubar>
 					<p:submenu label="Umum">
 						<p:submenu label="Registrasi">
-							<p:menuitem value="Pasien Baru"
-								outcome="/umum/register/add" />
+							<p:menuitem value="Pasien Baru" outcome="/umum/register/add" />
 						</p:submenu>
-							
+
 						<p:submenu label="Pasien">
 							<p:menuitem value="Melihat List Pasien"
 								outcome="/umum/pasien/list" />
 						</p:submenu>
-						
+
 						<p:submenu label="Atur Rawat Jalan">
 							<p:menuitem value="Daftar Kunjungan"
 								outcome="/umum/kunjungan/atur" />
 						</p:submenu>
 					</p:submenu>
-					
+
 					<p:submenu label="Dokter">
 						<p:submenu label="Kunjungan">
-							<p:menuitem value="List Pasien"
-								outcome="/dokter/kunjungan/list" />
+							<p:menuitem value="List Pasien" outcome="/dokter/kunjungan/list" />
 						</p:submenu>
 					</p:submenu>
-					
+
 					<p:submenu label="Apoteker">
 						<p:submenu label="Pengelolaan Data">
 							<p:menuitem value="Obat-obatan"
 								outcome="/apoteker/maintain/medicine" />
+							<p:menuitem value="Tambah Obat" 
+								outcome="/apoteker/maintain/add" />
 						</p:submenu>
-						
+
 						<p:submenu label="Pembayaran">
-								<p:menuitem value="Melihat list" 
-									outcome="/apoteker/pembayaran/list"/>
+							<p:menuitem value="Melihat list"
+								outcome="/apoteker/pembayaran/list" />
 						</p:submenu>
 					</p:submenu>
-					
+
 					<p:submenu label="Admin">
 						<p:submenu label="Registrasi">
-							<p:menuitem value="Staff Baru"
-								outcome="/admin/register/add" />
+							<p:menuitem value="Staff Baru" outcome="/admin/register/add" />
 						</p:submenu>
-						
+
 						<p:submenu label="Staff">
 							<p:menuitem value="Melihat List Staff"
 								outcome="/admin/staff/list" />
 						</p:submenu>
-						
+
 						<p:submenu label="Atur Menu Staff">
 							<p:menuitem value="Daftar Menu Untuk Staff"
 								outcome="/admin/menu/atur" />
 						</p:submenu>
 					</p:submenu>
-					
+
 					<p:menuitem value="Menu Utama" outcome="/menu" />
-					
+
 					<f:facet name="options">
-						<p:commandButton value="Logout" action="#{loginBacking.doLogout}" immediate="true" />
+						<p:commandButton value="Logout" action="#{loginBacking.doLogout}"
+							immediate="true" />
 					</f:facet>
 				</p:menubar>
 			</div>
 		</div>
 	</h:form>
-    	
+
 </ui:composition>

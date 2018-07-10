@@ -43,6 +43,7 @@ public class MedicineEao {
 				med.setMedicineHNA(rs.getFloat(8));
 				med.setMedicinePPN(rs.getFloat(9));
 				med.setExpDate(rs.getString(10));
+				med.setMedicineFinalPrice(med.calculateFinalPrice());
 				meds.add(med);
 			}
 		} catch (Exception e) {
