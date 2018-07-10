@@ -1,143 +1,394 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Pembikinan Resep</ui:define>
-    
-    <ui:define name="content">
-    	<h:form id="form">
-    		
-    		<div class="ui-g ui-widget" style="margin-top: 30px;">
-	   			
-	   			<p:dialog id="med_dialog" header="Menambah Obat" visible="#{diagnosePatient.medicineDialog}" modal="true" resizable="false" width="700" closable="true">
-					<p:ajax event="close" listener="#{diagnosePatient.dialogCloseListener}" update=":form:med_dialog" />
-					
-					<p:messages id="med_dlg_msg" />
-					
-					<h:panelGrid columns="1">
-						<h:outputText value="Filter Pencarian:" />
-						<p:selectOneRadio layout="grid" value="#{diagnosePatient.filterMode}" columns="2">
-							<f:selectItem itemLabel="Nama Obat" itemValue="1" />
-							<f:selectItem itemLabel="Kategori" itemValue="2" />
-							<f:selectItem itemLabel="Tipe Obat" itemValue="3" />
-							<f:selectItem itemLabel="Zat Aktif" itemValue="4" />
-						</p:selectOneRadio>
-					</h:panelGrid>
-					
-					<h:panelGrid columns="2">
-						<p:inputText style="width: 350px;" />
-						<p:commandButton  value="Cari" />
-					</h:panelGrid>
-					
-					<h:panelGrid columns="1" style="margin-top: 20px;">
-						<p:dataTable id="med_data" style="text-align: center;">
-							<p:column headerText="Nama Obat">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
 
-							</p:column>
-							<p:column headerText="Kategori">
+	<ui:define name="title">Pembikinan Resep</ui:define>
 
-							</p:column>
-							<p:column headerText="Tipe Obat">
+	<ui:define name="content">
+		<h:form id="form">
 
-							</p:column>
-							<p:column headerText="Zat Aktif">
-							
-							</p:column>
-						</p:dataTable>
-					</h:panelGrid>
-					
-					<h:panelGrid columns="1" style="margin-top: 20px;">
-						<h:outputText value="Instruksi untuk obat" />
-						<p:inputTextarea rows="5" cols="50" autoResize="true"
-						maxlength="500" counter="counter_ins" counterTemplate="{0} karakter tersisa."/>
-						<h:outputText id="counter_ins" />
-					</h:panelGrid>
-					
-					<h:panelGrid columns="2" style="margin-top: 20px;">
-						<p:commandButton value="Simpan" />
-						<p:commandButton value="Batal" actionListener="#{diagnosePatient.dialogCloseListener}" update=":form:med_dialog" />
-					</h:panelGrid>
-					
-	   			</p:dialog>
-	   			
-	   			<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
-	   			
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+
+				<p:dialog id="med_dialog" header="Menambah Obat"
+					visible="#{patientDiagnosisBacking.medicineDialog}" modal="true"
+					resizable="false" closable="true">
+					<p:ajax event="close"
+						listener="#{patientDiagnosisBacking.dialogCloseListener}"
+						update=":form:med_dialog" />
+
+					<p:outputPanel rendered="#{patientDiagnosisBacking.medPanel}">
+						<p:scrollPanel mode="native"
+							style="height: 500px; width: 700px; ;border: none;">
+							<p:messages id="med_dlg_msg" />
+							<p:panel>
+								<h:panelGrid columns="1">
+									<h:outputText value="Filter Pencarian:" />
+									<p:selectOneRadio layout="grid"
+										value="#{patientDiagnosisBacking.medicineFilter}" columns="2">
+										<f:selectItem itemLabel="Nama Obat" itemValue="1" />
+										<f:selectItem itemLabel="Kategori" itemValue="2" />
+										<f:selectItem itemLabel="Tipe Obat" itemValue="3" />
+										<f:selectItem itemLabel="Zat Aktif" itemValue="4" />
+									</p:selectOneRadio>
+								</h:panelGrid>
+
+								<h:panelGrid columns="2">
+									<p:inputText style="width: 350px;" required="false" />
+									<p:commandButton value="Cari" />
+								</h:panelGrid>
+							</p:panel>
+
+							<h:panelGrid columns="1" style="margin-top: 20px;">
+								<p:dataTable id="med_data"
+									value="#{patientDiagnosisBacking.medicines}" var="med"
+									paginator="true" rows="5" selectionMode="single"
+									rowKey="#{med.medID}"
+									selection="#{patientDiagnosisBacking.medicine}"
+									paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+									style="text-align: center;">
+									<p:ajax event="rowSelect" update=":form:med_name" />
+									<p:column headerText="Nama Obat" sortBy="#{med.medName}">
+										<h:outputText value="#{med.medName}" />
+									</p:column>
+									<p:column headerText="Kategori" sortBy="#{med.medCategory}">
+										<h:outputText value="#{med.medCategory}" />
+									</p:column>
+									<p:column headerText="Tipe Obat" sortBy="#{med.medType}">
+										<h:outputText value="#{med.medType}" />
+									</p:column>
+									<p:column headerText="Zat Aktif"
+										sortBy="#{med.activeIngredients}">
+										<h:outputText value="#{med.activeIngredients}" />
+									</p:column>
+								</p:dataTable>
+							</h:panelGrid>
+
+							<h:panelGrid columns="2" style="margin-top: 20px; float: right;">
+								<p:commandButton value="Berikutnya" update=":form:med_dialog"
+									actionListener="#{patientDiagnosisBacking.instructionPanelOpen}" />
+								<p:commandButton value="Batal"
+									actionListener="#{patientDiagnosisBacking.dialogCloseListener}"
+									update=":form:med_dialog" />
+							</h:panelGrid>
+						</p:scrollPanel>
+					</p:outputPanel>
+					<p:outputLabel rendered="#{patientDiagnosisBacking.insPanel}">
+						<h:panelGrid columns="1">
+							<h:outputText value="Instruksi untuk obat" />
+							<h:outputText id="med_name"
+								value="#{patientDiagnosisBacking.medicine.medName}"
+								style="font-weight: bold;" />
+							<p:inputTextarea rows="5" cols="50" autoResize="true"
+								maxlength="500"
+								value="#{patientDiagnosisBacking.perscription.instructions}"
+								counter="counter_ins" counterTemplate="{0} karakter tersisa." />
+							<h:outputText id="counter_ins" />
+						</h:panelGrid>
+						<h:panelGrid columns="2" style="margin-top: 20px; float: right;">
+							<p:commandButton value="Simpan"
+								actionListener="#{patientDiagnosisBacking.addNewPerscription}"
+								update=":form:meds_data :form:med_dialog" />
+							<p:commandButton value="Batal"
+								actionListener="#{patientDiagnosisBacking.dialogCloseListener}"
+								update=":form:med_dialog" />
+						</h:panelGrid>
+					</p:outputLabel>
+
+				</p:dialog>
+
+
+				<p:dialog id="patient_dialog"
+					header="Data #{patientDiagnosisBacking.visit.patientName}"
+					modal="true" visible="#{patientDiagnosisBacking.patientDialog}"
+					width="700">
+					<p:ajax event="close" update="patient_dialog"
+						listener="#{patientDiagnosisBacking.closePatientDialog}" />
+					<p:tabView>
+						<p:tab title="Personal">
+							<p:panelGrid columns="2" layout="grid"
+								styleClass="ui-panelgrid-blank">
+								<h:outputText value="Kelamin:" />
+								<h:outputText value="Nomor KTP:" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.patientGender}"
+									style="font-weight: bold;" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.patientKTP}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tanggal Lahir:" />
+								<h:outputText value="Nomor BPJS:" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.patientDOB}"
+									style="font-weight: bold;" />
+								<p:column>
+									<h:outputText
+										value="#{patientDiagnosisBacking.patient.patientBPJS}"
+										rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}"
+										style="font-weight: bold;" />
+									<h:outputText value="Tidak Punya"
+										rendered="#{patientDiagnosisBacking.patient.patientBPJS == null}"
+										style="font-weight: bold;" />
+								</p:column>
+								<p:separator style="visibility: hidden;"
+									rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}" />
+								<p:separator style="visibility: hidden;"
+									rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}" />
+								<br />
+								<h:outputText value="Tipe BPJS: "
+									rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}" />
+								<br />
+								<br />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.patientBPJSType}"
+									rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}"
+									style="font-weight: bold;" />
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Kontak dan Alamat">
+							<p:panelGrid columns="2" layout="grid"
+								styleClass="ui-panelgrid-blank">
+								<h:outputText value="Alamat: " />
+								<p:column>
+									<h:outputText value="Nomor Handphone: "
+										rendered="#{patientDiagnosisBacking.patient.phoneType == 'HandPhone'}" />
+									<h:outputText value="Nomor Telephone: "
+										rendered="#{patientDiagnosisBacking.patient.phoneType == 'HomePhone'}" />
+								</p:column>
+								<h:outputText value="#{patientDiagnosisBacking.patient.address}"
+									style="font-weight: bold;" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.phoneNumber}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+								<p:separator style="visibility: hidden;" />
+								<h:outputText value="Propinsi: " />
+								<br />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.province}"
+									style="font-weight: bold;" />
+								<br />
+
+								<p:separator style="visibility: hidden;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kabupaten" />
+								<br />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.kabupaten}"
+									style="font-weight: bold;" />
+								<br />
+
+								<p:separator style="visibility: hidden;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kode Pos" />
+								<br />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.postCode}"
+									style="font-weight: bold;" />
+							</p:panelGrid>
+						</p:tab>
+						<p:tab title="Kontak Darurat">
+							<p:panelGrid layout="grid" columns="2"
+								styleClass="ui-panelgrid-blank">
+								<h:outputText value="Nama Kontak" />
+								<h:outputText value="Nomor Kontak" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.contactName}"
+									style="font-weight: bold;" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.contactNumber}"
+									style="font-weight: bold;" />
+
+								<p:separator style="visibility: hidden;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Hubungan dengan Kontak" />
+								<br />
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.contactRelationship}"
+									style="font-weight: bold;" />
+							</p:panelGrid>
+						</p:tab>
+					</p:tabView>
+					<p:commandButton value="Tutup" update=":form:patient_dialog"
+						actionListener="#{patientDiagnosisBacking.closePatientDialog}"
+						style="float: right; margin-top: 10px;" />
+				</p:dialog>
+
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+
 					<div class="ui-g-2" style="height: 100%;">
-						<h:panelGrid style="float: center; margin: 0 auto;">
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientDiagnosisBacking.visit.patientGender == 'Laki-laki'}">
 							<i class="fa fa-male fa-5x" />
 						</h:panelGrid>
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientDiagnosisBacking.visit.patientGender == 'Perempuan'}">
+							<i class="fa fa-female fa-5x" />
+						</h:panelGrid>
 					</div>
-					
+
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
-							<h:outputText value="Budi Santoso - SEP - 06/06/2018" style="font-size: 24px;"/>
-							<p:commandButton value="Lihat Data Pasien" style="float: right;" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.visit.patientName} - #{patientDiagnosisBacking.visit.apptDate}"
+								style="font-size: 24px;" />
+							<p:commandButton value="Lihat Data Pasien"
+								update=":form:patient_dialog"
+								actionListener="#{patientDiagnosisBacking.openPatientDialog}"
+								style="float: right;" />
 							<p:separator />
 						</div>
-						
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="No. Surat Elegibilitas Peserta (SEP): " />
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.recordSEP}"
+									style="font-weight: bold"
+									rendered="#{patientDiagnosisBacking.medicalRecord.recordSEP != ''}" />
+								<h:outputText value="Tidak Ada" style="font-weight: bold"
+									rendered="#{patientDiagnosisBacking.medicalRecord.recordSEP == ''}" />
+							</h:panelGrid>
+						</div>
+
 						<div class="ui-g-6">
-							<h:panelGrid columns="1">
+							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Subject:" />
-								<p style="font-weight: bold">
-									Sakit hati, susah nafas.
-								</p>
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.medicalSubject}"
+									style="font-weight: bold" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-6">
-							<h:panelGrid columns="1">
+							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Object:" />
-								<p style="font-weight: bold">
-									Paru-paru tidak ada apa-apa.
-								</p>
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.medicalObject}"
+									style="font-weight: bold" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-6">
-							<h:panelGrid columns="1">
+							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Assessment:" />
-								<p style="font-weight: bold">
-									Bapak berumur 35. Sedang recover dari operasi.
-								</p>
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.medicalAssessment}"
+									style="font-weight: bold" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-6">
-							<h:panelGrid columns="1">
+							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Plan:" />
-								<p style="font-weight: bold">
-									Ikut diet. Check up ulang 3 hari kemudian.
-								</p>
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.medicalPlanning}"
+									style="font-weight: bold" />
 							</h:panelGrid>
 						</div>
-						
+
 						<div class="ui-g-12">
-							<h:outputText value="Resep Pasien" style="font-size: 24px;"/>
+							<h:outputText value="Pengukuran" style="font-size: 24px;" />
 							<p:separator />
 						</div>
-						
-						<div class="ui-g-12">
-							<h:panelGrid columns="1">
-								<p:commandButton value="Tambah" actionListener="#{diagnosePatient.openMedicineDialog}" update=":form:med_dialog" />
-								<p:separator style="visibility: hidden;" />
-								
-								<p:dataGrid>
-									
-								</p:dataGrid>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Tinggi: " />
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.patientHeight} cm"
+									style="font-weight: bold" />
+								<p:separator style="visibility: hidden" />
+
+
+								<h:outputText value="Berat Badan:  " />
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.patientWeight} kg"
+									style="font-weight: bold" />
+								<p:separator style="visibility: hidden" />
 							</h:panelGrid>
 						</div>
-						
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Systolic" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.patientSystolic} mm Hg"
+									style="font-weight: bold" />
+								<p:separator style="visibility: hidden" />
+
+								<h:outputText value="Diastolic" />
+								<h:outputText
+									value="#{patientDiagnosisBacking.medicalRecord.patientDiastolic} mm Hg"
+									style="font-weight: bold" />
+								<p:separator style="visibility: hidden" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<h:outputText value="Resep Untuk Pasien" style="font-size: 24px;" />
+							<p:commandButton value="Tambah"
+								actionListener="#{patientDiagnosisBacking.openMedicineDialog}"
+								update=":form:med_dialog" style="float: right;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-12">
+							<p:dataGrid id="meds_data" columns="1"
+								value="#{patientDiagnosisBacking.perscriptions}" layout="grid"
+								var="meds">
+								<f:facet name="header">
+									<h:outputText value="Obat" />
+								</f:facet>
+								<div class="ui-g" style="border-width: 1px; border-style: solid;">
+									<div class="ui-g-6">
+										<h:panelGrid columns="1">
+											<h:outputText value="Obat:" />
+											<h:outputText value="#{meds.medName}"
+												style="font-weight: bold" />
+											<p:separator style="visibility: hidden;" />
+
+											<h:outputText value="Zat Aktif" />
+											<h:outputText value="#{meds.activeIngredients}"
+												style="font-weight: bold" />
+
+										</h:panelGrid>
+									</div>
+									<div class="ui-g-6">
+										<h:panelGrid columns="1">
+											<h:outputText value="Instruksi" />
+											<h:outputText value="#{meds.instructions}"
+												style="font-weight: bold" />
+										</h:panelGrid>
+									</div>
+								</div>
+							</p:dataGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<p:separator />
+						</div>
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="2" style="float: right;">
+								<p:commandButton value="Selesai" />
+								<p:button value="Kembali" outcome="diagnosa" />
+							</h:panelGrid>
+						</div>
 					</div>
-					
+
 				</div>
-				
-    		</div>
-    		
-    	</h:form>
-    </ui:define>    
-    	
+
+			</div>
+
+		</h:form>
+	</ui:define>
+
 </ui:composition>

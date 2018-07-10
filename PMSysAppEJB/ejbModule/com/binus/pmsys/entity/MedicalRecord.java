@@ -19,8 +19,8 @@ public class MedicalRecord {
 	private int bloodPressure;
 	private int patientSystolic;
 	private int patientDiastolic;
-	private float patientWeight;
-	private float patientHeight;
+	private int patientWeight;
+	private int patientHeight;
 	private float patientBMI;
 	
 	private String recordDate;
@@ -120,22 +120,6 @@ public class MedicalRecord {
 		this.patientDiastolic = patientDiastolic;
 	}
 
-	public float getPatientWeight() {
-		return patientWeight;
-	}
-
-	public void setPatientWeight(float patientWeight) {
-		this.patientWeight = patientWeight;
-	}
-
-	public float getPatientHeight() {
-		return patientHeight;
-	}
-
-	public void setPatientHeight(float patientHeight) {
-		this.patientHeight = patientHeight;
-	}
-
 	public String getRecordDate() {
 		return recordDate;
 	}
@@ -182,6 +166,22 @@ public class MedicalRecord {
 
 	public void setPatientBMI(float patientBMI) {
 		this.patientBMI = patientBMI;
+	}
+
+	public int getPatientWeight() {
+		return patientWeight;
+	}
+
+	public void setPatientWeight(int patientWeight) {
+		this.patientWeight = patientWeight;
+	}
+
+	public int getPatientHeight() {
+		return patientHeight;
+	}
+
+	public void setPatientHeight(int patientHeight) {
+		this.patientHeight = patientHeight;
 	}
 
 }

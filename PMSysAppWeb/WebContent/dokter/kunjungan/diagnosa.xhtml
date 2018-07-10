@@ -8,15 +8,135 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<p:panel header="Data Pasien" visible>
-				
-			</p:panel>
-		
+			<p:dialog id="patient_dialog" modal="true"
+				header="Data #{patientDiagnosisBacking.visit.patientName}"
+				visible="#{patientDiagnosisBacking.patientDialog}" width="700">
+				<p:ajax event="close" update="patient_dialog"
+					listener="#{patientDiagnosisBacking.closePatientDialog}" />
+				<p:tabView>
+					<p:tab title="Personal">
+						<p:panelGrid columns="2" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<h:outputText value="Kelamin:" />
+							<h:outputText value="Nomor KTP:" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.patientGender}"
+								style="font-weight: bold;" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.patientKTP}"
+								style="font-weight: bold;" />
+							<p:separator style="visibility: hidden;" />
+							<p:separator style="visibility: hidden;" />
+
+							<h:outputText value="Tanggal Lahir:" />
+							<h:outputText value="Nomor BPJS:" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.patientDOB}"
+								style="font-weight: bold;" />
+							<p:column>
+								<h:outputText
+									value="#{patientDiagnosisBacking.patient.patientBPJS}"
+									rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}"
+									style="font-weight: bold;" />
+								<h:outputText value="Tidak Punya"
+									rendered="#{patientDiagnosisBacking.patient.patientBPJS == null}"
+									style="font-weight: bold;" />
+							</p:column>
+							<p:separator style="visibility: hidden;"
+								rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}" />
+							<p:separator style="visibility: hidden;"
+								rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}" />
+							<br />
+							<h:outputText value="Tipe BPJS: "
+								rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}" />
+							<br />
+							<br />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.patientBPJSType}"
+								rendered="#{patientDiagnosisBacking.patient.patientBPJS != null}"
+								style="font-weight: bold;" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Kontak dan Alamat">
+						<p:panelGrid columns="2" layout="grid"
+							styleClass="ui-panelgrid-blank">
+							<h:outputText value="Alamat: " />
+							<p:column>
+								<h:outputText value="Nomor Handphone: "
+									rendered="#{patientDiagnosisBacking.patient.phoneType == 'HandPhone'}" />
+								<h:outputText value="Nomor Telephone: "
+									rendered="#{patientDiagnosisBacking.patient.phoneType == 'HomePhone'}" />
+							</p:column>
+							<h:outputText value="#{patientDiagnosisBacking.patient.address}"
+								style="font-weight: bold;" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.phoneNumber}"
+								style="font-weight: bold;" />
+							<p:separator style="visibility: hidden;" />
+							<p:separator style="visibility: hidden;" />
+							<h:outputText value="Propinsi: " />
+							<br />
+							<h:outputText value="#{patientDiagnosisBacking.patient.province}"
+								style="font-weight: bold;" />
+							<br />
+
+							<p:separator style="visibility: hidden;" />
+							<p:separator style="visibility: hidden;" />
+
+							<h:outputText value="Kabupaten" />
+							<br />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.kabupaten}"
+								style="font-weight: bold;" />
+							<br />
+
+							<p:separator style="visibility: hidden;" />
+							<p:separator style="visibility: hidden;" />
+
+							<h:outputText value="Kode Pos" />
+							<br />
+							<h:outputText value="#{patientDiagnosisBacking.patient.postCode}"
+								style="font-weight: bold;" />
+						</p:panelGrid>
+					</p:tab>
+					<p:tab title="Kontak Darurat">
+						<p:panelGrid layout="grid" columns="2"
+							styleClass="ui-panelgrid-blank">
+							<h:outputText value="Nama Kontak" />
+							<h:outputText value="Nomor Kontak" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.contactName}"
+								style="font-weight: bold;" />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.contactNumber}"
+								style="font-weight: bold;" />
+
+							<p:separator style="visibility: hidden;" />
+							<p:separator style="visibility: hidden;" />
+
+							<h:outputText value="Hubungan dengan Kontak" />
+							<br />
+							<h:outputText
+								value="#{patientDiagnosisBacking.patient.contactRelationship}"
+								style="font-weight: bold;" />
+						</p:panelGrid>
+					</p:tab>
+				</p:tabView>
+				<p:commandButton value="Tutup" update=":form:patient_dialog"
+					actionListener="#{patientDiagnosisBacking.closePatientDialog}"
+					style="float: right; margin-top: 10px;" />
+			</p:dialog>
+
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
-						<h:panelGrid style="float: center; margin: 0 auto;">
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientDiagnosisBacking.visit.patientGender == 'Laki-laki'}">
 							<i class="fa fa-male fa-5x" />
+						</h:panelGrid>
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{patientDiagnosisBacking.visit.patientGender == 'Perempuan'}">
+							<i class="fa fa-female fa-5x" />
 						</h:panelGrid>
 					</div>
 
@@ -25,15 +145,29 @@
 							<h:outputText
 								value="#{patientDiagnosisBacking.visit.patientName} - #{patientDiagnosisBacking.visit.apptDate}"
 								style="font-size: 24px;" />
-							<p:commandButton value="Lihat Data Pasien" style="float: right;" />
+							<p:commandButton value="Lihat Data Pasien"
+								update=":form:patient_dialog"
+								actionListener="#{patientDiagnosisBacking.openPatientDialog}"
+								style="float: right;" />
 							<p:separator />
+							<p:messages id="diagnose_message" />
+						</div>
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="1">
+								<h:outputText value="No. Surat Elegibilitas Peserta (SEP):" />
+								<p:inputText style="width: 422px;" placeholder="Opsional"
+									value="#{patientDiagnosisBacking.medicalRecord.recordSEP}"
+									required="false" />
+							</h:panelGrid>
 						</div>
 
 						<div class="ui-g-6">
 							<h:panelGrid columns="1">
 								<h:outputText value="Subject:" />
 								<p:inputTextarea rows="5" cols="50" autoResize="true"
-									maxlength="500"
+									maxlength="500" required="true"
+									requiredMessage="Subject perlu di isi."
 									value="#{patientDiagnosisBacking.medicalRecord.medicalSubject}"
 									counter="counter_sub" counterTemplate="{0} karakter tersisa." />
 								<h:outputText id="counter_sub" />
@@ -44,7 +178,8 @@
 							<h:panelGrid columns="1">
 								<h:outputText value="Object:" />
 								<p:inputTextarea rows="5" cols="50" autoResize="true"
-									maxlength="500"
+									maxlength="500" required="true"
+									requiredMessage="Object perlu di isi."
 									value="#{patientDiagnosisBacking.medicalRecord.medicalObject}"
 									counter="counter_obj" counterTemplate="{0} karakter tersisa." />
 								<h:outputText id="counter_obj" />
@@ -55,7 +190,8 @@
 							<h:panelGrid columns="1">
 								<h:outputText value="Assessment:" />
 								<p:inputTextarea rows="5" cols="50" autoResize="true"
-									maxlength="500"
+									maxlength="500" required="true"
+									requiredMessage="Assessment perlu di isi."
 									value="#{patientDiagnosisBacking.medicalRecord.medicalAssessment}"
 									counter="counter_ass" counterTemplate="{0} karakter tersisa." />
 								<h:outputText id="counter_ass" />
@@ -66,7 +202,8 @@
 							<h:panelGrid columns="1">
 								<h:outputText value="Plan:" />
 								<p:inputTextarea rows="5" cols="50" autoResize="true"
-									maxlength="500"
+									maxlength="500" required="true"
+									requiredMessage="Plan perlu di isi."
 									value="#{patientDiagnosisBacking.medicalRecord.medicalPlanning}"
 									counter="counter_plan" counterTemplate="{0} karakter tersisa." />
 								<h:outputText id="counter_plan" />
@@ -84,7 +221,8 @@
 							<h:panelGrid columns="1">
 								<h:outputText value="Tinggi: " />
 								<h:column>
-									<p:inputText
+									<p:inputText required="true"
+										requiredMessage="Tinggi perlu di isi."
 										value="#{patientDiagnosisBacking.medicalRecord.patientHeight}"
 										style="margin-right: 10px;" />
 									<h:outputText value="cm" />
@@ -94,7 +232,8 @@
 
 								<h:outputText value="Berat Badan: " />
 								<h:column>
-									<p:inputText
+									<p:inputText required="true"
+										requiredMessage="Berat badan perlu di isi."
 										value="#{patientDiagnosisBacking.medicalRecord.patientWeight}"
 										style="margin-right: 10px;" />
 									<h:outputText value="kg" />
@@ -106,7 +245,8 @@
 							<h:panelGrid columns="1">
 								<h:outputText value="Systolic" />
 								<h:column>
-									<p:inputText
+									<p:inputText required="true"
+										requiredMessage="Systolic perlu di isi."
 										value="#{patientDiagnosisBacking.medicalRecord.patientSystolic}"
 										style="margin-right: 10px;" />
 									<h:outputText value="mm Hg" />
@@ -116,7 +256,8 @@
 
 								<h:outputText value="Diastolic" />
 								<h:column>
-									<p:inputText
+									<p:inputText required="true"
+										requiredMessage="Diastolic perlu di isi."
 										value="#{patientDiagnosisBacking.medicalRecord.patientDiastolic}"
 										style="margin-right: 10px;" />
 									<h:outputText value="mm Hg" />
@@ -130,7 +271,8 @@
 
 						<div class="ui-g-12">
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Berikutnya" />
+								<p:commandButton value="Berikutnya" update="diagnose_message"
+									action="#{patientDiagnosisBacking.redirectPerscription}" />
 								<p:button value="Kembali" outcome="list" />
 							</h:panelGrid>
 						</div>

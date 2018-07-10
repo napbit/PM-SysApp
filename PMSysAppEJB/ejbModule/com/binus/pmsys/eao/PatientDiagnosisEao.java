@@ -8,6 +8,8 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import com.binus.pmsys.entity.MedicalRecord;
+import com.binus.pmsys.entity.Perscription;
 import com.binus.pmsys.entity.Visitation;
 import com.binus.pmsys.utils.ReleaseConnection;
 import com.binus.pmsys.utils.Settings;
@@ -54,6 +56,70 @@ public class PatientDiagnosisEao {
 		}
 		
 		return visits;
+	}
+	
+	public void finishMedicalVisit(int apptID, int finishStatus) {
+		Connection connection = null;
+		CallableStatement cs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_appointmentUpdate(?,?)}");
+			cs.setInt(1, apptID);
+			cs.setInt(2, finishStatus);
+			
+			cs.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
+	}
+	
+	public void insertMedicalRecord(MedicalRecord record) {
+		Connection connection = null;
+		CallableStatement cs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_medicalRecordInsert(?,?,?,?,?,?,?,?,?,?,?,?)}");
+			cs.setInt(1, record.getPatientID());
+			cs.setInt(2, record.getDoctorID());
+			cs.setString(3, record.getRecordSEP());
+			cs.setString(4, record.getMedicalSubject());
+			cs.setString(5, record.getMedicalObject());
+			cs.setString(6, record.getMedicalAssessment());
+			cs.setString(7, record.getMedicalPlanning());
+			cs.setInt(8, record.getPatientSystolic());
+			cs.setInt(9, record.getPatientDiastolic());
+			cs.setInt(10, record.getPatientWeight());
+			cs.setInt(11, record.getPatientHeight());
+			cs.setString(12, record.getRecordDate());
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
+	
+	}
+	
+	public void insertPerscription(Perscription pers, int patientID) {
+		Connection connection = null;
+		CallableStatement cs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_prescriptionInsert(?,?,?)}");
+			cs.setInt(1, pers.getMedID());
+			cs.setInt(2, patientID);
+			cs.setString(3, pers.getInstructions());
+			
+			cs.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
 	}
 	
 }

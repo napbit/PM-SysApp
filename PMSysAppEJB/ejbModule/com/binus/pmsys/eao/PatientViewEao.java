@@ -371,4 +371,52 @@ public class PatientViewEao {
 		
 		return medicalRecords;
 	}
+	
+	public NewPatient getPatientAllData(int patientID) {
+		NewPatient patient  = new NewPatient();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_patientGetAllData(?)}");
+			cs.setInt(1, patientID);
+			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				patient.setPatientID(rs.getInt(1));
+				patient.setBpjsID(rs.getInt(2));
+				patient.setPhoneID(rs.getInt(3));
+				patient.setAddressID(rs.getInt(4));
+				patient.setEmergencyID(rs.getInt(5));
+				patient.setPatientKTP(rs.getString(6));
+				patient.setPatientName(rs.getString(7));
+				patient.setPatientGender(rs.getString(8));
+				patient.setPatientDOB(rs.getString(9));
+				patient.setPatientBPJSTypeID(rs.getInt(10));
+				patient.setPatientBPJS(rs.getString(11));
+				patient.setPatientBPJSType(rs.getString(12));
+				patient.setPhoneTypeID(rs.getInt(13));
+				patient.setPhoneNumber(rs.getString(14));
+				patient.setPhoneType(rs.getString(15));
+				patient.setContactName(rs.getString(16));
+				patient.setContactRelationship(rs.getString(17));
+				patient.setContactNumber(rs.getString(18));
+				patient.setAddress(rs.getString(19));
+				patient.setProvinceID(rs.getInt(20));
+				patient.setKabupatenID(rs.getInt(21));
+				patient.setPostCode(rs.getString(22));
+				patient.setProvince(rs.getString(23));
+				patient.setKabupaten(rs.getString(24));
+				patient.setPatientSEP(rs.getString(25));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs, rs);
+		}
+		
+		return patient;
+	}
 }
