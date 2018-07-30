@@ -28,8 +28,7 @@ public class LoginBacking extends BasicBacking implements Serializable {
 	private UserBacking userSession;
 	
 	private String username;
-	private char[] password;
-	private String temppassword;
+	private String password;
 	
 	public LoginBacking() { }
 
@@ -40,20 +39,18 @@ public class LoginBacking extends BasicBacking implements Serializable {
 	public void setUsername(String username) {
 		this.username = username;
 	}
-
-	public String getTemppassword() {
-		return temppassword;
-	}
-
-	public void setTemppassword(String temppassword) {
-		password = Hex.encodeHexString(HashHelper.getHash(temppassword.toCharArray(), rules.getUserSalt(username).getBytes() , 40000, 256), false).toCharArray();
-		temppassword = null;
-	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	private void clearInputs() {
-		username = null;
-		Arrays.fill(password, (Character) '0');
-		password = null;
+		setUsername(null);
+		setPassword(null);
 	}
 	
 	public String loginUser() {
