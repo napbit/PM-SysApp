@@ -2,7 +2,6 @@ package com.binus.pmsys.backing;
 
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
 import javax.inject.Named;
 
 import com.binus.pmsys.entity.Staff;
@@ -23,7 +22,7 @@ public class UserBacking extends BasicBacking {
 	
 	@PreDestroy
 	public void deinit() {
-		SessionManager.removeSession(user.getsID());
+		SessionManager.removeSession(user.getStaffID());
 	}
 
 	public Staff getUser() {

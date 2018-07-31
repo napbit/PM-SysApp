@@ -62,7 +62,7 @@ public class LoginBacking extends BasicBacking implements Serializable {
 			
 			if(!user.equals(null) || user == null) { //TODO: Verify properly
 				userSession.init(user);
-				SessionManager.recordSession(context, user.getsID());
+				SessionManager.recordSession(context, user.getStaffID());
 				redirect = "";
 			} else {
 				//TODO: MESSAGE

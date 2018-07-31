@@ -20,6 +20,9 @@ public class StaffViewBacking extends BasicBacking {
 	private transient StaffViewEao eao;
 	
 	private List<Staff> staffList = new ArrayList<Staff>();
+	private Staff staff;
+	
+	private int filterMode;
 	
 	public StaffViewBacking() {
 
@@ -38,4 +41,25 @@ public class StaffViewBacking extends BasicBacking {
 		this.staffList = staffList;
 	}
 
+	public Staff getStaff() {
+		return staff;
+	}
+
+	public void setStaff(Staff staff) {
+		this.staff = staff;
+	}
+
+	public int getFilterMode() {
+		return filterMode;
+	}
+
+	public void setFilterMode(int filterMode) {
+		this.filterMode = filterMode;
+	}
+	
+	public String getStaffDetail(Staff staff) {
+		this.staff = new Staff(staff);
+		return "view.xhtml?faces-redirect=true";
+	}
+	
 }
