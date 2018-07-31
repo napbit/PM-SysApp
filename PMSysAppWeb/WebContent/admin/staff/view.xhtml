@@ -21,37 +21,34 @@
 						
 						<div class="ui-g-10 ui-g-nopad">
 							<div class="ui-g-12">
-								<h:outputText value="Dr. John Smith - 01-1" style="font-size: 24px;"/>
+								<h:outputText value="#{staffViewBacking.staff.staffName}" style="font-size: 24px;"/>
 								<p:separator />
 							</div>
 							
 							<div class="ui-g-6">
 								<h:panelGrid columns="1" cellpadding="5">
 									<h:outputText value="Nomor KTP:" />
-									<h:outputText value="3506042602660001" style="font-weight: bold;" />
+									<h:outputText value="#{staffViewBacking.staff.staffKTP}" style="font-weight: bold;" />
 									<p:separator style="visibility: hidden;" />
 									
 									<h:outputText value="Kelamin:" />
-									<h:outputText value="Laki-laki" style="font-weight: bold;"  />
+									<h:outputText value="#{staffViewBacking.staff.staffGender}" style="font-weight: bold;"  />
 									<p:separator style="visibility: hidden;" />
 									
 									<h:outputText value="Tanggal Lahir:" />
-									<h:outputText value="11 April 1990" style="font-weight: bold;"  />
+									<h:outputText value="#{staffViewBacking.staff.staffDOB}" style="font-weight: bold;"  />
 								</h:panelGrid>
 							</div>
 							
 							<div class="ui-g-6">
 								<h:panelGrid columns="1" cellpadding="5">
-									<h:outputText value="Nomor Handphone:" />
-									<h:outputText value="082111362416" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Nomor Telephone:" />
-									<h:outputText value="Tidak Punya" style="font-weight: bold;" />
+									<h:outputText value="Nomor Handphone:" rendered="#{staffViewBacking.staff.phoneType == 'HandPhone'}" />
+									<h:outputText value="Nomor Telephone: " rendered="#{staffViewBacking.staff.phoneType == 'HomePhone'}" />
+									<h:outputText value="#{staffViewBacking.staff.phoneNumber}" style="font-weight: bold;" />
 									<p:separator style="visibility: hidden;" />
 									
 									<h:outputText value="Alamat:" />
-									<h:outputText value="Jl. Aries Asri 7, No. 20 Blok E5, Kembangan, Meruya Utara, Kembangan, Jakarta Barat, DKI Jakarta, 11620" style="font-weight: bold;" />
+									<h:outputText value="#{staffViewBacking.staff.address}" style="font-weight: bold;" />
 								</h:panelGrid>
 							</div>
 							
