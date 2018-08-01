@@ -30,7 +30,7 @@ public class StaffViewBacking extends BasicBacking {
 	
 	@PostConstruct
 	public void init() {
-		this.staffList = eao.getAllStaff();
+		refreshStaffList();
 	}
 	
 	public List<Staff> getStaffList() {
@@ -62,4 +62,7 @@ public class StaffViewBacking extends BasicBacking {
 		return "view.xhtml?faces-redirect=true";
 	}
 	
+	public void refreshStaffList() {
+		this.staffList = eao.getAllStaff();
+	}
 }

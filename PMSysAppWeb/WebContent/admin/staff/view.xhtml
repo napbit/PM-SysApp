@@ -1,75 +1,120 @@
-<ui:composition 
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:p="http://primefaces.org/ui"
-    template="/WEB-INF/template.xhtml">
-    
-    <ui:define name="title">Staff</ui:define>
-    
-    <ui:define name="content">
-    	<h:form id="form">
-    		<div class="ui-g ui-widget" style="margin-top: 30px;">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Staff</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
-						
-						<div class="ui-g-2" style="height: 100%;">
-							<h:panelGrid style="float: center; margin: 0 auto;">
-								<i class="fa fa-user fa-5x" />
-							</h:panelGrid>
+
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;">
+							<i class="fa fa-user fa-5x" />
+						</h:panelGrid>
+					</div>
+
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText value="#{staffViewBacking.staff.staffName}"
+								style="font-size: 24px;" />
+							<p:button value="Kembali" outcome="list"
+								style="float: right; width: 100px" />
+							<p:commandButton value="Edit"
+								style="float: right; margin-right: 5px; width: 100px;" />
+							<p:separator />
+							<p:messages>
+								<p:autoUpdate></p:autoUpdate>
+							</p:messages>
 						</div>
-						
-						<div class="ui-g-10 ui-g-nopad">
-							<div class="ui-g-12">
-								<h:outputText value="#{staffViewBacking.staff.staffName}" style="font-size: 24px;"/>
-								<p:separator />
-							</div>
-							
-							<div class="ui-g-6">
-								<h:panelGrid columns="1" cellpadding="5">
-									<h:outputText value="Nomor KTP:" />
-									<h:outputText value="#{staffViewBacking.staff.staffKTP}" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Kelamin:" />
-									<h:outputText value="#{staffViewBacking.staff.staffGender}" style="font-weight: bold;"  />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Tanggal Lahir:" />
-									<h:outputText value="#{staffViewBacking.staff.staffDOB}" style="font-weight: bold;"  />
-								</h:panelGrid>
-							</div>
-							
-							<div class="ui-g-6">
-								<h:panelGrid columns="1" cellpadding="5">
-									<h:outputText value="Nomor Handphone:" rendered="#{staffViewBacking.staff.phoneType == 'HandPhone'}" />
-									<h:outputText value="Nomor Telephone: " rendered="#{staffViewBacking.staff.phoneType == 'HomePhone'}" />
-									<h:outputText value="#{staffViewBacking.staff.phoneNumber}" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Alamat:" />
-									<h:outputText value="#{staffViewBacking.staff.address}" style="font-weight: bold;" />
-								</h:panelGrid>
-							</div>
-							
-							<div class="ui-g-12">
-								<h:outputText value="Employment" style="font-size: 24px;" />
-								<p:separator />
-							</div>
-							<div class="ui-g-6">
-								<h:panelGrid columns="1" cellpadding="5">
-									<h:outputText value="Posisi Staff:" />
-									<h:outputText value="Dokter Umum" style="font-weight: bold;" />
-									<p:separator style="visibility: hidden;" />
-									
-									<h:outputText value="Tanggal Masuk" />
-									<h:outputText value="10 Mei 2010" style="font-weight: bold;"  />
-								</h:panelGrid>
-							</div>
+
+						<div class="ui-g-12">
+							<p:tabView>
+								<p:tab title="Personal">
+									<p:panelGrid columns="2" layout="grid"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Kelamin:" />
+										<h:outputText value="ID: " />
+										<h:outputText value="#{staffViewBacking.staff.staffGender}"
+											style="font-weight: bold;" />
+										<h:outputText value="#{staffViewBacking.staff.staffID}"
+											style="font-weight: bold;" />
+										<p:separator style="visibility: hidden;" />
+										<p:separator style="visibility: hidden;" />
+
+										<h:outputText value="Tanggal Lahir:" />
+										<h:outputText value="Nomor KTP:" />
+										<h:outputText value="#{staffViewBacking.staff.staffDOB}"
+											style="font-weight: bold;" />
+										<h:outputText value="#{staffViewBacking.staff.staffKTP}"
+											style="font-weight: bold;" />
+									</p:panelGrid>
+								</p:tab>
+								<p:tab title="Kontak dan Alamat">
+									<p:panelGrid columns="2" layout="grid"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Alamat: " />
+										<p:column>
+											<h:outputText value="Nomor Handphone: "
+												rendered="#{staffViewBacking.staff.phoneType == 'HandPhone'}" />
+											<h:outputText value="Nomor Telephone: "
+												rendered="#{staffViewBacking.staff.phoneType == 'HomePhone'}" />
+										</p:column>
+										<h:outputText value="#{staffViewBacking.staff.address}"
+											style="font-weight: bold;" />
+										<h:outputText value="#{staffViewBacking.staff.phoneNumber}"
+											style="font-weight: bold;" />
+										<p:separator style="visibility: hidden;" />
+										<p:separator style="visibility: hidden;" />
+										<h:outputText value="Propinsi: " />
+										<br />
+										<h:outputText value="#{staffViewBacking.staff.province}"
+											style="font-weight: bold;" />
+										<br />
+
+										<p:separator style="visibility: hidden;" />
+										<p:separator style="visibility: hidden;" />
+
+										<h:outputText value="Kabupaten" />
+										<br />
+										<h:outputText value="#{staffViewBacking.staff.kabupaten}"
+											style="font-weight: bold;" />
+										<br />
+
+										<p:separator style="visibility: hidden;" />
+										<p:separator style="visibility: hidden;" />
+
+										<h:outputText value="Kode Pos" />
+										<br />
+										<h:outputText value="#{staffViewBacking.staff.postCode}"
+											style="font-weight: bold;" />
+									</p:panelGrid>
+								</p:tab>
+							</p:tabView>
+						</div>
+						<div class="ui-g-12">
+							<h:outputText value="Employment" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Posisi Staff:" />
+								<h:outputText value="#{staffViewBacking.staff.position}"
+									style="font-weight: bold;" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Tanggal Masuk" />
+								<h:outputText value="#{staffViewBacking.staff.joinDate}"
+									style="font-weight: bold;" />
+							</h:panelGrid>
 						</div>
 					</div>
 				</div>
-    	</h:form>
-    </ui:define>    
-    	
+			</div>
+		</h:form>
+	</ui:define>
+
 </ui:composition>
