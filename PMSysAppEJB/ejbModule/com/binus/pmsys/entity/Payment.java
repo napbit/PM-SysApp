@@ -53,9 +53,7 @@ public class Payment implements Serializable{
 		this.paymentType = paymentType;
 		this.date = date;
 	}
-
-
-
+	
 	public int getBillID() {
 		return billID;
 	}

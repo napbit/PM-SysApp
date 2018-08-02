@@ -12,52 +12,78 @@
 
 	<ui:define name="content">
 		<h:form id="form">
-			<p:dialog header="Bayar" width="500" visible="true" modal="true">
-				<div class="ui-g">
-					<div class="ui-g-6">
-						<h:panelGrid>
-							<h:outputText value="Total pembayaran: " />
-							<p:separator style="visibility: hidden;" />
-							<h:outputText value="Total bayar: " />
+			<p:dialog id="pay_dialog" header="Bayar" width="500"
+				visible="#{paymentBacking.calcDialog}" modal="true">
+				<p:ajax event="close" listener="#{paymentBacking.closeDialog}"
+					update=":form:pay_dialog" />
+				<p:outputPanel
+					rendered="#{paymentBacking.payment.paymentType == 'Non-BPJS'}">
+					<div class="ui-g">
+						<div class="ui-g-6">
+							<h:panelGrid>
+								<h:outputText value="Total pembayaran: " />
+								<p:separator style="visibility: hidden;" />
+								<h:outputText value="Total bayar: " />
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-6">
+							<h:panelGrid>
+								<h:outputText value="#{paymentBacking.payment.finalPrice}"
+									style="font-weight: bold;">
+									<f:convertNumber type="currency" currencySymbol="Rp. " />
+								</h:outputText>
+								<p:separator style="visibility: hidden;" />
+								<p:inputText value="#{paymentBacking.payment.paid}">
+									<p:ajax event="blur"
+										listener="#{paymentBacking.calculateChange}"
+										update=":form:change_txt" />
+								</p:inputText>
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-12">
+							<p:separator />
+						</div>
+						<div class="ui-g-6">
+							<h:panelGrid>
+								<h:outputText value="Kembalian: " />
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-6">
+							<h:panelGrid>
+								<h:outputText id="change_txt"
+									value="#{paymentBacking.payment.change}"
+									style="font-weight: bold;">
+									<f:convertNumber type="currency" currencySymbol="Rp. " />
+								</h:outputText>
+							</h:panelGrid>
+						</div>
+						<div class="ui-g-12">
+							<h:panelGrid columns="2" style="float: center;">
+								<p:commandButton value="Selesai"
+									action="#{paymentBacking.finish}" />
+								<p:commandButton value="Batal"
+									actionListener="#{paymentBacking.closeDialog}"
+									update=":form:pay_dialog" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</p:outputPanel>
+				<p:outputPanel
+					rendered="#{paymentBacking.payment.paymentType == 'BPJS'}">
+					<center>
+						<h:panelGrid columns="1">
+							<h:outputText value="Pasien akan membayar melewati BPJS."
+								style="font-size: 24px; font-weight: bold;" />
 						</h:panelGrid>
-					</div>
-					<div class="ui-g-6">
-						<h:panelGrid>
-							<h:outputText value="#{paymentBacking.payment.finalPrice}"
-								style="font-weight: bold;">
-								<f:convertNumber type="currency" currencySymbol="Rp. " />
-							</h:outputText>
-							<p:separator style="visibility: hidden;" />
-							<p:inputText value="#{paymentBacking.payment.paid}">
-								<p:ajax event="blur"
-									listener="#{paymentBacking.calculateChange}"
-									update=":form:change_txt" />
-							</p:inputText>
+						<h:panelGrid columns="2">
+							<p:commandButton value="Selesai"
+								action="#{paymentBacking.finish}" />
+							<p:commandButton value="Batal"
+								actionListener="#{paymentBacking.closeDialog}"
+								update=":form:pay_dialog" />
 						</h:panelGrid>
-					</div>
-					<div class="ui-g-12">
-						<p:separator />
-					</div>
-					<div class="ui-g-6">
-						<h:panelGrid>
-							<h:outputText value="Kembalian: " />
-						</h:panelGrid>
-					</div>
-					<div class="ui-g-6">
-						<h:panelGrid>
-							<h:outputText id="change_txt"
-								value="#{paymentBacking.payment.change}" style="font-weight: bold;" >
-								<f:convertNumber type="currency" currencySymbol="Rp. " />	
-							</h:outputText>
-						</h:panelGrid>
-					</div>
-					<div class="ui-g-12">
-						<h:panelGrid columns="2" style="float: center;">
-							<p:commandButton value="Selesai" />
-							<p:commandButton value="Batal" />
-						</h:panelGrid>
-					</div>
-				</div>
+					</center>
+				</p:outputPanel>
 			</p:dialog>
 
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
@@ -95,6 +121,9 @@
 									<h:outputText value="Nomor Telephone: "
 										rendered="#{paymentBacking.patient.phoneType == 'HomePhone'}" />
 								</p:column>
+
+								<h:outputText value="#{paymentBacking.patient.phoneNumber}"
+									style="font-weight: bold;" />
 							</h:panelGrid>
 						</div>
 
@@ -240,7 +269,8 @@
 									</div>
 									<div class="ui-g-6">
 										<h:panelGrid columns="2" style="float: right;">
-											<p:commandButton value="Bayar" />
+											<p:commandButton value="Bayar" update=":form:pay_dialog"
+												actionListener="#{paymentBacking.openDialog}" />
 											<p:button value="Batal" outcome="list" />
 										</h:panelGrid>
 									</div>

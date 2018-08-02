@@ -6,6 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
 import com.binus.pmsys.eao.DoctorEao;
@@ -42,6 +43,7 @@ public class PaymentBacking extends BasicBacking{
 	private List<Perscription> perscriptions;
 	
 	private boolean finalCalcPanel;
+	private boolean calcDialog;
 	
 	public PaymentBacking() { }
 	
@@ -52,7 +54,7 @@ public class PaymentBacking extends BasicBacking{
 	
 	public List<Payment> dataPreFill(){
 		List<Payment> pays = new ArrayList<Payment>();
-		Payment pay = new Payment(1, 1438, "Sandy", 1, "Branningham", 0, 0, "BPJS", "2018-07-10");
+		Payment pay = new Payment(1, 1438, "Sandy", 1, "Branningham", 0, 0, "BPJS", "2018-08-03");
 		Payment pay2 = new Payment(2, 1440, "Rio Santoso", 1, "Branningham", 0, 0, "Non-BPJS", "2018-07-10");
 		pays.add(pay);
 		pays.add(pay2);
@@ -81,6 +83,14 @@ public class PaymentBacking extends BasicBacking{
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public boolean isCalcDialog() {
+		return calcDialog;
+	}
+
+	public void setCalcDialog(boolean calcDialog) {
+		this.calcDialog = calcDialog;
 	}
 
 	public List<Payment> getPayments() {
@@ -122,13 +132,13 @@ public class PaymentBacking extends BasicBacking{
 	public void setFinalCalcPanel(boolean finalCalcPanel) {
 		this.finalCalcPanel = finalCalcPanel;
 	}
-
+	
 	public String viewBillingDetail(Payment pay) {
 		this.payment = new Payment(pay);
 		this.patient = patientEao.getPatientAllData(payment.getPatientID());
 		this.doctor = doctorEao.getDoctorAllData(payment.getDoctorID());
 		this.perscriptions = eao.getPerscriptionByPatient(payment.getPatientID());
-		
+		setCalcDialog(false);
 		return "view.xhtml?faces-redirect=true";
 	}
 	
@@ -142,6 +152,22 @@ public class PaymentBacking extends BasicBacking{
 		setFinalCalcPanel(true);
 		
 		System.out.println(payment.getFinalPrice());
+	}
+	
+	public void openDialog() {
+		setCalcDialog(true);
+	}
+	
+	public void closeDialog() {
+		setCalcDialog(false);
+	}
+	
+	public String finish() {
+		getFlash().setKeepMessages(true);
+		getFlash().setRedirect(true);
+		getFacesContext().addMessage(null, flashMessageHandler("Payment selesai.", FacesMessage.SEVERITY_INFO));
+		
+		return "/menu.xhtml?faces-redirect=true";
 	}
 	
 	public void calculateChange() {
