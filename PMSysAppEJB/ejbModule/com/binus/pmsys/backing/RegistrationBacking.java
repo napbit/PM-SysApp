@@ -248,9 +248,10 @@ public class RegistrationBacking extends BasicBacking {
 		int year = now.getYear();
 		int month = now.getMonthValue();
 		
-		String date = day + "-" + month + "-" + year;
+		String date = year + "-" + month + "-" + day;
+		Date dates = DateHelper.formatStringToDate(date, "yyyy-mm-dd");
 		
-		int result = registrationService.savePatient(prepackagePatientData(this.patient), date);
+		int result = registrationService.savePatient(prepackagePatientData(this.patient), DateHelper.formatDateToString(dates, "yyyy-mm-dd"));
 		
 		if (result == 1) {
 			getFlash().setKeepMessages(true);

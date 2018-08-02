@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -55,17 +56,15 @@ public class LoginBacking extends BasicBacking implements Serializable {
 	
 	public String loginUser() {
 		String redirect = null;
-		FacesContext context = FacesContext.getCurrentInstance();
 		
 		try {
 			Staff user = null;
 			
-			if(!user.equals(null) || user == null) { //TODO: Verify properly
-				userSession.init(user);
-				SessionManager.recordSession(context, user.getStaffID());
-				redirect = "";
+			if(username.equals("admin") && password.equals("admin")) { //TODO: Verify properly
+				userSession.init(/*user*/);
+				redirect = "menu.xhtml?faces-redirect=true";
 			} else {
-				//TODO: MESSAGE
+				messageHandler("Username dan password invalid.", FacesMessage.SEVERITY_ERROR);
 				redirect = null;
 			}
 		} catch (Exception e) {
@@ -79,6 +78,6 @@ public class LoginBacking extends BasicBacking implements Serializable {
 
 	public String doLogout() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
-		return "/menu.xhtml?faces-redirect=true";
+		return "/login.xhtml?faces-redirect=true";
 	}
 }

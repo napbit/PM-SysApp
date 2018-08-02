@@ -23,18 +23,18 @@
 						<p:messages id="login_msg" closable="true" />
 						<h:panelGrid style="width: 100%;">
 							<h:outputText value="Username: " />
-							<h:inputText style="width: 100%;" required="true"
+							<p:inputText value="#{loginBacking.username}" style="width: 100%;" required="true"
 								requiredMessage="Username tidak boleh kosong." />
 							<p:separator style="visibility: hidden;" />
 							<h:outputText value="Password: " />
-							<h:inputText style="width: 100%;" required="true"
+							<p:inputText value="#{loginBacking.password}" type="password" style="width: 100%;" required="true"
 								requiredMessage="Password tidak boleh kosong." />
 							<p:separator style="visibility: hidden;" />
 						</h:panelGrid>
 						<h:panelGrid columns="2" style="margin: 0 auto;">
-							<p:commandButton value="Login" ajax="false"
+							<p:commandButton action="#{loginBacking.loginUser}" value="Login" ajax="false"
 								style="width: 100px; margin-right: 10px;" />
-							<p:commandButton value="Reset" immediate="true"
+							<p:commandButton action="#{loginBacking.clearInputs}" value="Reset" immediate="true"
 								style="width: 100px; margin-left: 10px;" />
 						</h:panelGrid>
 					</p:panel>
