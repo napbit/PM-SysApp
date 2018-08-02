@@ -35,7 +35,8 @@ public class StaffViewBacking extends BasicBacking {
 
 	@EJB
 	private transient RegionEao regionEao;
-
+	
+	private List<String> menuSource = new ArrayList<String>();
 	private List<Staff> staffList = new ArrayList<Staff>();
 	private Staff staff;
 	private Staff newStaff;
@@ -64,7 +65,15 @@ public class StaffViewBacking extends BasicBacking {
 	public void init() {
 		refreshStaffList();
 	}
+	
+	public List<String> getMenuSource() {
+		return menuSource;
+	}
 
+	public void setMenuSource(List<String> menuSource) {
+		this.menuSource = menuSource;
+	}
+	
 	public List<Staff> getStaffList() {
 		return staffList;
 	}
@@ -264,5 +273,20 @@ public class StaffViewBacking extends BasicBacking {
 	
 	public void refreshStaffList() {
 		this.staffList = eao.getAllStaff();
+	}
+	
+	public String redirectStaffMenu(Staff s) {
+		this.staff = new Staff(s);
+		menuSource.clear();
+		menuSource.add("Umum - Registrasi Pasien Baru");
+		menuSource.add("Umum - Pasien");
+		menuSource.add("Umum - Atur Rawat Jalan");
+		menuSource.add("Admin - Registrasi Staff");
+		menuSource.add("Admin - Staff List");
+		menuSource.add("Admin - Atur Menu Staff");
+		menuSource.add("Dokter - Kunjungan");
+		menuSource.add("Apoteker - Pengelolaan Data");
+		menuSource.add("Apoteker - Pembayaran");
+		return "aturstaff.xhtml?faces-redirect=true";
 	}
 }
