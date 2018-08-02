@@ -6,15 +6,16 @@
     xmlns:p="http://primefaces.org/ui"
     template="/WEB-INF/template.xhtml">
     
-    <ui:define name="title">Registrasi Staff Baru</ui:define>
+    <ui:define name="title">Registrasi Pasien Baru</ui:define>
     
     <ui:define name="content">
 		<h:form id="form">
+		
 			<div class="ui-g ui-widget" style="margin-top: 30px;">
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 					<div class="ui-g-2" style="height: 100%;">
 						<h:panelGrid style="float: center; margin: 0 auto;">
-							<i class="fa fa-pencil-square-o fa-5x" />
+							<i class="fa fa-user-plus fa-5x" />
 						</h:panelGrid>
 					</div>
 					<div class="ui-g-10 ui-g-nopad">
@@ -26,15 +27,15 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<h:outputText  />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.staffName}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Jenis Kelamin:" />
-								<h:outputText  />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.staffGender}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputLabel value="Tanggal Lahir:" />
-								<h:outputText  />
+								<h:outputText value="#{staffRegistrationBacking.normalDOB}" />
 								<p:separator style="visibility: hidden;" />
 							</h:panelGrid>
 						</div>
@@ -42,15 +43,15 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nomor KTP:" />
-								<h:outputText value="#{registrationBacking.patient.patientKTP}" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.staffKTP}" />
 								<p:separator style="visibility: hidden;" />
 								
-								<h:outputText value="Posisi Staff:" />
-								<h:outputText value="#Posisi" />
+								<h:outputText value="Posisi: " />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.position}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Tanggal Masuk:" />
-								<h:outputText value="#Posisi" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.joinDate}" />
 							</h:panelGrid>
 						</div>
 						
@@ -61,37 +62,28 @@
 						
 						<div class="ui-g-12">
 							<h:panelGrid columns="1" cellpadding="5">
-								<h:outputText value="Nomor Handphone:" />
-								<h:outputText value="#{registrationBacking.patient.address.noHP}" />
+								<h:outputText value="Tipe Telepon: " />
+								<h:outputText value="Rumah" rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HomePhone'}" />
+								<h:outputText value="Seluler" rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HandPhone'}" />
 								<p:separator style="visibility: hidden;" />
-									
-								<h:outputText value="Nomor Telepon:" />
-								<h:outputText value="#{registrationBacking.patient.address.noTel}" />
+								
+								<h:outputText value="Nomor Telepon Seluler: " rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HandPhone'}" />
+								<h:outputText value="Nomor Telepon Rumah: " rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HomePhone'}" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.frontExt} #{staffRegistrationBacking.newStaff.phoneNumber}" />
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Alamat:" />
-								<h:outputText value="#{registrationBacking.patient.address.address}" />
-								<p:separator style="visibility: hidden;" />
-							</h:panelGrid>
-						</div>
-						
-						<div class="ui-g-12">
-							<h:outputText value="Kontak Darurat" style="font-size: 24px;"/>
-							<p:separator />
-						</div>
-						
-						<div class="ui-g-12">
-							<h:panelGrid columns="1" cellpadding="5">
-								<h:outputText value="Nama Kontak:" />
-								<h:outputText value="#{registrationBacking.patient.relationName}" />
-								<p:separator style="visibility: hidden;" />
-									
-								<h:outputText value="Hubungan:" />
-								<h:outputText value="#{registrationBacking.patient.relationType}" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.address}" />
 								<p:separator style="visibility: hidden;" />
 								
-								<h:outputText value="Nomor Kontak:" />
-								<h:outputText value="#{registrationBacking.patient.relationContact}" />
+								<h:outputText value="Propinsi:" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.province}" />
+								
+								<h:outputText value="Kabupaten" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.kabupaten}" />
+								
+								<h:outputText value="Kode Pos:" />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.postCode}" />
 							</h:panelGrid>
 						</div>
 						
