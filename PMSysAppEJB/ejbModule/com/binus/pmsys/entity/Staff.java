@@ -26,7 +26,9 @@ public class Staff {
 	private String address;
 	
 	private String postCode;
+	private int provinceID;
 	private String province;
+	private int kabupatenID;
 	private String kabupaten;
 	
 	private int loginID;
@@ -55,7 +57,9 @@ public class Staff {
 		setAddressID(s.getAddressID());
 		setAddress(s.getAddress());
 		setPostCode(s.getPostCode());
+		setProvinceID(s.getProvinceID());
 		setProvince(s.getProvince());
+		setKabupatenID(s.getKabupatenID());
 		setKabupaten(s.getKabupaten());
 		setLoginID(s.getLoginID());
 		setUsername(s.getUsername());
@@ -235,6 +239,22 @@ public class Staff {
 
 	public void setFrontExt(String frontExt) {
 		this.frontExt = frontExt;
+	}
+
+	public int getProvinceID() {
+		return provinceID;
+	}
+
+	public void setProvinceID(int provinceID) {
+		this.provinceID = provinceID;
+	}
+
+	public int getKabupatenID() {
+		return kabupatenID;
+	}
+
+	public void setKabupatenID(int kabupatenID) {
+		this.kabupatenID = kabupatenID;
 	}
 	
 	

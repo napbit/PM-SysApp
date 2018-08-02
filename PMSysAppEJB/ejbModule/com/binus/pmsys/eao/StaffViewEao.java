@@ -48,10 +48,12 @@ public class StaffViewEao {
 				emp.setAddressID(rs.getInt(15));
 				emp.setAddress(rs.getString(16));
 				emp.setPostCode(rs.getString(17));
-				emp.setProvince(rs.getString(18));
-				emp.setKabupaten(rs.getString(19));
-				emp.setLoginID(rs.getInt(20));
-				emp.setUsername(rs.getString(21));
+				emp.setProvinceID(rs.getInt(18));
+				emp.setProvince(rs.getString(19));
+				emp.setKabupatenID(rs.getInt(20));
+				emp.setKabupaten(rs.getString(21));
+				emp.setLoginID(rs.getInt(22));
+				emp.setUsername(rs.getString(23));
 				staff.add(emp);
 			}
 		} catch (Exception e) {
