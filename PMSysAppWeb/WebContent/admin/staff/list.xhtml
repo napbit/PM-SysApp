@@ -36,11 +36,13 @@
 										<f:selectItem itemLabel="Jenis Kelamin" itemValue="3" />
 										<f:selectItem itemLabel="Posisi" itemValue="4" />
 										<f:selectItem itemLabel="Join Date" itemValue="5" />
+										<p:ajax update=":form:search_input"
+											listener="#{staffViewBacking.clearSearchTerm}" />
 									</p:selectOneRadio>
 								</h:panelGrid>
-								<h:panelGrid columns="2">
-									<p:inputText style="width: 350px;" />
-									<p:commandButton value="Cari" />
+								<h:panelGrid columns="2" id="search_input">
+									<p:inputText value="#{staffViewBacking.searchTerm}" style="width: 350px;" />
+									<p:commandButton value="Cari" actionListener="#{staffViewBacking.searchStaffList}" update=":form:staff_data" />
 								</h:panelGrid>
 							</p:panel>
 						</div>

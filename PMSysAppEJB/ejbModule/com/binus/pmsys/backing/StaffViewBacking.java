@@ -254,23 +254,12 @@ public class StaffViewBacking extends BasicBacking {
 		}
 	}
 	
-	private void searchStaffList() {
-		switch (filterMode) {
-		case BasicEnum.FILTER_NO_RM:
-			
-			break;
-		case BasicEnum.FILTER_NAME:
-			
-			break;
-		case BasicEnum.FILTER_GENDER:
-			
-			break;
-		case BasicEnum.FILTER_DOB:
-			
-			break;
-		default:
-			break;
-		}
+	public void searchStaffList() {
+		this.staffList = eao.searchStaff(filterMode, searchTerm);
+	}
+	
+	public void clearSearchTerm() {
+		searchTerm = "";
 	}
 	
 	public void refreshStaffList() {

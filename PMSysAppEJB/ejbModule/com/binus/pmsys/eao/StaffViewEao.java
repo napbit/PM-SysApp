@@ -10,6 +10,7 @@ import javax.ejb.Stateless;
 
 import com.binus.pmsys.entity.Position;
 import com.binus.pmsys.entity.Staff;
+import com.binus.pmsys.enums.BasicEnum;
 import com.binus.pmsys.enums.PatientEnum;
 import com.binus.pmsys.utils.ReleaseConnection;
 import com.binus.pmsys.utils.Settings;
@@ -131,18 +132,71 @@ public class StaffViewEao {
 		return i;
 	}
 	
-	public List<Staff> searchStaff(int mode){
+	public List<Staff> searchStaff(int mode, String search){
 		List<Staff> staffs = new ArrayList<Staff>();
 		Connection connection = null;
 		CallableStatement cs = null;
 		ResultSet rs = null;
 		
 		try {
+			connection = Settings.getConnection();
 			
+			switch (mode) {
+			case BasicEnum.FILTER_NO_RM:
+				cs = connection.prepareCall("{call sp_staffSearchNIK(?)}");
+				break;
+			case BasicEnum.FILTER_NAME:
+				cs = connection.prepareCall("{call sp_staffSearchName(?)}");
+				break;
+			case BasicEnum.FILTER_GENDER:
+				cs = connection.prepareCall("{call sp_staffSearchGender(?)}");
+				break;
+			case BasicEnum.FILTER_DOB:
+				cs = connection.prepareCall("{call sp_staffSearchPosition(?)}");
+				break;
+			case 5:
+				cs = connection.prepareCall("{call sp_staffSearchJoinDate(?)}");
+			default:
+				break;
+			}
+			
+			cs.setString(1, search);
+			
+			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				Staff emp = new Staff();
+				emp.setStaffID(rs.getInt(1));
+				emp.setStaffKTP(rs.getString(2));
+				emp.setStaffName(rs.getString(3));
+				emp.setStaffDOB(rs.getString(4));
+				emp.setStaffGender(rs.getString(5));
+				emp.setJoinDate(rs.getString(6));
+				emp.setLeaveDate(rs.getString(7));
+				emp.setPositionID(rs.getInt(8));
+				emp.setPosition(rs.getString(9));
+				emp.setContactID(rs.getInt(10));
+				emp.setPhoneNumber(rs.getString(11));
+				emp.setPhoneType(rs.getString(12));
+				emp.setClinicID(rs.getInt(13));
+				emp.setClinicName(rs.getString(14));
+				emp.setAddressID(rs.getInt(15));
+				emp.setAddress(rs.getString(16));
+				emp.setPostCode(rs.getString(17));
+				emp.setProvinceID(rs.getInt(18));
+				emp.setProvince(rs.getString(19));
+				emp.setKabupatenID(rs.getInt(20));
+				emp.setKabupaten(rs.getString(21));
+				emp.setLoginID(rs.getInt(22));
+				emp.setUsername(rs.getString(23));
+				staffs.add(emp);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ReleaseConnection.close(connection, cs, rs);
 		}
+		
+		return staffs;
 	}
 }
