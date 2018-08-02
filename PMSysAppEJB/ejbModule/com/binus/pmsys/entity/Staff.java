@@ -17,6 +17,7 @@ public class Staff {
 	private int contactID;
 	private String phoneNumber;
 	private String phoneType;
+	private String frontExt;
 	
 	private int clinicID;
 	private String clinicName;
@@ -48,6 +49,7 @@ public class Staff {
 		setContactID(s.getContactID());
 		setPhoneNumber(s.getPhoneNumber());
 		setPhoneType(s.getPhoneType());
+		setFrontExt(s.getFrontExt());
 		setClinicID(s.getClinicID());
 		setClinicName(s.getClinicName());
 		setAddressID(s.getAddressID());
@@ -57,33 +59,6 @@ public class Staff {
 		setKabupaten(s.getKabupaten());
 		setLoginID(s.getLoginID());
 		setUsername(s.getUsername());
-	}
-	
-	public Staff(int staffID, String staffKTP, String staffDOB, String staffGender, String joinDate, String leaveDate,
-			int positionID, String position, int contactID, String phoneNumber, String phoneType, int clinicID,
-			String clinicName, int addressID, String address, String postCode, String province, String kabupaten,
-			int loginID, String username) {
-		super();
-		this.staffID = staffID;
-		this.staffKTP = staffKTP;
-		this.staffDOB = staffDOB;
-		this.staffGender = staffGender;
-		this.joinDate = joinDate;
-		this.leaveDate = leaveDate;
-		this.positionID = positionID;
-		this.position = position;
-		this.contactID = contactID;
-		this.phoneNumber = phoneNumber;
-		this.phoneType = phoneType;
-		this.clinicID = clinicID;
-		this.clinicName = clinicName;
-		this.addressID = addressID;
-		this.address = address;
-		this.postCode = postCode;
-		this.province = province;
-		this.kabupaten = kabupaten;
-		this.loginID = loginID;
-		this.username = username;
 	}
 
 	public int getStaffID() {
@@ -252,6 +227,14 @@ public class Staff {
 
 	public void setStaffName(String staffName) {
 		this.staffName = staffName;
+	}
+
+	public String getFrontExt() {
+		return frontExt;
+	}
+
+	public void setFrontExt(String frontExt) {
+		this.frontExt = frontExt;
 	}
 	
 	

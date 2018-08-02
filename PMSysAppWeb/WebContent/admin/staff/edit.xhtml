@@ -1,0 +1,183 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui" template="/WEB-INF/template.xhtml">
+
+	<ui:define name="title">Edit Staff</ui:define>
+
+	<ui:define name="content">
+		<h:form id="form">
+			<div class="ui-g ui-widget" style="margin-top: 30px;">
+				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
+					<div class="ui-g-2" style="height: 100%;">
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{staffViewBacking.newStaff.staffGender == 'Laki-laki'}">
+							<i class="fa fa-male fa-5x" />
+						</h:panelGrid>
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{staffViewBacking.newStaff.staffGender == 'Perempuan'}">
+							<i class="fa fa-female fa-5x" />
+						</h:panelGrid>
+					</div>
+
+					<div class="ui-g-10 ui-g-nopad">
+						<div class="ui-g-12">
+							<h:outputText
+								value="Edit #{staffViewBacking.newStaff.staffName}"
+								style="font-size: 24px;" />
+							<p:separator />
+							<p:messages id="edit_msg" closable="true" />
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Nama Lengkap:" />
+								<p:inputText
+									value="#{staffViewBacking.newStaff.staffName}"
+									required="true" requiredMessage="Nama perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Jenis Kelamin:" />
+								<p:selectOneMenu
+									value="#{staffViewBacking.newStaff.staffGender}"
+									required="true" requiredMessage="Jenis Kelamin perlu dipilih.">
+									<f:selectItem itemLabel="Laki-laki" itemValue="Laki-laki" />
+									<f:selectItem itemLabel="Perempuan" itemValue="Perempuan" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputLabel value="Tanggal Lahir:" />
+								<h:panelGrid columns="3">
+									<p:selectOneMenu value="#{staffViewBacking.day}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{staffViewBacking.days}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu value="#{staffViewBacking.month}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{staffViewBacking.months}" />
+									</p:selectOneMenu>
+									<p:selectOneMenu value="#{staffViewBacking.year}"
+										style="margin-right: 5px;">
+										<f:selectItems value="#{staffViewBacking.years}" />
+									</p:selectOneMenu>
+									<h:outputText value="Hari" />
+									<h:outputText value="Bulan" />
+									<h:outputText value="Tahun" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5" id="num_data">
+								<h:outputText value="Nomor KTP:" />
+								<p:inputMask mask="9999999999999999"
+									value="#{staffViewBacking.newStaff.staffKTP}"
+									required="true" requiredMessage="Nomor KTP perlu di isi." />
+								<p:separator style="visibility: hidden;" />
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<h:outputText value="Data Kontak" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5" id="kontak_panel">
+								<h:outputText value="Tipe Telepon: " />
+								<p:selectOneButton required="true"
+									requiredMessage="Tipe Kontak harus di pilih."
+									value="#{staffViewBacking.newStaff.phoneType}">
+									<f:selectItem itemLabel="Telepon Seluler" itemValue="HandPhone" />
+									<f:selectItem itemLabel="Telepon Rumah" itemValue="HomePhone" />
+									<p:ajax update=":form:kontak_panel" />
+								</p:selectOneButton>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Nomor Telepon Seluler:"
+									rendered="#{staffViewBacking.newStaff.phoneType == 'HandPhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{staffViewBacking.newStaff.phoneType == 'HandPhone'}">
+									<p:inputText value="+62" disabled="true" style="width: 40px;"
+										rendered="#{staffViewBacking.newStaff.phoneType == 'HandPhone'}" />
+									<p:inputMask
+										value="#{staffViewBacking.newStaff.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Seluler perlu di isi."
+										mask="99999999999"
+										rendered="#{staffViewBacking.newStaff.phoneType == 'HandPhone'}" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;"
+									rendered="#{staffViewBacking.newStaff.phoneType == 'HandPhone'}" />
+
+								<h:outputText value="Nomor Telepon Rumah:"
+									rendered="#{staffViewBacking.newStaff.phoneType == 'HomePhone'}" />
+								<h:panelGrid columns="2"
+									rendered="#{staffViewBacking.newStaff.phoneType == 'HomePhone'}">
+									<p:inputMask mask="099?9"
+										value="#{staffViewBacking.newStaff.frontExt}"
+										style="width: 40px;" required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										rendered="#{staffViewBacking.newStaff.phoneType == 'HomePhone'}" />
+									<p:inputMask
+										value="#{staffViewBacking.newStaff.phoneNumber}"
+										required="true"
+										requiredMessage="Nomor Telepon Rumah perlu di isi."
+										mask="999999?99"
+										rendered="#{staffViewBacking.newStaff.phoneType == 'HomePhone'}" />
+								</h:panelGrid>
+								<p:separator style="visibility: hidden;"
+									rendered="#{staffViewBacking.newStaff.phoneType == 'HomePhone'}" />
+
+								<h:outputText value="Alamat:" />
+								<h:column>
+									<p:inputTextarea required="true"
+										requiredMessage="Alamat perlu di isi."
+										value="#{staffViewBacking.newStaff.address}" rows="5"
+										cols="50" maxlength="500" />
+								</h:column>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Propinsi: " />
+								<p:selectOneMenu
+									value="#{staffViewBacking.newStaff.province}"
+									required="true" requiredMessage="Propinsi perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Propinsi"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Kabupaten" />
+								<p:selectOneMenu
+									value="#{staffViewBacking.newStaff.kabupaten}"
+									required="true" requiredMessage="Kabupaten perlu di pilih.">
+									<f:selectItem itemLabel="Pilih Kabupaten"
+										noSelectionOption="true" />
+									<f:selectItem itemLabel="Jakarta Barat" itemValue="1" />
+								</p:selectOneMenu>
+								<p:separator style="visibility: hidden;" />
+								
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<p:separator />
+							<h:panelGrid columns="2" style="float: right;">
+								<p:commandButton value="Simpan" widgetVar="save_btn"
+									onclick="PF('save_btn').disable();"
+									oncomplete="PF('save_btn').enable();"
+									action="#{patientViewBacking.finalizePatientEdit}" 
+									update=":form:edit_msg" />
+								<p:button value="Batal" outcome="view" />
+							</h:panelGrid>
+						</div>
+					</div>
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

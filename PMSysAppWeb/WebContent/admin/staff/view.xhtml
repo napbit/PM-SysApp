@@ -12,8 +12,13 @@
 				<div class="ui-g-10 ui-g-nopad" style="margin: 0 auto;">
 
 					<div class="ui-g-2" style="height: 100%;">
-						<h:panelGrid style="float: center; margin: 0 auto;">
-							<i class="fa fa-user fa-5x" />
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{staffViewBacking.staff.staffGender == 'Laki-laki'}">
+							<i class="fa fa-male fa-5x" />
+						</h:panelGrid>
+						<h:panelGrid style="float: center; margin: 0 auto;"
+							rendered="#{staffViewBacking.staff.staffGender == 'Perempuan'}">
+							<i class="fa fa-female fa-5x" />
 						</h:panelGrid>
 					</div>
 
@@ -23,11 +28,11 @@
 								style="font-size: 24px;" />
 							<p:button value="Kembali" outcome="list"
 								style="float: right; width: 100px" />
-							<p:commandButton value="Edit"
+							<p:commandButton value="Edit" action="#{staffViewBacking.onClickEdit}"
 								style="float: right; margin-right: 5px; width: 100px;" />
 							<p:separator />
 							<p:messages>
-								<p:autoUpdate></p:autoUpdate>
+								<p:autoUpdate />
 							</p:messages>
 						</div>
 
@@ -93,23 +98,18 @@
 											style="font-weight: bold;" />
 									</p:panelGrid>
 								</p:tab>
+								<p:tab title="Employment">
+									<p:panelGrid columns="2" layout="grid"
+										styleClass="ui-panelgrid-blank">
+										<h:outputText value="Posisi: " />
+										<h:outputText value="Tanggal Masuk: " />
+										<h:outputText value="#{staffViewBacking.staff.position}"
+											style="font-weight: bold;" />
+										<h:outputText value="#{staffViewBacking.staff.joinDate}"
+											style="font-weight: bold;" />
+									</p:panelGrid>
+								</p:tab>
 							</p:tabView>
-						</div>
-						<div class="ui-g-12">
-							<h:outputText value="Employment" style="font-size: 24px;" />
-							<p:separator />
-						</div>
-						<div class="ui-g-12">
-							<h:panelGrid columns="1" cellpadding="5">
-								<h:outputText value="Posisi Staff:" />
-								<h:outputText value="#{staffViewBacking.staff.position}"
-									style="font-weight: bold;" />
-								<p:separator style="visibility: hidden;" />
-
-								<h:outputText value="Tanggal Masuk" />
-								<h:outputText value="#{staffViewBacking.staff.joinDate}"
-									style="font-weight: bold;" />
-							</h:panelGrid>
 						</div>
 					</div>
 				</div>
