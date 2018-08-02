@@ -14,13 +14,14 @@ public class RegistrationEao {
 
 	public RegistrationEao() { }
 	
-	public void savePatient(NewPatient patientData) {
+	public int savePatient(NewPatient patientData, String registrationDate) {
+		int result = 0;
 		Connection connection = null;
 		CallableStatement cs = null;
 		
     	try {
     		connection = Settings.getConnection();
-    		cs = connection.prepareCall("{call sp_patientInsert(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+    		cs = connection.prepareCall("{call sp_patientInsert(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
 			cs.setString(1, patientData.getPatientKTP());
 			cs.setString(2, patientData.getPatientName());
 			cs.setString(3, patientData.getPatientGender());
@@ -36,12 +37,18 @@ public class RegistrationEao {
 			cs.setInt(13, patientData.getKabupatenID());
 			cs.setString(14, patientData.getAddress());
 			cs.setString(15, patientData.getPostCode());
-			cs.execute();
+			cs.setString(16, registrationDate);
+			
+			if(!cs.execute()) {
+				result = 1;
+			}
     	} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			ReleaseConnection.close(connection, cs);
 		}
+    	
+    	return result;
     }
 	
 }

@@ -174,7 +174,8 @@
 									required="true" requiredMessage="Propinsi perlu di pilih.">
 									<f:selectItem itemLabel="Pilih Propinsi"
 										noSelectionOption="true" />
-									<f:selectItem itemLabel="Jakarta" itemValue="1" />
+									<f:selectItems value="#{registrationBacking.provinces}"
+										var="p" itemLabel="#{p.provinceName}" itemValue="#{p.id}" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
 
@@ -184,7 +185,8 @@
 									required="true" requiredMessage="Kabupaten perlu di pilih.">
 									<f:selectItem itemLabel="Pilih Kabupaten"
 										noSelectionOption="true" />
-									<f:selectItem itemLabel="Jakarta Barat" itemValue="1" />
+									<f:selectItems value="#{registrationBacking.kabupatens}"
+										var="k" itemLabel="#{k.kabupatenName}" itemValue="#{k.id}" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
 
