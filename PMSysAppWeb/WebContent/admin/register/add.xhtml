@@ -21,13 +21,16 @@
 							<h:outputText value="Registrasi Staff Baru"
 								style="font-size: 24px;" />
 							<p:separator />
-							<p:messages id="edit_msg" closable="true" />
+							<p:messages id="edit_msg" closable="true">
+								<p:autoUpdate></p:autoUpdate>
+							</p:messages>
 						</div>
 
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nama Lengkap:" />
-								<p:inputText value="#{staffRegistrationBacking.newStaff.staffName}"
+								<p:inputText
+									value="#{staffRegistrationBacking.newStaff.staffName}"
 									required="true" requiredMessage="Nama perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
@@ -65,19 +68,21 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5" id="num_data">
 								<h:outputText value="Nomor KTP:" />
-								<p:inputMask value="#{staffRegistrationBacking.newStaff.staffKTP}"
+								<p:inputMask mask="9999 9999 9999 9999"
+									value="#{staffRegistrationBacking.newStaff.staffKTP}"
 									required="true" requiredMessage="Nomor KTP perlu di isi." />
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Posisi: " />
-								<p:selectOneMenu value="#{staffRegistrationBacking.newStaff.positionID}"
+								<p:selectOneMenu
+									value="#{staffRegistrationBacking.newStaff.positionID}"
 									required="true" requiredMessage="Posisi perlu di isi">
 									<f:selectItem itemLabel="Pilih Posisi" noSelectionOption="true" />
-									<f:selectItems value="#{staffRegistrationBacking.positions}" var="pos"
-										itemLabel="#{pos.name}" itemValue="#{pos.id}" />
+									<f:selectItems value="#{staffRegistrationBacking.positions}"
+										var="pos" itemLabel="#{pos.name}" itemValue="#{pos.id}" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
-								
+
 								<h:outputLabel value="Tanggal Masuk:" />
 								<h:panelGrid columns="3">
 									<p:selectOneMenu value="#{staffRegistrationBacking.joinDay}"
@@ -96,6 +101,32 @@
 									<h:outputText value="Bulan" />
 									<h:outputText value="Tahun" />
 								</h:panelGrid>
+							</h:panelGrid>
+						</div>
+
+						<div class="ui-g-12">
+							<h:outputText value="Rincian Data Login" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Username: " />
+								<p:inputText
+									value="#{staffRegistrationBacking.newStaff.username}"
+									required="true" requiredMessage="Username harus di isi." />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Password: " />
+								<p:inputText type="password" required="true"
+									requiredMessage="Password harus di isi."
+									value="#{staffRegistrationBacking.password}" />
+								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Konfirmasi Password: " />
+								<p:inputText type="password" required="true"
+									requiredMessage="Konfirmasi password harus di isi."
+									value="#{staffRegistrationBacking.confirmationPass}" />
 							</h:panelGrid>
 						</div>
 
@@ -122,7 +153,8 @@
 									rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HandPhone'}">
 									<p:inputText value="+62" disabled="true" style="width: 40px;"
 										rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HandPhone'}" />
-									<p:inputMask value="#{staffRegistrationBacking.newStaff.phoneNumber}"
+									<p:inputMask
+										value="#{staffRegistrationBacking.newStaff.phoneNumber}"
 										required="true"
 										requiredMessage="Nomor Telepon Seluler perlu di isi."
 										mask="99999999999"
@@ -140,7 +172,8 @@
 										style="width: 40px;" required="true"
 										requiredMessage="Nomor Telepon Rumah perlu di isi."
 										rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HomePhone'}" />
-									<p:inputMask value="#{staffRegistrationBacking.newStaff.phoneNumber}"
+									<p:inputMask
+										value="#{staffRegistrationBacking.newStaff.phoneNumber}"
 										required="true"
 										requiredMessage="Nomor Telepon Rumah perlu di isi."
 										mask="999999?99"
@@ -159,12 +192,13 @@
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Propinsi: " />
-								<p:selectOneMenu value="#{staffRegistrationBacking.newStaff.provinceID}"
+								<p:selectOneMenu
+									value="#{staffRegistrationBacking.newStaff.provinceID}"
 									required="true" requiredMessage="Propinsi perlu di pilih.">
 									<f:selectItem itemLabel="Pilih Propinsi"
 										noSelectionOption="true" />
-									<f:selectItems value="#{staffRegistrationBacking.provinces}" var="p"
-										itemLabel="#{p.provinceName}" itemValue="#{p.id}" />
+									<f:selectItems value="#{staffRegistrationBacking.provinces}"
+										var="p" itemLabel="#{p.provinceName}" itemValue="#{p.id}" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
 
@@ -174,11 +208,15 @@
 									required="true" requiredMessage="Kabupaten perlu di pilih.">
 									<f:selectItem itemLabel="Pilih Kabupaten"
 										noSelectionOption="true" />
-									<f:selectItems value="#{staffRegistrationBacking.kabupatens}" var="k"
-										itemLabel="#{k.kabupatenName}" itemValue="#{k.id}" />
+									<f:selectItems value="#{staffRegistrationBacking.kabupatens}"
+										var="k" itemLabel="#{k.kabupatenName}" itemValue="#{k.id}" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
-							
+
+								<h:outputText value="Kode Pos" />
+								<h:inputText
+									value="#{staffRegistrationBacking.newStaff.postCode}"
+									required="true" requiredMessage="Kode pos perlu di isi." />
 							</h:panelGrid>
 						</div>
 
@@ -187,8 +225,7 @@
 							<h:panelGrid columns="2" style="float: right;">
 								<p:commandButton value="Simpan" widgetVar="save_btn"
 									onclick="PF('save_btn').disable();"
-									oncomplete="PF('save_btn').enable();"
-									update=":form:edit_msg"
+									oncomplete="PF('save_btn').enable();" update=":form:edit_msg"
 									action="#{staffRegistrationBacking.reviewRegistration}" />
 								<p:button value="Batal" outcome="/menu" />
 							</h:panelGrid>

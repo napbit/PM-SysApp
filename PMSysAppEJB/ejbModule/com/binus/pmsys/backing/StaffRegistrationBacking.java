@@ -17,11 +17,13 @@ import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 
 import com.binus.pmsys.eao.RegionEao;
+import com.binus.pmsys.eao.StaffRegistrationEao;
 import com.binus.pmsys.eao.StaffViewEao;
 import com.binus.pmsys.entity.Kabupaten;
 import com.binus.pmsys.entity.Position;
 import com.binus.pmsys.entity.Province;
 import com.binus.pmsys.entity.Staff;
+import com.binus.pmsys.enums.PatientEnum;
 import com.binus.pmsys.utils.DateHelper;
 
 @Named
@@ -34,6 +36,9 @@ public class StaffRegistrationBacking extends BasicBacking{
 	
 	@EJB
 	private transient StaffViewEao staffEao;
+	
+	@EJB
+	private transient StaffRegistrationEao eao;
 	
 	private Staff newStaff;
 	
@@ -55,6 +60,9 @@ public class StaffRegistrationBacking extends BasicBacking{
 	private List<Province> provinces;
 	private List<Kabupaten> kabupatens;
 	private List<Position> positions;
+	
+	private String password;
+	private String confirmationPass;
 	
 	public StaffRegistrationBacking() {	}
 	
@@ -154,6 +162,22 @@ public class StaffRegistrationBacking extends BasicBacking{
 		this.normalDOB = normalDOB;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmationPass() {
+		return confirmationPass;
+	}
+
+	public void setConfirmationPass(String confirmationPass) {
+		this.confirmationPass = confirmationPass;
+	}
+
 	public List<Province> getProvinces() {
 		return provinces;
 	}
@@ -187,9 +211,19 @@ public class StaffRegistrationBacking extends BasicBacking{
 	}
 
 	public String reviewRegistration() {
-		validateDOB();
-		validateJoinDate();
-		return "review.xhtml?faces-redirect=true";
+		String redirect = "";
+		
+		if(validateDOB() && validateJoinDate() && validatePassword()) {
+			redirect = "review.xhtml?faces-redirect=true";
+		} else {
+			redirect = "add.xhtml";
+		}
+		
+		findPosition();
+		findProvince();
+		findKabupaten();
+		
+		return redirect;
 	}
 	
 	private void getRegions() {
@@ -221,27 +255,101 @@ public class StaffRegistrationBacking extends BasicBacking{
 		this.positions = staffEao.getPositions();
 	}
 	
-	private void validateDOB() {
+	private boolean validateDOB() {
 		normalDOB = day + "-" + month + "-" + year;
 		String dobString = year + "-" + DateHelper.getMonthfromString(month) + "-" + day;
 		Date dobDate = DateHelper.formatStringToDate(dobString, "yyyy-MM-dd");
-
+		
+		boolean value = false;
+		
 		if (day > DateHelper.findLengthDaysinMonthYear(year, DateHelper.getMonthfromString(month))) {
 			messageHandler("Tidak ada hari " + day + "di " + month + " " + year + " untuk tanggal lahir.", FacesMessage.SEVERITY_ERROR);
 		} else {
 			newStaff.setStaffDOB(DateHelper.formatDateToString(dobDate, "yyyy-MM-dd"));
+			value = true;
 		}
+		
+		return value;
 	}
 	
-	private void validateJoinDate() {
+	private boolean validateJoinDate() {
 		normalJoin = joinDay + "-" + joinMonth + "-" + joinYear;
 		String dobString = joinYear + "-" + DateHelper.getMonthfromString(joinMonth) + "-" + joinDay;
 		Date dobDate = DateHelper.formatStringToDate(dobString, "yyyy-MM-dd");
-
+		
+		boolean value = false;
+		
 		if (joinDay > DateHelper.findLengthDaysinMonthYear(joinYear, DateHelper.getMonthfromString(joinMonth))) {
 			messageHandler("Tidak ada hari " + joinDay + "di " + joinMonth + " " + joinYear + " untuk tanggal masuk.", FacesMessage.SEVERITY_ERROR);
 		} else {
 			newStaff.setJoinDate(DateHelper.formatDateToString(dobDate, "yyyy-MM-dd"));
+			value = true;
 		}
+		
+		return value;
+	}
+	
+	private boolean validatePassword() {
+		boolean value = false;
+		
+		if(!password.equals(confirmationPass)) {
+			messageHandler("Password dan Konfirmasi Password tidak sama.", FacesMessage.SEVERITY_ERROR);
+		} else {
+			value = true;
+		}
+		
+		return value;
+	}
+	
+	private void findPosition() {
+		for (Position pos : positions) {
+			if(pos.getId() == newStaff.getPositionID()) {
+				this.newStaff.setPosition(pos.getName());
+			}
+		}
+	}
+	
+	private void findProvince() {
+		for (Province prov : provinces) {
+			if(prov.getId() == newStaff.getProvinceID()) {
+				this.newStaff.setProvince(prov.getProvinceName());
+			}
+		}
+	}
+	
+	private void findKabupaten() {
+		for (Kabupaten kab : kabupatens) {
+			if(kab.getId() == newStaff.getKabupatenID()) {
+				this.newStaff.setKabupaten(kab.getKabupatenName());
+			}
+		}
+	}
+	
+	private Staff prepackageStaff(Staff staff) {
+		staff.setStaffKTP(staff.getStaffKTP().replaceAll("\\s+", ""));
+		
+		if (PatientEnum.getPhoneTypeByString(newStaff.getPhoneType()) == PatientEnum.HOMEPHONE) {
+			newStaff.setPhoneNumber(newStaff.getFrontExt() + " " + newStaff.getPhoneNumber());
+		} else {
+			newStaff.setPhoneNumber("+62 " + newStaff.getPhoneNumber());
+		}
+		
+		return staff;
+	}
+	
+	public String finalizeRegistration() {
+		int result = eao.insertNewStaff(prepackageStaff(newStaff), password);
+		
+		if (result == 1) {
+			getFlash().setKeepMessages(true);
+			getFlash().setRedirect(true);
+			getFacesContext().addMessage(null, flashMessageHandler("Berhasil untuk registrasi staff baru.", FacesMessage.SEVERITY_INFO));
+		} else {
+			getFlash().setKeepMessages(true);
+			getFlash().setRedirect(true);
+			getFacesContext().addMessage(null, flashMessageHandler("Registrasi staff baru tidak berhasil.", FacesMessage.SEVERITY_ERROR));
+		}
+		
+		return "/faces/menu.xhtml?faces-redirect=true;";
 	}
 }

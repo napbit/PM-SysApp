@@ -51,7 +51,19 @@
 								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Tanggal Masuk:" />
-								<h:outputText value="#{staffRegistrationBacking.newStaff.joinDate}" />
+								<h:outputText value="#{staffRegistrationBacking.normalJoin}" />
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-12">
+							<h:outputText value="Rincian Data Login" style="font-size: 24px;" />
+							<p:separator />
+						</div>
+						
+						<div class="ui-g-12">
+							<h:panelGrid columns="1" cellpadding="5">
+								<h:outputText value="Username: " />
+								<h:outputText value="#{staffRegistrationBacking.newStaff.username}" />
 							</h:panelGrid>
 						</div>
 						
@@ -60,7 +72,7 @@
 							<p:separator />
 						</div>
 						
-						<div class="ui-g-12">
+						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Tipe Telepon: " />
 								<h:outputText value="Rumah" rendered="#{staffRegistrationBacking.newStaff.phoneType == 'HomePhone'}" />
@@ -74,13 +86,18 @@
 								
 								<h:outputText value="Alamat:" />
 								<h:outputText value="#{staffRegistrationBacking.newStaff.address}" />
-								<p:separator style="visibility: hidden;" />
-								
+							</h:panelGrid>
+						</div>
+						
+						<div class="ui-g-6">
+							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Propinsi:" />
 								<h:outputText value="#{staffRegistrationBacking.newStaff.province}" />
+								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Kabupaten" />
 								<h:outputText value="#{staffRegistrationBacking.newStaff.kabupaten}" />
+								<p:separator style="visibility: hidden;" />
 								
 								<h:outputText value="Kode Pos:" />
 								<h:outputText value="#{staffRegistrationBacking.newStaff.postCode}" />
@@ -90,8 +107,8 @@
 						<div class="ui-g-12">
 							<p:separator />
 							<h:panelGrid columns="2" style="float: right;">
-								<p:commandButton value="Simpan" />
-								<p:commandButton value="Batal" />
+								<p:commandButton value="Simpan" action="#{staffRegistrationBacking.finalizeRegistration}" />
+								<p:button value="Kembali" outcome="add" />
 							</h:panelGrid>
 						</div>
 					</div>
