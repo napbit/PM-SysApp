@@ -8,7 +8,9 @@ import java.util.List;
 
 import javax.ejb.Stateless;
 
+import com.binus.pmsys.entity.Position;
 import com.binus.pmsys.entity.Staff;
+import com.binus.pmsys.enums.PatientEnum;
 import com.binus.pmsys.utils.ReleaseConnection;
 import com.binus.pmsys.utils.Settings;
 
@@ -63,5 +65,84 @@ public class StaffViewEao {
 		}
 		
 		return staff;
+	}
+	
+	public List<Position> getPositions() {
+		List<Position> positions = new ArrayList<Position>();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_staffPositionGetAllList}");
+			
+			rs = cs.executeQuery();
+			
+			while(rs.next()) {
+				Position pos = new Position();
+				pos.setId(rs.getInt(1));
+				pos.setName(rs.getString(2));
+				positions.add(pos);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs, rs);
+		}
+		
+		return positions;
+	}
+	
+	public int updateStaff(Staff staff) {
+		Connection connection = null;
+		CallableStatement cs = null;
+		int i = 0;
+		
+		try {
+			connection = Settings.getConnection();
+			cs = connection.prepareCall("{call sp_StaffUpdate(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)}");
+			cs.setInt(1, staff.getStaffID());
+			cs.setString(2, staff.getStaffKTP());
+			cs.setString(3, staff.getStaffName());
+			cs.setString(4, staff.getStaffDOB());
+			cs.setString(5, staff.getStaffGender());
+			cs.setString(6, staff.getJoinDate());
+			cs.setString(7, staff.getLeaveDate());
+			cs.setInt(8, staff.getPositionID());
+			cs.setString(9, staff.getPhoneNumber());
+			cs.setInt(10, PatientEnum.getPhoneTypeByString(staff.getPhoneType()));
+			cs.setInt(11, staff.getClinicID());
+			cs.setInt(12, staff.getProvinceID());
+			cs.setInt(13, staff.getKabupatenID());
+			cs.setString(14, staff.getAddress());
+			cs.setString(15, staff.getPostCode());
+			cs.setString(16, staff.getUsername());
+			
+			if(!cs.execute()) {
+				i = 1;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs);
+		}
+		
+		return i;
+	}
+	
+	public List<Staff> searchStaff(int mode){
+		List<Staff> staffs = new ArrayList<Staff>();
+		Connection connection = null;
+		CallableStatement cs = null;
+		ResultSet rs = null;
+		
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			ReleaseConnection.close(connection, cs, rs);
+		}
 	}
 }

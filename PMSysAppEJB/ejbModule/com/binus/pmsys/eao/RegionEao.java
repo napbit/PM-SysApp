@@ -34,7 +34,7 @@ public class RegionEao {
     	
     	try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("{call sp_sp_provinceGetAllList}");
+			cs = connection.prepareCall("{call sp_provinceGetAllList}");
 			rs = cs.executeQuery();
 			
 			while(rs.next()) {
@@ -60,13 +60,14 @@ public class RegionEao {
     	
     	try {
 			connection = Settings.getConnection();
-			cs = connection.prepareCall("");
+			cs = connection.prepareCall("{call sp_kabupatenGetAllList}");
 			rs = cs.executeQuery();
 			
 			while(rs.next()) {
 				Kabupaten kabupaten = new Kabupaten();
 				kabupaten.setId(rs.getInt(1));
 				kabupaten.setKabupatenName(rs.getString(2));
+				kabupatens.add(kabupaten);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

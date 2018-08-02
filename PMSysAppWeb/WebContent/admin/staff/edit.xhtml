@@ -73,6 +73,14 @@
 								<p:inputMask value="#{staffViewBacking.newStaff.staffKTP}"
 									required="true" requiredMessage="Nomor KTP perlu di isi." />
 								<p:separator style="visibility: hidden;" />
+
+								<h:outputText value="Posisi: " />
+								<p:selectOneMenu value="#{staffViewBacking.newStaff.positionID}"
+									required="true" requiredMessage="Posisi perlu di isi">
+									<f:selectItem itemLabel="Pilih Posisi" noSelectionOption="true" />
+									<f:selectItems value="#{staffViewBacking.positions}" var="pos"
+										itemLabel="#{pos.name}" itemValue="#{pos.id}" />
+								</p:selectOneMenu>
 							</h:panelGrid>
 						</div>
 
@@ -151,7 +159,7 @@
 									required="true" requiredMessage="Kabupaten perlu di pilih.">
 									<f:selectItem itemLabel="Pilih Kabupaten"
 										noSelectionOption="true" />
-									<f:selectItem value="#{staffViewBacking.kabupatens}" var="k"
+									<f:selectItems value="#{staffViewBacking.kabupatens}" var="k"
 										itemLabel="#{k.kabupatenName}" itemValue="#{k.id}" />
 								</p:selectOneMenu>
 								<p:separator style="visibility: hidden;" />
@@ -165,7 +173,7 @@
 								<p:commandButton value="Simpan" widgetVar="save_btn"
 									onclick="PF('save_btn').disable();"
 									oncomplete="PF('save_btn').enable();"
-									action="#{patientViewBacking.finalizePatientEdit}"
+									action="#{staffViewBacking.updateStaffConfirm}"
 									update=":form:edit_msg" />
 								<p:button value="Batal" outcome="view" />
 							</h:panelGrid>
