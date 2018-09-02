@@ -54,7 +54,7 @@ public class LoginBacking extends BasicBacking implements Serializable {
 		setPassword(null);
 	}
 	
-	public String loginUser() {
+	public String doLogin() {
 		String redirect = null;
 		
 		try {
