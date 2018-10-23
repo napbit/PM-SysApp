@@ -68,9 +68,12 @@
 						<div class="ui-g-6">
 							<h:panelGrid columns="1" cellpadding="5">
 								<h:outputText value="Nomor KTP:" />
-								<p:inputMask mask="9999 9999 9999 9999"
+								<p:inputMask id="ktp_mask" mask="9999 9999 9999 9999"
 									value="#{registrationBacking.patient.patientKTP}"
 									required="true" requiredMessage="Nomor KTP perlu di isi." />
+								<p:tooltip for="ktp_mask" showEvent="focus" hideEvent="blur" position="bottom" 
+									value="Nomor KTP Pasien yang terdiri dari 16 karakter numerik."
+								/>
 								<p:separator style="visibility: hidden;" />
 
 								<h:outputText value="Apakah Mempunyai BPJS?" />

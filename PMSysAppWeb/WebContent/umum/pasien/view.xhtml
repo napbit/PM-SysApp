@@ -30,11 +30,15 @@
 						<div class="ui-g-12">
 							<h:outputText value="#{patientViewBacking.patient.patientName}"
 								style="font-size: 24px;" />
-							<p:button value="Kembali" outcome="list"
-								style="float: right; width: 100px" />
-							<p:commandButton value="Edit"
+							<p:commandButton value="Ubah"
+								icon="fa fa-pencil"
+								type="button"
 								style="float: right; margin-right: 5px; width: 100px;"
 								action="#{patientViewBacking.onClickEdit}" />
+							<p:button value="Kembali" 
+								icon="fa fa-arrow-left"
+								outcome="list"
+								style="float: right; width: 100px" />
 							<p:separator />
 							<p:messages>
 								<p:autoUpdate></p:autoUpdate>

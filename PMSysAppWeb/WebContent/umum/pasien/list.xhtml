@@ -18,7 +18,8 @@
 					<div class="ui-g-10 ui-g-nopad">
 						<div class="ui-g-12">
 							<h:outputText value="List Data Pasien" style="font-size: 24px;" />
-							<p:commandButton value="Refresh Data"
+							<p:commandButton value="Ambil Data Lagi"
+								icon="fa fa-refresh"
 								actionListener="#{patientViewBacking.refreshPatientData}"
 								ajax="false" update=":form:patients_data" style="float: right;" />
 							<p:separator />
@@ -75,6 +76,7 @@
 									style="text-align:center;">
 									<p:column headerText="Action">
 										<p:commandButton value="Melihat"
+											icon="fa fa-search"
 											action="#{patientViewBacking.onClickView(p)}" />
 									</p:column>
 									<p:column headerText="No. KTP" sortBy="#{p.patientKTP}">
